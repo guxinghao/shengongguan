@@ -1,0 +1,9 @@
+.project
+.buildpath
+.settings
+.DS_Store
+Public/upload
+Public/qrcode
+Application/Common/Conf/db.php
+Application/Runtime
+Application/Common/Conf/config.php

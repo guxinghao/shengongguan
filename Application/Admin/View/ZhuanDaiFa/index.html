@@ -1,0 +1,63 @@
+<include file="Public/min-header"/>
+<style>
+    .h5_a{
+        margin-top: 0;
+    }
+</style>
+<div class="wrapper">
+  <include file="Public/breadcrumb"/>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-vo"></i> 转代发记录表</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="box-body">               
+                    <div class="row">
+                    <div class="col-sm-12">
+                      <table id="vo-table" class="table table-bordered table-striped dataTable">
+                         <thead>
+                          <h5 class="h5 h5_a"> 转代发记录<span style="float: right;"><a href="javascript:history.go(-1);">返回&gt;</a></span></h5>
+                           <tr role="row">
+                               <th class="sorting" tabindex="0">编号</th>
+                               <th class="sorting" tabindex="0">转代发根数</th>
+                               <th class="sorting" tabindex="0">剩余盒数</th>
+                               <th class="sorting" tabindex="0">剩余根数</th>
+                               <th class="sorting" tabindex="0">经手人</th>
+                               <th class="sorting" tabindex="0">创建时间</th>
+                           </tr>
+                         </thead>
+                        <tbody>
+                          <foreach name="info" item="vo" key="k" >
+                            <tr role="row" >
+                             <td>{$vo.sn}</td>
+                             <td>{$vo.tl_count}</td>
+                             <td>{$vo.over_box}</td>
+                             <td>{$vo.over_count}</td>
+                             
+                             <td>{$vo.creator}</td>
+                             <td>{$vo['create_time']?$vo.create_time|date='y-m-d H:i',###:''}</td>
+                           </tr>
+                          </foreach>
+                           </tbody>
+                       </table>
+                   </div>
+              </div>
+              <div class="row">
+                    <div class="col-sm-12 text-center">{$page}</div>        
+              </div>
+              </div>
+
+
+                </div>
+            </div>
+        </div>        <!-- /.row -->
+    </section>
+</div>
+<script>
+    $('#selectPage').css('display','none');
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>找回密码</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>
+		<meta content="telephone=no,email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+
+	</head>
+
+	<body id="cgg_fpwd" class="comform">
+
+		<form action="{:U('Member/reset_Pwd')}" method="post" id="form1">
+			<div class="pwd cominpput">
+				<span>
+					<img src="__STATIC__/img/loph.png"/>
+				</span>
+				<input type="text" name="mobile" id="" value="" placeholder="请输入手机号" />
+
+			</div>
+
+			<div class="conpwd cominpput">
+				<span>
+					<img src="__STATIC__/img/ys.png"/>
+				</span>
+				<input type="text"    name='rand' id="" value="" placeholder="请输入验证码" maxlength="6" />
+
+				<input class="code" name='b' value="获取验证码" onfocus="b.blur()" onclick="time(this);sendMessage();">
+				<p class="line"></p>
+			</div>
+			<a class="btn" onClick="login();">下一步</a>
+			<p class="font_28 last">请在60秒内完成验证，超时请点击重新发送</p>
+
+		</form>
+		<script type="text/javascript" src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="__STATIC__/js/common.js"></script>
+
+	</body>
+	<script>
+
+        function sendMessage() {
+	
+			var mobile=$("#mobile").val();
+			if(mobile==''){				
+				alert("请输入手机号码！");
+				return;				
+			}  
+			var getcodeurl="{:u('member/getCode1')}";						
+			$.post(getcodeurl, {mobile:mobile}, function(res){
+			
+			if(res==1){
+				alert('发送成功');
+			}else if(res==3){
+				alert("验证码一天最多发5次!");
+			}else{
+				alert("发送失败！");
+			}
+     });
+}
+function login(){
+				$("#form1").submit();
+			}
+
+	</script>
+	
+</html>

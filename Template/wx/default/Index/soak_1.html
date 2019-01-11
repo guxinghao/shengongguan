@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#ededed">
+<head>
+	<meta charset="UTF-8">
+	<!-- 同比缩放标签 ,最大缩放比,最小缩放比,禁止用户缩放-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>Document</title>
+	<link rel="stylesheet" href="__STATIC__/css/reset.css">
+	<link rel="stylesheet" href="__STATIC__/css/public.css">
+	<script src="__STATIC__/js/rem.js"></script>
+</head>
+<body>
+<form action="{:U('Index/dosoak_1')}" method="post">
+	<ul class="apply ovw soak soak_1">
+		<li class="pad">
+			<span>选择拜访时间</span>
+			<div class="fr">
+				<input class="so_time" id="" value="2017-07-02T11:00:00" type="datetime-local" placeholder="请选择日期" name="time">
+			</div>
+		</li>
+		<li class="pad bg_col">
+			<span>拜访地址</span>
+		</li>
+		
+		<li class="city">
+			<span>市</span>
+			<div class="fr">
+				<select name="shi" id="">
+<!-- 					<option value="0">{$info.city}</option> -->
+					<option value="1">上海市</option>
+<!-- 					<option value="2">上海市</option> -->
+				</select>
+			</div>
+		</li>
+
+		<li class="city">
+			<span>区</span>
+			<div class="fr">
+				<select name="qu" id="">
+					<option value="{$info.district}">{$info.district}</option>
+					<option value="浦东新区">浦东新区</option>
+					<option value="徐汇区">徐汇区</option>
+					<option value="长宁区">长宁区</option>
+					<option value="普陀区">普陀区</option>
+					<option value="虹口区">虹口区</option>
+					<option value="杨浦区">杨浦区</option>
+					<option value="闸北区">闸北区</option>
+					<option value="黄浦区">黄浦区</option>
+					<option value="宝山区">宝山区</option>
+					<option value="闵行区">闵行区</option>
+					<option value="嘉定区">嘉定区</option>
+					<option value="金山区">金山区</option>
+					<option value="松江区">松江区</option>
+					<option value="青浦区">青浦区</option>
+					<option value="奉贤区">奉贤区</option>
+					<option value="崇明县">崇明县</option>
+				</select>
+			</div>
+		</li>
+		<li class="pad info_site">
+			<span>详细地址</span>
+			<textarea class="site" name="address" style="border:none;">{$info.address}</textarea>
+		</li>
+	</ul>
+	<!-- <a class="apply_sub" href="#">我要预约</a> -->
+	<input type="submit" value="我要预约" class="apply_sub">
+	</form>
+</body>
+</html>

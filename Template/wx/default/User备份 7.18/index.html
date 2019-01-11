@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#ededed">
+<head>
+	<meta charset="UTF-8">
+	<!-- 同比缩放标签 ,最大缩放比,最小缩放比,禁止用户缩放-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>海参下午茶</title>
+	<link rel="stylesheet" href="__STATIC__/css/reset.css">
+	<link rel="stylesheet" href="__STATIC__/css/public.css">
+	<script src="__STATIC__/js/rem.js"></script>
+</head>
+<body>
+	<div class="acti_pic">
+		<img src="{$info.img}" alt="">
+	</div>
+
+
+	<dl class="soak_comm ovw taboo mar_b">
+		<dt>
+			<img src="__STATIC__/images/line.png" alt="">
+			<span>下午茶经典介绍</span>
+		</dt>
+
+		<dd class="ovw bor_b taboo_cont">
+			<div class='lf'>
+				<img src="__STATIC__/images/pic_b.png" alt="">
+			</div>
+			<div class="rt">
+				<h3>{$info.title}</h3>
+				<p>{$info.content}</p>
+			</div>
+		</dd>
+		
+
+<!-- 		<dd class="ovw bor_b taboo_cont">
+			<div class='lf'>
+				<img src="__STATIC__/images/pic_c.png" alt="">
+			</div>
+			<div class="rt">
+				<h3>滋补海参下午茶</h3>
+				<p>精选海参，搭配滋补上好天然补品、枸杞、红枣、干姜片，炖熬30分钟，酿造</p>
+			</div>
+		</dd> -->
+	</dl>
+
+	<dl class="soak_comm ovw taboo  afternoon_tea">
+		<dt>
+			<img src="__STATIC__/images/line.png" alt="">
+			<span>食客姿势</span>
+		</dt>
+		<dd>
+			<img src="__STATIC__/images/pic_d.png" alt="">
+			<div class="posi">
+				<p>众食客共享经典滋补</p>
+				<span>海参下午茶</span>
+			</div>
+		</dd>
+		<dd>
+			<img src="__STATIC__/images/pic_e.png" alt="">
+			<div class="posi">
+				<p>众食客共享经典滋补</p>
+				<span>海参下午茶</span>
+			</div>
+		</dd>
+	</dl>
+
+	<!-- 底部 -->
+	<div class="soak_footer after_footer">
+		<div class="fl tableware">
+			<i></i>
+			<img src="__STATIC__/images/tableware.png" alt="">
+			<a href="__APP__/Home/User/activity_1/cate_id/1">我要吃海参</a>
+		</div>
+		<div class="fl phone friend">
+			<img src="__STATIC__/images/friend.png" alt="">
+			<a href="{:U('User/Diners_share')}">请朋友一起吃</a>
+		</div>
+	</div>
+</body>
+</html>

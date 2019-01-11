@@ -1,0 +1,173 @@
+<style type="text/css">
+  /*table字体*/
+    .sorting{
+      font-size:12px; 
+    }
+    .showStyle td{
+      font-size: 12px;
+    }
+</style>
+<include file="Public/min-header"/>
+<div class="wrapper">
+  <include file="Public/breadcrumb"/>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-vo"></i> 仓库列表</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="navbar navbar-default">
+                            <form action="{:U('Repertory/index')}" id="search-form2" class="navbar-form form-inline" method="post" >
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">仓库名称</label>
+                                    <div class="input-group">
+                                        <input type="text" name="repertory_name" value="" placeholder="仓库名称" id="input-member-id" class="form-control">
+                                        <!--<span class="input-group-addon" id="basic-addon2"><i class="fa fa-search"></i></span>-->
+                                    </div>
+                                </div>
+                                <button type="submit"  id="button-filter search-order" class="btn btn-primary "><i class="fa fa-search"></i> 筛选</button>
+                                <button type="button" onclick="location.href='{:U('Admin/repertory/add')}'" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>新增仓库</button>
+                            </form>
+                    </div>
+                    <div class="box-body">               
+                    <div class="row">
+                    <div class="col-sm-12">
+                      <table id="vo-table" class="table table-bordered table-striped dataTable">
+                         <thead>
+                           <tr role="row">
+                               <th class="sorting" tabindex="0">仓库名称</th>
+                               <th class="sorting" tabindex="0">仓库简称</th>
+                               <th class="sorting" tabindex="0">状态</th>
+                               <th class="sorting" tabindex="0">地址</th>
+                               <th class="sorting" tabindex="0">说明</th>
+                               <th class="sorting" tabindex="0">创建时间</th>
+                               <th class="sorting" tabindex="0">创建人</th>
+                               <th class="sorting" tabindex="0">最后修改时间</th>
+                               <th class="sorting" tabindex="0">最后修改人</th>
+                               <th class="sorting text-center" tabindex="0">操作</th>
+                           </tr>
+                         </thead>
+                        <tbody>
+                          <foreach name="info" item="vo" key="k" >
+                            <tr role="row" class="showStyle">
+                             <td>{$vo.repertory_name}</td>
+                             <td>{$vo.repertory_name_short}</td>
+                             <td>{$vo['status']?'禁用':'启用'}</td>
+                             <td>{$vo.address}</td>
+                             <td>{$vo.remark}</td>
+                             <td>{$vo['create_time']?$vo.create_time|date='y-m-d H:i',###:''}</td>
+                             <td>{$vo.creator}</td>
+                             <td>{$vo['update_time']?$vo.update_time|date='y-m-d H:i',###:''}</td>
+                             <td>{$vo.last_creator}</td>
+                             <td class="text-center col-sm-2">
+                                <!-- <a href="{:U('Admin/user/detail',array('id'=>$vo['user_id']))}" data-toggle="tooltip" title="查看详情" class="btn btn-info" data-original-title="查看详情"><i class="fa fa-eye"></i></a> -->
+                                <a href="{:U('Admin/Repertory/update',array('id'=>$vo['id'],'p'=>$p))}" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="编辑"><i class="fa fa-pencil"></i></a>
+                                <a class="btn btn-danger" href="javascript:void(0)" data-url="{:U('Repertory/delData')}" data-id="{$vo.id}" onclick="delfun(this)"><i class="fa fa-trash-o"></i></a>
+                                <if condition="$vo.status eq 0 ">
+                                  <a title="禁用" data-url="{:U('Admin/repertory/forbid_repertory',array('id'=>$vo['id']))}" onclick="forbid_repertory(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-warning" data-original-title="禁用"><i class="fa fa-minus-square"></i></a>
+                                  <a style="display:none" title="启用" data-url="{:U('Admin/repertory/start_repertory',array('id'=>$vo['id']))}" onclick="start_store(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="启用"><i class="fa fa-check-circle"></i></a>
+                                <else />
+                                  <a style="display:none" data-url="{:U('Admin/repertory/forbid_repertory',array('id'=>$vo['id']))}" onclick="forbid_repertory(this)" href="javascript:;" title="禁用" data-toggle="tooltip" title="" class="btn btn-warning" data-original-title="禁用"><i class="fa fa-minus-square"></i></a>
+                                  <a data-url="{:U('Admin/repertory/start_repertory',array('id'=>$vo['id']))}" title="启用" onclick="start_repertory(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="启用"><i class="fa fa-check-circle"></i></a>
+                                </if>
+                            </td>
+                           </tr>
+                          </foreach>
+                           </tbody>
+                       </table>
+                   </div>
+              </div>
+              <div class="row">
+                    <div class="col-sm-12 text-center">{$page}</div>        
+              </div>
+              </div>
+
+
+                </div>
+            </div>
+        </div>        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<script type="text/javascript">
+  function delfun(obj){
+  if(confirm('确认删除')){    
+    $.ajax({
+      type : 'post',
+      url : $(obj).attr('data-url'),
+      data : {id:$(obj).attr('data-id')},
+      dataType : 'json',
+      success : function(data){
+        if(data.success==1){
+          $(obj).parent().parent().remove();
+          window.location.reload();
+        }else{
+          layer.alert(data.info, {icon: 2});  //alert('删除失败');
+        }
+      }
+    })
+  }
+  return false;
+}
+// 禁用门店
+function forbid_repertory(obj){
+    if(confirm('确认禁用')){ 
+        $.ajax({
+            type : 'post',
+            url : $(obj).attr('data-url'),
+            dataType : 'json',
+            success : function(data){
+                if(data.success==1){
+                    $(obj).css('display', 'none');
+                    $(obj).next().css('display', 'inline-block');
+                    window.location.reload();
+                }else{
+                    layer.alert(data.info, {icon: 2});  //alert('删除失败');
+                }
+            }
+        })
+    }
+    return false;
+}
+// 启用门店
+function start_repertory(obj){
+    if(confirm('确认启用')){        
+        $.ajax({
+            type : 'post',
+            url : $(obj).attr('data-url'),
+            dataType : 'json',
+            success : function(data){
+                if(data.success==1){
+                    $(obj).css('display', 'none');
+                    $(obj).prev().css('display', 'inline-block');
+                    window.location.reload();
+                }else{
+                    layer.alert(data.info, {icon: 2});  //alert('删除失败');
+                }
+            }
+        })
+    }
+    return false;
+}
+//选择展示条数时触发
+$("#selectPage").change(function(){
+    var pageCount = $('#selectPage').val();
+    $('.pagination  a').each(function(index, el) {
+        var result = getStrParam('pageCount',$(this).attr('href'));
+        // 如果已经拼接 则替换
+        if (result) {
+            var _href = reStrParam($(this).attr('href'),pageCount);
+        }else{
+            var _href = $(this).attr('href')+'/pageCount/'+pageCount;
+        }
+        $(this).attr('href',_href);
+        
+    });
+    window.location.href="{:U('Repertory/index')}/p/1/pageCount/"+pageCount;
+});
+
+</script>
+</body>
+</html>

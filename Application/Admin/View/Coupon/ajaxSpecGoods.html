@@ -1,0 +1,19 @@
+             <volist name="list" id="list">
+                  <tr>
+                  	
+                      <td class="text-left">{$i}</td>
+                      <td class="text-left">{$list.sku}</td>
+                      <td class="text-left">
+                       		<input type="text" name="num[]" />
+                            <input type="hidden"  value="{$list.sku}" name="sku[]" />
+                            <input type="hidden"  value="{$list.goods_id}" name="goods_id[]" />
+                            <input type="hidden"  value="{$list.key_name}" name="key_name[]" />
+                             <input type="hidden"  value="{$list.goods_name}" name="goods_name[]" />
+                      </td>
+                      <td class="text-left">{$list.goods_name}</td>
+                      <td class="text-left">{$list.key_name}</td>
+                      <td class="text-left">{$list.spu}</td>
+                      <td><a href="javascript:void(0)" onclick="javascript:$(this).parent().parent().remove();">删除</a></td>
+                  </tr>                              
+         	</volist>   
+       

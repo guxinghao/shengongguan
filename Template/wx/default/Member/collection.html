@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的收藏</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>
+		<meta content="telephone=no,email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+	</head>
+
+	<body id="collect">
+		<ul>
+		<volist name='r' id="vo">
+			<li>
+				<span class="img"><img src="{$vo.original_img}"/></span>
+				<aside>
+					<h3>{$vo.goods_remark}</h3>
+					<b>¥ {$vo.shop_price}</b>
+					<i><img src="__STATIC__/img/sc4.png"/></i>
+				</aside>
+			</li>
+			
+		</volist>
+		</ul>
+	</body>
+
+</html>

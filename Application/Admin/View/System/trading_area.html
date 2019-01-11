@@ -1,0 +1,97 @@
+<include file="Public/min-header" />
+<div class="wrapper">
+    <include file="Public/breadcrumb"/>
+	<section class="content">
+       <div class="row">
+       		<div class="col-xs-12">
+	       		<div class="box">
+	             <div class="box-header">
+	               	<nav class="navbar navbar-default">	     
+				        <div class="collapse navbar-collapse">
+				          <form class="navbar-form form-inline" action="{:U('System/ajax_area')}" method="post" id="area">
+				            <div class="form-group">
+				              	<input type="text" name="name" class="form-control" placeholder="搜索">
+				            </div>
+				            <a  class="btn btn-default">提交</a>
+				            <div class="form-group pull-right">
+				            	<a href="{:U('System/add_area')}" class="btn btn-default"><i class="fa fa-plus"></i>添加</a>
+				       
+				            </div>		          
+				          </form>		
+				      	</div>
+	    			</nav>  
+	             </div>	             
+	             <div class="box-body" id="ajax_return">	               
+	           		
+	         </div>
+	        </div>
+       	</div>
+       </div>
+   </section>
+</div>
+
+
+
+<script>
+$(document).ready(function(){
+        ajax_get_table('area',1);
+    });
+    function ajax_get_table(tab,page,pageCount){
+        cur_page = page; //当前页面 保存为全局变量
+            $.ajax({
+                type : "POST",
+                url:"/index.php/Admin/system/ajax_area/p/"+page+"/pageCount/"+pageCount,//+tab,
+                data : $('#'+tab).serialize(),// 你的formid
+                success: function(data){
+                	console.log(data);
+                    $("#ajax_return").html('');
+                    $("#ajax_return").append(data);
+                }
+            });
+    }
+     $(".btn-default").click(function(){
+        ajax_get_table('area',1);	
+    });
+function choosebox(o){
+	var vt = $(o).is(':checked');
+	if(vt){
+		$('input[type=checkbox]').prop('checked',vt);
+	}else{
+		$('input[type=checkbox]').removeAttr('checked');
+	}
+}
+function delfunc(obj){
+    if(confirm('完成')){        
+        $.ajax({
+            type : 'post',
+            url : $(obj).attr('data-url'),
+            dataType : 'json',
+            success : function(data){
+                    if(data.code==1){
+                    location.reload(true);
+                }
+                
+            }
+        })
+    }
+    return false;
+}
+function store(obj){
+    if(confirm('完成')){        
+        $.ajax({
+            type : 'post',
+            url : $(obj).attr('data-url'),
+            dataType : 'json',
+            success : function(data){
+                    if(data.code==1){
+                    location.reload(true);
+                }
+                
+            }
+        })
+    }
+    return false;
+}
+</script> 
+</body>
+</html>

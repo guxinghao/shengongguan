@@ -1,0 +1,28 @@
+
+	<volist name='r' id='vo'>
+		<dl class="so_info mar_b my_info ovw">
+	
+			<dd class="pad mar_t">
+				<span>寄存编号 : </span>
+				<i>{$vo.sn}</i>
+			</dd>
+			<dd class="pad">
+				<span>品名 : </span>
+				<i>{$vo.product_name}</i>
+			</dd>
+			<dd class="pad">
+				<span>根数 : </span>
+				<i>{$vo.count}根</i>
+			</dd>
+			<dd class="pad">
+				<span>寄存日期 : </span>
+				<i>{$vo.receive_time}</i>
+			</dd>
+			
+			<dt class="schedule ovw">
+				<a class="tre_soak" href="__APP__/Home/Member/my_soak/id/{$vo.id}">我要泡发</a>
+				<a class="tre_delivery" href="__APP__/Home/Member/deliver_goods/id/{$vo.id}">不泡发直接送货</a>
+			</dt>
+		</dl>
+	</volist>
+	

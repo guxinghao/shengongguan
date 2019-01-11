@@ -1,0 +1,71 @@
+footer {
+	width: 100%;
+	overflow: hidden;
+	height: 1.33rem;
+	border-top: 1px solid #dcdcdc;
+	position: fixed;
+	bottom: 0;
+	background: #fff;
+	z-index: 9999;
+}
+
+footer dl {
+	width: 25%;
+	float: left;
+	text-align: center;
+	font-size: 0.32rem;
+	color: #999999;
+	position: relative;
+}
+
+footer dl dd.addCol {
+	color: #aa8250;
+}
+
+footer dl dd {
+	line-height: 0.26rem;
+}
+
+footer dl dt {
+	text-align: center;
+	height: 0.66rem;
+	margin-top: 0.24rem;
+}
+
+footer dl dt img {
+	display: block;
+	width: auto;
+	margin: 0 auto;
+}
+
+footer dl dt:nth-of-type(1) img {
+	height: 0.54rem;
+}
+
+footer dl dt:nth-of-type(2) img {
+	height: 0.52rem;
+}
+
+footer dl dt:nth-of-type(3) img,
+footer dl dt:nth-of-type(4) img {
+	height: 0.5rem;
+}
+
+footer dl:after {
+	content: '';
+	width: 1px;
+	height: 0.44rem;
+	background: url(../img/line.png) no-repeat center;
+	background-size: cover;
+	position: absolute;
+	right: 0;
+	top: 0.445rem;
+}
+
+footer dl:last-child:after {
+	display: none;
+}
+
+footer a{
+	color: #999999;
+}

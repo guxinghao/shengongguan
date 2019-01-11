@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#FFF">
+<head>
+	<meta charset="UTF-8">
+	<!-- 同比缩放标签 ,最大缩放比,最小缩放比,禁止用户缩放-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>我的积分</title>
+	<link rel="stylesheet" href="__STATIC__/css/reset.css">
+	<link rel="stylesheet" href="__STATIC__/css/public.css">
+	<script src="__STATIC__/js/rem.js"></script>
+</head>
+<body>
+	<div class="integral pad">
+		<p class="explain">积分说明</p>
+		<div class="explain_num">{$r.pay_points}</div>
+		<p class="explain_record">
+			<img src="__STATIC__/images/line.png" alt="">
+			<span>积分记录</span>
+		</p>
+	</div>
+	<ul class="record_list">
+	<volist name='data' id='vo'>
+			<li>
+				<h3><eq name="vo.type" value="3">-<else/>+</eq>{$vo.pay_points}</h3>
+				<span>{$vo.desc}</span>
+				<p>{$vo.change_time|date='m-d H:i',###}</p>
+			</li>
+	</volist>		
+		</ul>
+	<!-- 积分说明弹窗 -->
+		<div class="in_show">
+			<dl>
+				<dt>
+					<img class="close" src="__STATIC__/images/close.png" alt="">
+					<span>积分说明</span>
+				</dt>
+				<volist name='data' id='vo' key='k' >
+				<dd class="pad">
+					<i>{$k}.</i>
+					<div>消费{$vo.user_money}元，赠送{$vo.pay_points}积分。</div>
+				</dd>
+				</volist>
+			</dl>
+		</div>
+	<script src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+	<script>
+	$(function(){
+		$(".explain").click(function(){
+			$(".in_show").show();
+		});
+		$(".close").click(function(){
+			$(".in_show").hide();
+		})
+	})
+		
+	</script>
+</body>
+</html>

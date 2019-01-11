@@ -1,0 +1,66 @@
+<include file="Public/min-header"/>
+<link href="__PUBLIC__/plugins/iCheck/flat/user_icon.css" rel="stylesheet" type="text/css" /> 
+<style>
+    .h5_a{
+        margin-top: 0;
+    }
+    .return{
+      margin-right: 0;
+    }
+</style>
+<div class="wrapper">
+    <!-- Content Header (Page header) -->
+  <include file="Public/breadcrumb"/>
+    <div class="panel panel-default">  
+    <form action="" method="post" id="detail_b">
+      <div id="ajax_return">      
+      <table class="table table-bordered table-hover">
+        <thead>   
+          <h5 class="h5 h5_a">会员风格转换<span><a href="{:U('Admin/user/detail',array('id'=>$mapss['uid']))}">返回&gt;</a></span></h5>                         
+          <tr>                      
+              <td>转换时间</td>
+              <td>风格转换</td>
+          </tr>
+        </thead>
+        <tbody>
+            <volist name="style" id="sty">
+              <tr>
+                  <td>{$sty.create_time|date='Y-m-d H:i',###}</td>
+                  <td>{$sty.old_fengge}--{$sty.new_fengge}</td>                      
+              </tr>
+            </volist>
+        </tbody>
+        </table>	   
+   </div>
+
+
+       <input type="hidden" value="{$mapss.uid}" name="style">
+      </form>
+   <div class="row">
+                    <div class="col-sm-12 text-center">{$page}</div>    
+              </div>
+    </div>
+
+   </div>
+    <script>
+    $('#selectPage').css('display','none');
+    // $(".pagination  a").click(function(){
+    //     // var pageCount = $('#selectPage').val();
+    //     var page = $(this).data('p');
+    //     ajax_get_table('detail_b',page);
+    // });
+    //        function ajax_get_table(tab,page){
+    //     cur_page = page; //当前页面 保存为全局变量
+    //         $.ajax({
+    //             type : "POST",
+    //             url:"/index.php/Admin/user/ajax_b/p/"+page,//+tab,
+    //             data : $('#'+tab).serialize(),// 你的formid
+    //             success: function(data){
+    //                 $("#ajax_return").html('');
+    //                 $("#ajax_return").append(data);
+    //             }
+    //         });
+    // }
+</script>
+</body>
+</html>

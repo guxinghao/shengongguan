@@ -1,0 +1,229 @@
+<include file="Public/min-header"/>
+<link href="__PUBLIC__/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/plugins/daterangepicker/moment.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<style type="text/css">
+    #search-form2 .input-group .form-control{
+        width: 157px;
+        height: 30px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+    }
+    .day{
+        width: 80px;
+        height: 29px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        padding-left: 10px;
+    }
+    .search_date_box {
+        float: left;
+        width: 80px;
+        height: 30px;
+        margin-top: 1px ;
+    }
+</style>
+<style type="text/css">
+    .count{
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+    }
+    .count .count_div .count_p{
+        float: left;
+        width: 33%;
+        text-align: left;
+        font-size: 14px;
+    }
+    .count:before, .count:after{
+      display:table;
+      content:'';
+    }
+    .count:after{
+      clear:both;
+    }
+    .count .count_div{
+        width: 100%;
+        padding: 15px;
+    }
+    .count .count_div .count_span{
+        display: inline-block;
+        width: 90px;
+        text-align: left;
+    }
+</style>
+<div class="wrapper" style="min-height: 650px">
+    <!-- Content Header (Page header) -->
+    <include file="Public/breadcrumb"/>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i> 推荐人管理</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="panel-body">
+                    <div class="count">
+                        <div class="count_div">
+                            <p class="count_p"><span class="count_span">推荐人总数</span><span id="tuijian_count"></span></p>
+                            <p class="count_p"><span class="count_span">被推荐人总数</span><span id="beituijian_count"></span></p>
+                            <p class="count_p"><span class="count_span">被推荐人消费</span><span id="beituijian_sale"></span></p>
+                        </div>
+                    </div> 
+                    <div class="navbar navbar-default">
+                            <form action="{:U('Admin/order/export_order')}" id="search-form2" class="navbar-form form-inline" method="post" onkeydown="if(event.keyCode==13){return false;}">
+                            <div style="float: left;"">
+                                <div class="form-group" style="margin-bottom: 10px">
+                                    <label class="control-label" for="input-date-added">推荐人</label>
+                                    <div class="input-group">
+                                        <input type="text" name="search_user" value="{$search_user}" placeholder="推荐人姓名/手机号" class="input-sm">
+					                 </div>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 10px">
+                                    <label class="control-label" for="input-date-added">被推荐人</label>
+                                    <div class="input-group">
+                                        <input type="text" name="referrals_user" value="{$referrals_user}" placeholder="被推荐人姓名/手机号" class="input-sm">
+                                     </div>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 10px">
+                                    <label class="control-label" for="input-order-id">注册时间</label>
+                                    <div class="input-group">
+                                        <input style="width: 150px;padding-left: 0px;font-size: 12px;" type="text" name="receive_time" placeholder="注册时间" value="{$_receive_time}"  id="receive_time" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 10px">
+                                    <div class="more_one_l" style="float:left;margin-top:6px;">
+                                        <label class="control-label" for="input-order-id">累计购买金额</label>
+                                    </div>
+                                    <div class="search_date_box">
+                                        <input placeholder="起始" type="text" name="start_point_a" class="day">
+                                    </div>
+                                    <div style="float:left;margin:6px 3px;"><label class="control-label" for="input-order-id">至</label></div>
+                                    <div class="search_date_box">
+                                        <input placeholder="结束" type="text" name="end_point_b" class="day">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 10px">
+                                    <div class="more_one_l" style="float:left;margin-top:6px;">
+                                        <label class="control-label" for="input-order-id">推荐数量</label>
+                                    </div>
+                                    <div class="search_date_box">
+                                        <input placeholder="起始" type="text" name="start_count_a" class="day">
+                                    </div>
+                                    <div style="float:left;margin:6px 3px;"><label class="control-label" for="input-order-id">至</label></div>
+                                    <div class="search_date_box">
+                                        <input placeholder="结束" type="text" name="end_countt_b" class="day">
+                                    </div>
+                                </div>
+                                <input id="orderby" type="hidden" name="order_by" value="tp_users.reg_time">
+                                <input id="sort" type="hidden" name="sort" value="desc">
+                                <div class="form-group" style="margin-bottom: 10px">
+                                	<a href="javascript:void(0)" onclick="ajax_get_table_search('search-form2',1)" id="button-filter search-order" class="btn btn-primary"><i class="fa fa-search"></i> 筛选</a>
+                                </div>
+                              </div>
+                            </form>
+                    </div>
+                    <div id="ajax_return">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script>
+$(document).ready(function(){
+    ajax_get_table('search-form2',1);
+	$('#receive_time').daterangepicker({
+		format:"YYYY/MM/DD",
+		singleDatePicker: false,
+		showDropdowns: true,
+		minDate:'2016/01/01',
+		maxDate:'2030/01/01',
+		startDate:'2017/01/01',
+	    locale : {
+            applyLabel : '确定',
+            cancelLabel : '取消',
+            fromLabel : '起始时间',
+            toLabel : '结束时间',
+            customRangeLabel : '自定义',
+            daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+            monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+            firstDay : 1
+        }
+	});
+});
+    
+// ajax 抓取页面
+function ajax_get_table(tab,page,pageCount){
+    cur_page = page; //当前页面 保存为全局变量
+    $.ajax({
+        type : "POST",
+        url:"/index.php/Admin/user/ajaxrecommender/p/"+page+"/pageCount/"+pageCount,//+tab,
+        data : $('#'+tab).serialize(),// 你的formid
+        success: function(data){
+            $("#ajax_return").html('');
+            $("#ajax_return").append(data);
+        }
+    });
+}
+
+    
+// ajax 抓取页面
+function ajax_get_table_search(tab,page){
+    var pageCount = $('#selectPage').val();
+    cur_page = page; //当前页面 保存为全局变量
+    $.ajax({
+        type : "POST",
+        url:"/index.php/Admin/user/ajaxrecommender/p/"+page+"/pageCount/"+pageCount,//+tab,
+        data : $('#'+tab).serialize(),// 你的formid
+        success: function(data){
+            $("#ajax_return").html('');
+            $("#ajax_return").append(data);
+        }
+    });
+}
+
+
+// 点击排序
+function sort(field)
+{   
+    var _order = $("input[name='sort']").val();
+    console.log(_order);
+    if (!_order) {
+        _order = 'desc';
+    }
+    var v =_order == 'desc' ? 'asc' : 'desc';
+    $('#sort').val(v);
+    $('#orderby').val(field);
+    ajax_get_table('search-form2',cur_page);
+}
+
+//如果门店改变 则改变服务顾问数据
+$('#store_select').change(function(event) {
+    var store_id = $(this).val();
+    if (!store_id) {
+        store_id = 0;
+    }
+    $.ajax({
+        type:"post",
+        url:"{:U('services/getGuWen')}",
+        data:{"store_id":store_id},
+        success:function(result){
+            var jsonobj=eval('('+result+')');
+            var len = jsonobj.length;
+            var str = '<option value="">全部</option>';
+            for (var i = 0; i < len; i++) {
+                str += "<option value='"+jsonobj[i].admin_id+"'>"+jsonobj[i].user_name+"</option>"
+            }
+            $('#guwen').html(str);
+        }
+    })
+});
+
+</script>
+</body>
+</html>

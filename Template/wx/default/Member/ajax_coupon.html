@@ -1,0 +1,11 @@
+
+	<volist name='info' id='vo'>
+	<div class="dis_coupon dis_bg">
+		<span class="dis_sum">¥<i>{$vo.money}</i></span>
+		<div class="dis_explain">
+			<p>{$vo.name}</p>
+			<span>{$vo.use_start_time|date='Y.m.d',###}-{$vo.use_end_time|date='Y.m.d',###}</span>
+		</div>
+		<a href="{:U('User/vip_index')}" class="fr dis_use">立即使用</a>
+	</div>
+	</volist>

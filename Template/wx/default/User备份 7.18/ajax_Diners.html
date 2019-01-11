@@ -1,0 +1,28 @@
+
+			<volist name='info' id= 'vo'>
+				<div class="top">
+					<span><img src="__STATIC__/img/tx.png"/></span>
+					<div class="center">
+						<div class="dl_top">
+							<h3>{$vo.title}</h3>
+							<dl>
+								<dt>
+									<a href="__APP__/Home/User/do_a/id/{$vo.id}"><img src="__STATIC__/img/dz.png"/></a>
+									<a href="__APP__/Home/User/do_b/id/{$vo.id}"><img src="__STATIC__/img/dz1.png" class="click"/></a>
+								</dt>
+								<dd>{$vo.zan}</dd>
+								<dd class="click">{$vo.zana}</dd>
+							</dl>
+						</div>
+						<i class="colTip blue">{$vo.t}</i>
+						<p class="font_28 col_3">{$vo.content}</p>
+						<ul>
+						<volist name='vo.data' id='vos'>
+							<li><img src="{$url}{$vos.image}" alt=""></li>
+						</volist>
+						</ul>
+						<em class="time">{$vo.cretae_time|friendlyTimes}</em>
+					</div>
+				</div>
+		</volist>
+		

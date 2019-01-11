@@ -1,0 +1,212 @@
+<style type="text/css">
+  /*自定义展示列样式*/
+    #selectBox{
+        padding:0px 30px 20px 0px;
+        width: 100%;
+        height: 30px;
+    }
+    .showlist{
+        display: inline-block;
+        width: 90px;
+        height: 30px;
+        border:1px solid #eee;
+        float: right;
+        text-align: center;
+        line-height: 30px;
+        background-color: #68b828;
+        color: #fff;
+        cursor: pointer;
+    }
+    .listTitle{
+        width:180px;
+        height: 360px;
+        border:1px solid #ccc;
+        background-color: #fff;
+        padding-left:20px; 
+        position: absolute;
+        right: 30px;
+        top: 38px;
+        z-index: 99;
+        display: none;
+    }
+    .listTitle li{
+        list-style-type:none;
+
+    }
+    label{
+        font-weight: normal;
+        cursor: pointer;
+    }
+
+    /*table字体*/
+    .sorting{
+      font-size:12px; 
+    }
+    .showStyle td{
+      font-size: 12px;
+    }
+
+    /*搜索框样式*/
+    .input-group input{
+      height:30px;
+      width: 130px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+      padding-left: 5px;
+    }
+    .changeColor{
+      height:30px;
+      width: 130px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+      padding-left: 5px;
+    }
+</style>
+<include file="Public/min-header"/>
+<div class="wrapper">
+  <include file="Public/breadcrumb"/>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-vo"></i> 发票列表</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="navbar navbar-default">
+                            <form action="{:U('Invoice/index')}" id="search-form2" class="navbar-form form-inline" method="post" >
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">发票名称</label>
+                                    <div class="input-group">
+                                        <input type="text" name="fapiao_name" value="{$fapiao_name}" placeholder="发票名称" id="input-member-id">
+                                        <!--<span class="input-group-addon" id="basic-addon2"><i class="fa fa-search"></i></span>-->
+                                    </div>
+                                </div>
+                                <if condition="($role_id neq 4)">
+                                  <div class="form-group">
+                                      <label class="control-label" for="input-order-id">门店名称</label>
+                                      <select style="height:30px;" name="store_id" class="store_id changeColor">
+                                          <option value="0">选择门店</option>
+                                              <volist name="store" id="item">
+                                              <option value="{$item.store_id}" <if condition="$item[store_id] eq $store_id"> selected="selected"</if>>
+                                              {$item.store_name}
+                                              </option>
+                                          </volist>                  
+                                      </select>
+                                  </div>
+                                </if>
+                                <input type="hidden" name="pageCount" id="pageCount" value="{$pageCount}">
+                                <button type="submit"  id="button-filter search-order" class="btn btn-primary "><i class="fa fa-search"></i> 筛选</button>
+                            </form>
+                    </div>
+                    <div class="box-body">               
+                    <div class="row">
+                    <div class="col-sm-12">
+                      <div style="width: 100%;overflow-x: auto;">
+                      <div style="width: 1410px;">
+                        <table id="vo-table" class="table table-bordered table-striped dataTable">
+                         <thead>
+                           <tr role="row">
+                               <th class="sorting" tabindex="0" style="width: 140px;">订单编号</th>
+                               <th class="sorting" tabindex="0" style="width: 80px;">用户名</th>
+                               <th class="sorting" tabindex="0" style="width: 80px;">发票类型</th>
+                               <th class="sorting" tabindex="0" style="width: 160px;">发票名称</th>
+                               <th class="sorting" tabindex="0" style="width: 100px;">发票税号</th>
+                               <th class="sorting" tabindex="0" style="width: 130px;">单位地址</th>
+                               <th class="sorting" tabindex="0" style="width: 110px;">联系电话</th>
+                               <th class="sorting" tabindex="0" style="width: 130px;">开户行</th>
+                               <th class="sorting" tabindex="0" style="width: 160px;">银行账户</th>
+                               <th class="sorting" tabindex="0" style="width: 70px;">操作人</th>
+                               <th class="sorting" tabindex="0" style="width: 90px;">开票门店</th>
+                               <th class="sorting" tabindex="0" style="width: 110px;">开票时间</th>
+                               <th class="sorting text-center" tabindex="0"  style="width: 50px;">操作</th>
+                           </tr>
+                         </thead>
+                          <tbody>
+                          <foreach name="result" item="vo" key="k" >
+                            <tr role="row" class="showStyle">
+                             <td>{$vo.order_sn}</td>
+                             <td>{$vo.user_name}</td>
+                             <td>{$vo['fapiao_style']?'单位':'个人'}</td>
+                             <td>{$vo.fapiao_name}</td>
+                             <td>{$vo.fapiao_shuihao}</td>
+                             <td>{$vo.fapiao_adress}</td>
+                             <td>{$vo.link_phone}</td>
+                             <td>{$vo.bank_deposit}</td>
+                             <td>{$vo.bank_num}</td>
+                             <td>{$vo.admin_name}</td>
+                             <td>{$vo.store_name}</td>
+                             <td>{$vo['create_time']?$vo.create_time|date='y-m-d H:i',###:''}</td>
+                             <td class="text-center col-sm-2" style="width: 120px">
+                                <a class="btn btn-danger" href="javascript:void(0)" data-url="{:U('Invoice/delData')}" data-id="{$vo.id}" onclick="delfun(this)"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                           </tr>
+                          </foreach>
+                           </tbody>
+                        </table>
+                       </div>
+                      </div>
+                   </div>
+              </div>
+              <div class="row">
+                    <div class="col-sm-12 text-center">{$page}</div>        
+              </div>
+              </div>
+
+
+                </div>
+            </div>
+        </div>        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<script type="text/javascript">
+
+//选择展示条数时触发
+$("#selectPage").change(function(){
+    var pageCount = $('#selectPage').val();
+    $('#pageCount').val(pageCount);
+    $('.pagination  a').each(function(index, el) {
+        var result = getStrParam('pageCount',$(this).attr('href'));
+        // 如果已经拼接 则替换
+        if (result) {
+            var _href = reStrParam($(this).attr('href'),pageCount);
+        }else{
+            var _href = $(this).attr('href')+'/pageCount/'+pageCount;
+        }
+        $(this).attr('href',_href);
+        
+    });
+    window.location.href="{:U('Invoice/index')}/p/1/pageCount/"+pageCount;
+});
+function delfun(obj){
+  if(confirm('确认删除')){    
+    $.ajax({
+      type : 'post',
+      url : $(obj).attr('data-url'),
+      data : {id:$(obj).attr('data-id')},
+      dataType : 'json',
+      success : function(data){
+        if(data.success==1){
+          $(obj).parent().parent().remove();
+          // window.location.reload();
+        }else{
+          layer.alert(data.info, {icon: 2});  //alert('删除失败');
+        }
+      }
+    })
+  }
+  return false;
+}
+$('.changeColor').on('change',function () {
+    $(this).css('color','red').find("option").css('color','red');
+    $(this).find("option:not(:selected)").css('color','#999');
+    return false;
+});
+if ('{$store_id}') {
+  $('.changeColor').css('color','red').find("option").css('color','red');
+  $('.changeColor').find("option:not(:selected)").css('color','#999');
+}
+</script>
+</body>
+</html>

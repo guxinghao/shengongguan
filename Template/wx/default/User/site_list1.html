@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>地址列表</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>
+		<meta content="telephone=no,email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+	</head>
+
+	<body id="siteList">
+		<ul>
+		<volist name="info" id="vo">
+			<li>
+				<input type="radio" name="list" id="" onclick="btn1({$vo.address_id});" value="" <eq name="vo.is_default" value="1" > checked="checked" </eq> />
+				<aside>
+					<h3>{$vo.consignee} <span>{$vo.mobile}</span></h3>
+					<p>{$vo.address} </p>
+
+				</aside>
+				<div class="btn">
+					<a class="addborder del" onclick="btn({$vo.address_id});">删除</a>
+					<a href="__APP__/Home/User/new_addi/address_id/{$vo.address_id}">编辑</a>
+				</div>
+			</li>
+		</volist>
+		</ul>
+	<a class="btn" href="{:U('User/new_addi')}">新增地址</a>
+<!-- 	<a class="btn" href="{:U('Cart/cart2')}">返回</a> -->
+	<script src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+	<script>
+		function btn(address_id){
+			$.ajax({
+                type : "GET",
+                url:"/index.php?m=Home&c=User&a=do_address&address_id="+address_id,
+                success: function(data){               	
+                    console.log("1");
+                }
+            });
+        }
+        function btn1(address_id){
+        	var url="/index.php?m=Home&c=User&a=less_address&address_id="+address_id;
+			$.ajax({
+                type : "GET",
+                url:"/index.php?m=Home&c=User&a=less_address&address_id="+address_id,
+                success: function(data){               	
+                    console.log(url);
+                }
+            });
+        }
+	</script>
+		<script>
+			$(function() {
+				$(".del").click(function() {
+					$(this).parent().parent().remove();
+				})
+			})
+		</script>
+	</body>
+
+</html>

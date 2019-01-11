@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>意见反馈</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>
+		<meta content="telephone=no,email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+
+	</head>
+
+	<body id="feedBack">
+	<form action="{:u('member/dofeedback')}" method="" id="form1">
+		<aside class="top">
+
+			<ul>
+				<li>
+					<input type="radio" name="yj" id="" value="产品意见" checked="checked" />
+					<span>产品意见</span>
+				</li>
+				<li>
+					<input type="radio" name="yj" id="" value="服务意见" />
+					<span>服务意见</span>
+				</li>
+				<li>
+					<input type="radio" name="yj" id="" value="其他意见" />
+					<span>其他意见</span>
+				</li>
+
+			</ul>
+			<div class="wordCount" id="wordCount">
+				<textarea id="news_title" onkeyup="title_len();" onclick="title_len();" maxlength="200" placeholder="请填写意见，您的意见对我们非常重要..." name="content"></textarea>
+				<span class="wordwrap"><var class="word" id="titlelen"><var>0</var>/200</var></span>
+			</div>
+		</aside>
+		
+		<a class="btn" onClick="login();">提交意见</a>
+		</form>
+		<script type="text/javascript" src="__STATIC__/js/jquery-1.11.1.min.js">
+		</script>
+		<script type="text/javascript" src="__STATIC__/js/common.js">
+		</script>
+		  <script>
+        	function login(){
+				$("#form1").submit();
+			}
+        </script>
+	</body>
+
+</html>

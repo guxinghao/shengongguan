@@ -1,0 +1,181 @@
+<form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
+<div class="table-responsive">
+    <table class="table table-bordered table-hover" style="font-size:12px;">
+        <thead>
+        <tr>
+            <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></td>
+              <td class="text-center">
+                <a href="javascript:sort('nickname');">用户</a>
+            </td>
+            <td class="text-center">
+                <a href="javascript:sort('consignee');">收货人</a>
+            </td>
+            <td class="text-center">
+                <a href="javascript:sort('goods_price');">商品积分</a>
+            </td>
+            <td class="text-center">编号</td>      
+            <!-- <td class="text-center">收货地址</td> -->
+            <td class="text-center">收货电话</td>
+            <td class="text-center">配送方式</td>
+            <td class="text-center">门店</td>
+            <td class="text-center">发送状态</td>
+            <td class="text-center">
+                下单时间
+                <!-- <a href="javascript:sort('add_time');">下单时间</a> -->
+            </td>
+            <td class="text-center" style="width: 200px;">操作</td>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="order" id="vo">
+            <tr>
+                <td class="text-center">
+                	<input type="checkbox" name="selected[]" value="6">
+                	<input type="hidden" name="shipping_code[]" value="flat.flat">
+                </td>
+                <td class="text-center">{$vo.nickname}</td>
+                <td class="text-center">{$vo.consignee}</td>
+                <td class="text-center">{$vo.pay_points}</td>
+                <td title="{$vo.order_sn}" class="text-center">{$vo.order_sn|substr=0,5}...</td>
+                <!-- <td class="text-center">{$vo.address}</td> -->
+                <td class="text-center">{$vo.mobile}</td>
+                <td class="text-center"><eq name="vo.type" value="1">自提</eq><eq name="vo.type" value="2">送货</eq></td>
+                <td class="text-center">{$vo.store_name}</td>
+                <!-- <td class="text-center"><eq name="vo.status" value="1">未发货</eq><eq name="vo.status" value="2">已发货</eq><eq name="vo.status" value="3">已收货</eq></td> -->
+                <td class="text-center"><if condition="($vo.status eq 1) and ($vo.type eq 2)">未发货
+                <elseif condition="($vo.status eq 2) and ($vo.type eq 2)"/>已发货
+                <elseif condition="($vo.status eq 3) and ($vo.type eq 2)"/>已收货
+                <elseif condition="($vo.is_tiling eq 0) and ($vo.type eq 1)"/>未提领
+                <elseif condition="($vo.is_tiling eq 1) and ($vo.type eq 1)"/>已提领
+                </if></span></td> 
+                <td class="text-center">{$vo.create_time|date="y-m-d H:i:s",###}</td>
+               
+                <td class="text-center">
+                <a href="{:U('Admin/order/sendPoint_detail',array('order_id'=>$vo['id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看详情"><i class="fa fa-eye"></i></a>
+                <if condition="($vo['status'] eq 1) and ($vo['type'] eq 2)">
+                    <a title="发货" data-url="{:U('Admin/Order/songhuo',array('id'=>$vo['id']))}" onclick="forbid_store(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-warning" data-original-title="发货"><i class="fa fa-minus-square"></i></a>
+                <elseif condition="($vo['type'] eq 1)"/>
+                    <a title="自提" href="javascript:;" 
+                    onclick="alert('该订单为自提，不可操作！')"
+                    data-toggle="tooltip" title="" class="btn btn-default" data-original-title="自提"><i class="fa fa-minus-square"></i></a>
+                <else/>
+                    <a title="已发货" href="javascript:;" 
+                    onclick="alert('该订单已发货')"
+                    data-toggle="tooltip" title="" class="btn btn-default" data-original-title="发货"><i class="fa fa-minus-square"></i></a>
+                </if>
+                
+                <if condition="($vo['status'] eq 3) and ($vo['type'] eq 2)">
+                      <a title="已收货" href="javascript:;" 
+                    onclick="alert('该订单已收货')"
+                    data-toggle="tooltip" title="" class="btn btn-default" data-original-title="已收货"><i class="fa fa-send"></i></a>
+                <elseif condition="($vo['type'] eq 1)"/> 
+                 <a title="提领" href="javascript:;" 
+                    onclick="alert('该订单为自提，不可操作！')"
+                    data-toggle="tooltip" title="" class="btn btn-default" data-original-title="提领"><i class="fa fa-send"></i></a>  
+                <else/>
+                    <a title="收货" data-url="{:U('Admin/Order/wangcheng',array('id'=>$vo['id']))}" onclick="forbid(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-warning" data-original-title="收货"><i class="fa fa-send"></i></a>
+                </if>
+                <a id="button-delete6" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除" data-url="{:U('Admin/Order/del_sendPoint',array('id'=>$vo['id']))}"  onclick="delsendpoint(this)"><i class="fa fa-trash-o"></i></a>
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+</div>
+</form>
+<div class="row">                        
+<div class="col-sm-12 text-center">{$page}</div>
+</div>
+<script>
+    $(".pagination  a").click(function(){
+        var pageCount = $('#selectPage').val();
+        var page = $(this).data('p');
+        ajax_get_table('search-form2',page,pageCount);
+    });
+    //选择展示条数时触发
+    $("#selectPage").change(function(){
+        var pageCount = $('#selectPage').val();
+        $('#pageCount').val(pageCount);
+        
+        var page = $("li.active>a").data('p');
+        ajax_get_table('search-form2',page,pageCount);
+    });
+</script>
+
+<script>
+function delsendpoint(obj) { 
+var id=id;
+ var msg = "您真的确定要删除吗？\n\n请确认！"; 
+ if(confirm(msg)){        
+        $.ajax({
+            type : 'post',
+            url : $(obj).attr('data-url'),
+            dataType : 'json',
+            success : function(data){
+                if (data.status==0) {
+                   alert(data.info); 
+                }else{
+                    if(data.code==1){
+                        var page = $("li.active>a").data('p');
+                        ajax_get_table('search-form2',page,pageCount);
+                    }else{
+                        alert("删除失败");
+                    }
+                }
+                
+            }
+        })
+    }
+    return false;
+}
+</script>
+<script>
+//发货
+function forbid_store(obj){
+    if(confirm('发货')){        
+        $.ajax({
+            type : 'post',
+            url : $(obj).attr('data-url'),
+            dataType : 'json',
+            success : function(data){
+                if(data.code==1){
+                    var page = $("li.active>a").data('p');
+                    ajax_get_table('search-form2',page,pageCount);
+                    // location.reload(true);
+                }else{
+                    alert("发货失败");
+                }
+                
+            }
+        })
+    }
+    return false;
+}
+function forbid(obj){
+    if(confirm('完成')){        
+        $.ajax({
+            type : 'post',
+            url : $(obj).attr('data-url'),
+            dataType : 'json',
+            success : function(data){
+                if(data.code==1){
+                    location.reload(true);
+                }else{
+                    alert("发货失败");
+                }
+                
+            }
+        })
+    }
+    return false;
+}
+//给统计赋值
+$('#total_count').html('{$total_count?$total_count:0}');
+$('#ytl_count').html('{$ytl_count?$ytl_count:0}');
+$('#wtl_count').html('{$wtl_count?$wtl_count:0}');
+$('#app_count').html('{$app_count?$app_count:0}');
+$('#wx_count').html('{$wx_count?$wx_count:0}');
+$('#ysend_count').html('{$ysend_count?$ysend_count:0}');
+$('#wsend_count').html('{$wsend_count?$wsend_count:0}');
+$('#yget_count').html('{$yget_count?$yget_count:0}');
+</script>

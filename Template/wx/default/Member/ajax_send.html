@@ -1,0 +1,35 @@
+
+	<volist name='info' id='vo'>
+		<dl class="so_info mar_b my_info ovw">
+	
+			<dd class="pad mar_t">
+				<span>订单编号 : </span>
+				<i>{$vo.sn}</i>
+				<i class="finish">已完成</i>
+			</dd>
+			<dd class="pad">
+				<span>品名 : </span>
+				<i>{$vo.product_name}</i>
+			</dd>
+			<dd class="pad">
+				<span>根数 : </span>
+				<i>{$vo.count}根</i>
+			</dd>
+			<dd class="pad">
+				<span>发制日期 : </span>
+				<i>{$vo.send_time}</i>
+			</dd>
+			<dd class="pad">
+				<span>领取日期 : </span>
+				<i>{$vo.receive_time}</i>
+			</dd>
+			<dd class="pad">
+				<span>发制要求 : </span>
+				<i>{$vo.requirement}</i>
+			</dd>
+			<dt class="schedule ovw">
+				<a class="tre_soak" href="__APP__/Home/Member/soak_schedule/id/{$vo.id}">查看泡发进度</a>
+			</dt>
+		</dl>
+	</volist>
+	

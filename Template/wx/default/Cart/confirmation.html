@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>确定订单</title>
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+		<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css" /> 
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+	</head>
+
+	<body id="confirmation">
+		<header>
+		<form action="{:U('User/sub_order')}" id="form1" method="post">
+		 <eq name="info.address_id" value=""> <a href="{:U('User/new_addi',array('source'=>'cart2'))}">
+		   <else/><a href="{:U('User/site_list1')}"></eq>
+			<p>
+				<span>收货人：{$info.consignee}</span>
+				<input type="hidden" name="consignee" value="{$info.consignee}">
+				<input type="hidden" name="mobile" value="{$info.mobile}">
+				<input type="hidden" value="{$info.address_id}" name="address_id" />  
+				<b>{$info.mobile}</b>
+			</p>
+			<dl>
+				<dt><img src="__STATIC__/img/dw.png"/></dt>
+				<dd><p>{$info.address}</p></dd>
+				<input type="hidden" name="address" value="{$info.address}">
+			</dl>
+			</a>
+			<dl>
+				<dt><img src="__STATIC__/img/sj.png"/></dt>
+				<dd class="pad"> 
+				<span>选择送货时间</span>
+				<select name="send_goods_time" id="sel">
+					<option value="只工作日送货">只工作日送货</option>
+					<option value="只双休日、假日送货">只双休日、假日送货</option>
+					<option value="时间不限" selected="selected">时间不限</option>
+				</select>
+		</dd>
+			</dl>
+			<img src="__STATIC__/img/shfg.png" class="fg" />
+		</header>
+
+		<aside class="order">
+			<dl>
+				<dt><img src="__STATIC__/img/line3.png"></dt>
+				<dd>订单商品</dd>
+			</dl>
+
+		</aside>
+		<aside class="top">
+		 <foreach name="cartList" item="v"  key="k">
+            <if condition="$v[selected] eq '1'">         	  
+			<dl>
+				<dt><img src="{$v.goods_id|goods_thum_images=200,200}"/></dt>
+				<dd class="title"><p>{$v.goods_name}</p></dd>
+				<input type="hidden" name="cart_id[]" value="{$v.id}">
+				<dd class="money"><span>{$v.goods_points}</span><b>Χ{$v.goods_num}</b></dd>
+			
+			<!-- 	<div>{$vo.goods_id}</div> -->
+				
+			</dl>
+		 </if>
+            </foreach>
+			<!-- </foreach>
+			<p class="yh"><a href="{:U('User/discount_coupon_1')}"><img src="__STATIC__/img/coup.png"><span>1个优惠券可用</span></a></p>
+			<div class="jf">
+				<img src="__STATIC__/img/jf2.png">
+				<div id="switch1" class="open1">
+					<div id="switch2" class="open2"></div>
+				</div> -->
+				<!-- <span>可用积分1000可抵¥10</span> -->
+
+			</div>
+		</aside>
+		<aside class="bottom">
+			<p>订单备注<input type="text" placeholder="选填：对本次交易的其他说明" name="user_note"></p>
+
+			<ul>
+<!-- 				<li>商品金额<span>¥888.00</span></li>
+				<li>积分抵扣<span>¥10.00</span></li>
+				<li>优惠券抵扣<span>¥0.00</span></li>
+				<li>运费金额<span>¥0.00</span></li> -->
+				<!-- <li>应付积分<span class="red">{$total_price}</span></li> -->
+			</ul>
+		</aside>
+		<footer>
+			<p>应付积分：<span>{$total_price.total_fee}</span></p>
+			<input type="hidden" name="total_fee" value="{$total_price.total_fee}">
+			<a  class="aaa">立即支付</a>
+		</footer>
+		</form>
+		<script type="text/javascript" src="__STATIC__/js/jquery-1.11.1.min.js">
+			
+		</script>
+		<script>
+				$('.aaa').click(function(){
+					$('#form1').submit();
+				})
+		</script>
+
+	</body>
+
+</html>

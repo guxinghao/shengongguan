@@ -1,0 +1,18 @@
+				<volist name='info' id='vo'>
+				<a href="__APP__/Home/User/product_Details/id/{$vo.goods_id}">
+					<li>
+						<div class="top">
+							<img src="{$vo.original_img}" />
+							<span class="shopcar"><img src="__STATIC__/img/shopcar.png"></span>
+						</div>
+
+						<div class="text">
+							<h3>{$vo.goods_name}</h3>
+							<p class="intro">{$vo.goods_content|htmlspecialchars_decode}</p>
+							<p class="price"><span>￥</span>{$vo.shop_price}</p>
+						</div>
+
+					</li>
+				</a>
+					</volist>
+			

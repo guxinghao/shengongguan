@@ -1,0 +1,16 @@
+<volist name='r' id='vo'>
+	<a href="__APP__/Home/index/show_b/id/{$vo.article_id}">
+		<dd class="ovw bor_b taboo_cont">
+			<div class='lf'>
+				<img src="{$vo.thumb}" alt="">
+			</div>
+			<div class="rt">
+				<h3>{$vo.title}</h3>
+				<p>{$vo.content|htmlspecialchars_decode}</p>
+			</div>
+		</dd>
+		</a>
+	</volist>			
+
+
+	

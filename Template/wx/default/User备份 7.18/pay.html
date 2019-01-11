@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>支付</title>
+		<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>
+		<meta content="telephone=no,email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+	</head>
+
+	<body id="cgg_pay">
+		<ul>
+			<li>{$info.title}</li>
+			<li>人数 1</li>
+			<li>预约日期 {$info.create_time|date='Y-m-d',###}</li>
+			<li>
+				<span>总计：</span>
+				<b>¥{$info.price1} </b>
+				<i>市场价值：</i>
+				<a>{$info.price}</a>
+			</li>
+		</ul>
+		<aside class="order">
+			<dl>
+				<dt><img src="__STATIC__/img/line3.png"></dt>
+				<dd>选择支付方式</dd>
+			</dl>
+		</aside>
+		<aside class="way">
+			<dl>
+				<dt><img src="__STATIC__/img/wechat.png"></dt>
+				<dd><input type="checkbox" name="" id="" value="" checked="checked"/></dd>
+			</dl>
+		</aside>
+		<a class="btn" href="{:U('User/imm_order')}">立即支付</a>
+	</body>
+
+</html>

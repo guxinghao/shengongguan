@@ -1,0 +1,15 @@
+<div id=itable style="margin-top: 20px;">
+	<form action="{:U('reportForms/titleImport_cangku')}" method="post" enctype="multipart/form-data">
+		<table cellspacing=1 style="width:765px;">
+			<tr class=tr4>
+				<td class=td1 width="15%">选择文件</td>
+				<td width="85%">
+					<input type="file" id="import" name="import"/>
+				</td>
+			</tr>
+		</table>
+		<p style="margin-left:117px;margin-top:17px;"><button type="submit" class="btn btn-primary btn-sm blue save">提交</button>
+		</p>
+	</form>
+<h3 style="margin-left:95px;;float:left;font-size:22px;color:red"><?php echo $str;?></h3>
+</div>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#ededed">
+<head>
+	<meta charset="UTF-8">
+	<!-- 同比缩放标签 ,最大缩放比,最小缩放比,禁止用户缩放-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>下次预约</title>
+	<link rel="stylesheet" href="__STATIC__/css/reset.css">
+	<link rel="stylesheet" href="__STATIC__/css/public.css">
+	<script src="__STATIC__/js/rem.js"></script>
+</head>
+<body>
+<form action="{:U('User/apply_a')}" id="form1" method="post">
+	<ul class="apply ovw">
+		<li class="pad">
+			<span>手机号</span>
+			<input type="text" placeholder="请输入手机号" name="mobile" class="mobile">
+		</li>
+		<li class="pad">
+			<span>姓名</span>
+			<input type="text" placeholder="请输入姓名" name="name" class="name">
+		</li>
+	</ul>
+	<a class="apply_sub" onClick="login();" style="cursor:pointer;">报名提交</a>
+</form>
+</body>
+</html>
+<script type="text/javascript" src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+	<script>
+
+			function login(){
+				var a = $('.mobile').val();
+				var b = $('.name').val();
+				console.log(a,b);
+				if(a&&b){
+					$("#form1").submit();					
+				}else{
+					alert('不能为空');
+				}
+				
+			}
+			
+
+	</script>

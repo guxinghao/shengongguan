@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>投诉</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>
+		<meta content="telephone=no,email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+	</head>
+
+	<body id="complaint">
+	<form action="{:U('User/do_complaint')}" method="post" id="form1">
+		<dl>
+			<dt><img src="__STATIC__/img/ts.png"/></dt>
+			<dd>您正在投诉服务顾问{$info.name}</dd>
+		</dl>
+		<div class="wordCount" id="wordCount">
+			<textarea id="news_title" onkeyup="title_len();" onclick="title_len();" maxlength="200" name="content"></textarea>
+			<span class="wordwrap"><var class="word" id="titlelen"><var>0</var>/200</var></span>
+		</div>
+		<input type="hidden" value="{$info.admin_id}" name="id">
+		<a class="btn" onclick="login();">我要投诉</a>
+	</form>
+		<script type="text/javascript" src="__STATIC__/js/jquery-1.11.1.min.js">
+		</script>
+		<script type="text/javascript" src="__STATIC__/js/common.js">
+		</script>
+		<script>
+			function login(){
+				$('#form1').submit();
+			}
+		</script>
+	</body>
+
+</html>

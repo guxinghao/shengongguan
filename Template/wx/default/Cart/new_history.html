@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#fff">
+<head>
+	<meta charset="UTF-8">
+	<!-- 同比缩放标签 ,最大缩放比,最小缩放比,禁止用户缩放-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>积分兑换-兑换历史</title>
+	<link rel="stylesheet" href="__STATIC__/css/reset.css">
+	<link rel="stylesheet" href="__STATIC__/css/new_integral.css">
+	<script src="__STATIC__/js/rem.js"></script>
+</head>
+<body>
+	<ul class="history_container ovw">
+	<volist name="info" id="vo">
+		<li class="ovw">
+			<p class="fr num">-{$vo.pay_points}</p>
+			<div class="comm_name">
+				<p class="name">{$vo.goods_name} x 1<span style="font-size: 0.5rem;color:#666"> ( <if condition="($vo.status eq 1) and ($vo.type eq 2)">未发货
+					<elseif condition="($vo.status eq 2) and ($vo.type eq 2)"/>已发货
+					<elseif condition="($vo.status eq 3) and ($vo.type eq 2)"/>已收货
+					<elseif condition="($vo.is_tiling eq 0) and ($vo.type eq 1)"/>未提领
+					<elseif condition="($vo.is_tiling eq 1) and ($vo.type eq 1)"/>已提领
+					</if> )</span></p>
+				<p class="time">{$vo.create_time|date='Y-m-d H:i:s',###}</p>
+			</div>
+		</li>
+		</volist>
+		
+	</ul>
+
+</body>
+</html>

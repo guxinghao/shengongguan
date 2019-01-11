@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>商品详情</title>
+		<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>
+		<meta content="telephone=no,email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/swiper.min.css" />
+	</head>
+
+	<body id="p_detail">
+		<header>
+			<!--轮播-->
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide"><img src="{$info.original_img}" /></div>
+
+				</div>
+				<div class="swiper-pagination"></div>
+			</div>
+			<div class="intro">
+				<h3 class="font_32 col_3">{$info.goods_content|htmlspecialchars_decode}</h3>
+				<p class="font_32 col_r price">￥{$info.shop_price}</p>
+				<i>价格 ￥<a>{$info.shop_price}<a></i>
+				<div>
+					<p>已售：<span>{$info.sales_sum}</span>件</p>
+					<p>库存：<span>{$info.store_count}</span></p>
+				</div>
+			</div>
+		</header>
+		<div id="detail_con">
+			<p class="etalon font_28 col_3">商品规格</p>
+			<aside class="num font_28 col_3">
+				数量
+				<ul>
+					<li id="quantity-increase" class="btn">–</li>
+
+					<li><input type="text" name="" id="" value="5" /></li>
+					<li id="quantity-decrease" class="btn">+</li>
+
+				</ul>
+				
+			</aside>
+			<aside class="order">
+				<dl>
+					<dt><img src="__STATIC__/img/line3.png"></dt>
+					<dd class="font_32 col_3">商品详情</dd>
+				</dl>
+			</aside>
+			<aside class="xq_con">
+				<p>
+					<img src="__STATIC__/img/xq2.png" />
+				</p>
+			</aside>
+		</div>
+		<footer>
+			<div class="left">
+				<dl>
+					<dt><img src="__STATIC__/img/xq4.png"/></dt>
+					<dd>收藏</dd>
+				</dl>
+				<dl>
+					<dt><img src="__STATIC__/img/xq3.png"/></dt>
+					<dd>加入购物车</dd>
+				</dl>
+			</div>
+			<p class="purchase">立即购买</p>
+		</footer>
+		<script type="text/javascript" src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="__STATIC__/js/swiper.min.js"></script>
+		<script type="text/javascript" src="__STATIC__/js/fastclick.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				var mySwiper = new Swiper('.swiper-container', {
+					autoplay: 1000, //可选选项，自动滑动
+					pagination: '.swiper-pagination',
+					loop: 'true',
+				});
+				$('#quantity-increase').on('click', function() {
+					var oSub = $('input').val();
+
+					if(oSub == 1) {
+						return;
+					} else {
+						oSub--;
+						$('input').val(oSub);
+					}
+				});
+				$('#quantity-decrease').on('click', function() {
+					var oSub = $('input').val();
+					oSub++;
+					$('input').val(oSub);
+				});
+
+			})
+		</script>
+	</body>
+
+</html>

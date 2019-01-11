@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>修改密码</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>
+		<meta content="telephone=no,email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css" /> 
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+
+
+	</head>
+
+	<body id="cgg_resPwd" class="comform">
+		<form action="{:U('Member/sign_Up1')}" method="post" id="form1">
+			<div class="pwd cominpput">
+				<span>
+					<img src="__STATIC__/img/lock.png"/>
+				</span>
+				
+				<input type="password" class="mima_dd" name="password" id="" value="" placeholder="请输入6位数密码" maxlength="6"/>
+				<!-- <input type="text" class="mima_wz" name="password" id="" value="" placeholder="请输入6位数密码" maxlength="6" style="display:none;"/> -->
+				<i class="eyes_box" data-show="1"><img src="__STATIC__/img/open.png"/></i>
+			</div>
+
+			<div class="conpwd cominpput">
+				<span>
+					<img src="__STATIC__/img/lock.png"/>
+				</span>
+				<input type="hidden" value="{$mobile}" name="mobile">
+				
+				<input type="password" name="password_a" id="" class="mima_wz" value="" placeholder="请再输入确定密码" maxlength="6" />
+				<i class="eyes_box" data-show="2"><img src="__STATIC__/img/close.png"/></i>
+			</div>
+			<a class="btn" onClick = "login()";>确定</a>
+			<input type="hidden" name="mobile" value="{$mobile}">
+			
+		</form>
+		<script type="text/javascript" src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="__STATIC__/js/common.js"></script>
+		<script>
+  			function login(){
+				$("#form1").submit();
+			}
+
+		</script>
+			
+		
+	</body>
+
+</html>

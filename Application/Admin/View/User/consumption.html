@@ -1,0 +1,104 @@
+<include file="Public/min-header"/>
+<div class="wrapper">
+  <include file="Public/breadcrumb"/>
+	<section class="content">
+       <div class="row">
+       		<div class="col-xs-12">
+	       		<div class="box">
+	           	<div class="box-header">
+	               <nav class="navbar navbar-default">	     
+				        <div class="collapse navbar-collapse">
+				            <div class="navbar-form row">
+					            <a href="{:U('User/addconsumption')}" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>新增会员消费管理</a>
+				            </div>
+				      	</div>
+	    			</nav>              
+	             </div>	    
+	             <!-- /.box-header -->
+	             <div class="box-body">	             
+	           		<div class="row">
+	            	<div class="col-sm-12">
+		              <table id="list-table" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+		                 <thead>
+		                   <tr role="row">
+			                   <th class="sorting" tabindex="0">编号</th>
+			                   <th class="sorting" tabindex="0">活动名称</th>
+			                   <th class="sorting" tabindex="0">活动规则</th>
+			                   <th class="sorting" tabindex="0">活动类型</th>
+			                   <th class="sorting" tabindex="0">适用会员</th>
+			                   <th class="sorting" tabindex="0">是否启用</th>
+			                   <th class="sorting" tabindex="0">操作</th>
+
+		                   </tr>
+		                 </thead>
+						<tbody>
+						  <foreach name="list" item="vo" key="k" >
+						  	<tr role="row">
+		                     <td>{$vo.id}</td>
+		                     <td>{$vo.title}</td>
+		                     <td>单笔订单金额大于{$vo.amount}元</td>
+		                     <td><eq name="vo.is_cate" value="1">超出订单金额部分额外赠送{$vo.ps}%积分<else/>赠送{$vo.co_name}优惠券</eq></td>
+		                     
+                              <td>{$vo.memberlevel}</td>
+		                     <td>   <img width="20" height="20" src="__PUBLIC__/images/<if condition='$vo[status] eq 1'>yes.png<else />cancel.png</if>" onclick="changeTableVal('consumption','id','{$vo.id}','status',this)"/>         
+		                     <td>
+		                      <a class="btn btn-primary" href="{:U('User/addconsumption',array('act'=>'edit','id'=>$vo['id']))}"><i class="fa fa-pencil"></i></a>
+		                      
+							</td>
+		                   </tr>
+		                  </foreach>
+		                   </tbody>
+		                 <tfoot>
+		                 
+		                 </tfoot>
+		               </table>
+	               </div>
+	          </div>
+              <div class="row">
+                    <div class="col-sm-12 text-center">{$page}</div>		
+              </div>
+	          </div><!-- /.box-body -->
+	        </div><!-- /.box -->
+       	</div>
+       </div>
+   </section>
+</div>
+<script>
+function delfun(obj){
+	if(confirm('确认删除')){		
+		$.ajax({
+			type : 'post',
+			url : $(obj).attr('data-url'),
+			data : {act:'del',level_id:$(obj).attr('data-id')},
+			dataType : 'json',
+			success : function(data){
+				if(data){
+					$(obj).parent().parent().remove();
+				}else{
+					layer.alert('删除失败', {icon: 2});  //alert('删除失败');
+				}
+			}
+		})
+	}
+	return false;
+}
+
+//选择展示条数时触发
+    $("#selectPage").change(function(){
+        var pageCount = $('#selectPage').val();
+        $('.pagination  a').each(function(index, el) {
+            var result = getStrParam('pageCount',$(this).attr('href'));
+            // 如果已经拼接 则替换
+            if (result) {
+                var _href = reStrParam($(this).attr('href'),pageCount);
+            }else{
+                var _href = $(this).attr('href')+'/pageCount/'+pageCount;
+            }
+            $(this).attr('href',_href);
+            
+        });
+        window.location.href="{:U('user/consumption')}/p/1/pageCount/"+pageCount;
+    });
+</script>  
+</body>
+</html>

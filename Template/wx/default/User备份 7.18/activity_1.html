@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#ededed">
+<head>
+	<meta charset="UTF-8">
+	<!-- 同比缩放标签 ,最大缩放比,最小缩放比,禁止用户缩放-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>活动列表</title>
+	<link rel="stylesheet" href="__STATIC__/css/reset.css">
+	<link rel="stylesheet" href="__STATIC__/css/public.css">
+	<script type="text/javascript" src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+	<script src="__STATIC__/js/rem.js"></script>
+</head>
+<body>
+<div id="activity_content">
+<div id= 'ajax_return'>
+
+	<volist name = 'info' id = 'vo'>
+	<div class="activity_content ovw mar_b">
+		<div class="pic">
+			<!-- <img src="__STATIC__/images/pic_5.png" alt=""> -->
+			<img src="{$vo.img}" alt="">
+			<a href="__APP__/Home/User/activity/activity_id/{$vo.activity_id}" class="pic_a">马上预约</a>
+			<a class="bg_col pic_b" href="{:U('User/apply')}">预约已满</a>
+			
+
+		</div>
+		<dl>
+			<dt>{$vo.title}</dt>
+			<dd class="times">
+				<span class="time">活动时间 :</span>
+				<span>{$vo.start_day|date='Y-m-d',###}</span>
+			</dd>
+			<dd class="times">
+				<span class="time">活动门店 :</span>
+				<span>{$vo.store_name}</span>
+			</dd>
+			<dd class="times">
+				<span class="time">预约人数 :</span>
+				<span class="line ovw rel">
+					<span class="num"></span>
+				</span>
+					<span class="nums">
+						<span id="num_a">{$vo.enter_count}</span>/<span id="num_b">{$vo.counts}</span>
+					</span>
+			</dd>
+		</dl>
+	</div>
+	</volist>
+</div>
+
+<!-- 	<div class="activity_content ovw">
+		<div class="pic">
+			<img src="__STATIC__/images/pic_6.png" alt="">
+			<a class="bg_col" href="{:U('User/apply')}">预约已满</a>
+		</div>
+		<dl>
+			<dt>大鹏教您吃海参的100种方法大鹏教您吃海参的100种方法</dt>
+			<dd class="times">
+				<span class="time">活动时间 :</span>
+				<span>2017.03.04 ~ 2017.06.04</span>
+			</dd>
+			<dd class="times">
+				<span class="time">活动门店 :</span>
+				<span>鲁班路总店</span>
+			</dd>
+			<dd class="times">
+				<span class="time">预约人数 :</span>
+				<span class="line ovw">
+					<span class="num"></span>
+				</span>
+				<span class="nums">03/30</span>
+			</dd>
+		</dl>
+
+	</div> -->
+
+</div>
+		<input type="hidden" id = "page" value = '1'>
+	
+	<a href="{:U('User/apply')}" class="activity_entrance bor_t">没约上？来报名！下次优先吃
+		<img src="__STATIC__/images/entrance.png" alt="">
+	</a>
+</body>
+</html>
+<script>
+$(function(){
+	$('.pic_b').css('display','none');
+	 var a = $('#num_a').html();
+	 var b = $('#num_b').html();
+	 var c = 10/3;
+	 var d = a*c+"%";
+	 console.log(d);
+	  $('.num').css({width:d})
+	 if(a == b){
+	 	$('.pic_a').css('display','none');
+	 	$('.pic_b').css('display','block');
+	 }
+	 $(window).scroll(function () {
+      	var a = $(window).height()+$(window).scrollTop();
+      	var b = $(document).height();
+      	if(a==b){
+      		var page = $('#page').val();     		
+      		 $.ajax({
+                type : "POST",
+                url:"/index.php?m=Home&c=User&a=ajax_activity_1&p="+page,
+                success: function(data){               	
+                    if(data==''){
+						$('#load').css('display','none');
+						$('.finish').css('display','block');
+								}else{
+									 		page =Number(page)+1;
+											$('#page').val(page);					
+                    						$("#ajax_return").append(data);
+										}
+                }
+            });
+        }
+ 	}); 
+})
+	
+</script>

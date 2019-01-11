@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>确定订单</title>
+		<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>
+		<meta content="telephone=no,email=no" name="format-detection">
+<!-- 		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css" /> -->
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+	</head>
+
+	<body id="confirmation">
+		<header>
+		<a href="{:U('User/site_list')}">
+			<p>
+				<span>收货人：季婷婷</span>
+				<b>1585858558</b>
+			</p>
+			<dl>
+				<dt><img src="__STATIC__/img/dw.png"/></dt>
+				<dd><p>湖北省武汉市江夏区光谷荷兰风情街左侧青年 城5单元402室</p></dd>
+			</dl>
+			</a>
+			<dl>
+				<dt><img src="__STATIC__/img/sj.png"/></dt>
+				<dd>选择送货时间</dd>
+			</dl>
+			<img src="__STATIC__/img/shfg.png" class="fg" />
+		</header>
+
+		<aside class="order">
+			<dl>
+				<dt><img src="__STATIC__/img/line3.png"></dt>
+				<dd>订单商品</dd>
+			</dl>
+
+		</aside>
+		<aside class="top">
+			<dl>
+				<dt><img src="__STATIC__/img/tu.png"/></dt>
+				<dd class="title"><p>大连晓芹淡干海参38-48头300g 装超高性...</p></dd>
+				<dd class="money"><span>¥ 888.00</span><b>Χ2</b></dd>
+			</dl>
+			<p class="yh"><a href="{:U('User/discount_coupon_1')}"><img src="__STATIC__/img/coup.png"><span>1个优惠券可用</span></a></p>
+			<div class="jf">
+				<img src="__STATIC__/img/jf2.png">
+				<div id="switch1" class="open1">
+					<div id="switch2" class="open2"></div>
+				</div>
+				<span>可用积分1000可抵¥10</span>
+
+			</div>
+		</aside>
+		<aside class="bottom">
+			<p>订单备注<input type="text" placeholder="选填：对本次交易的其他说明"></p>
+
+			<ul>
+				<li>商品金额<span>¥888.00</span></li>
+				<li>积分抵扣<span>¥10.00</span></li>
+				<li>优惠券抵扣<span>¥0.00</span></li>
+				<li>运费金额<span>¥0.00</span></li>
+				<li>应付总额<span class="red">¥1776.00</span></li>
+			</ul>
+		</aside>
+		<footer>
+			<p>实付总额：<span>¥ 1766.00</span></p>
+			<a href="{:U('User/sub_order')}">立即支付</a>
+		</footer>
+		<script type="text/javascript" src="__STATIC__/js/jquery-1.11.1.min.js">
+			
+		</script>
+		<script type="text/javascript">
+			window.onload = function() {
+				var div2 = document.getElementById("switch2");
+				var div1 = document.getElementById("switch1");
+				div2.onclick = function() {
+					div1.className = (div1.className == "close1") ? "open1" : "close1";
+					div2.className = (div2.className == "close2") ? "open2" : "close2";
+				}
+			}
+			
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>评价你的顾问</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<script src="__STATIC__/js/flexible.js"></script>
+		<meta content="telephone=no,email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+	</head>
+
+	<body id="cgg_com">
+	<form action="" method="post" id="form1">
+		<header>
+			<p class="search">
+				<input type="text" name="search" id="ser" value="{$search}" />
+			</p>
+			<ul>
+				<li>
+					<select onchange="btn1();" name="shops">
+						<option value="0" <eq name="shop" value="0"> selected="selected" </eq>>全部</option>	
+						<volist name='data' id='vos' >
+						<option value="{$vos.store_id}" <eq name="shop" value="$vos.store_id"> selected="selected" </eq>>{$vos.store_name}</option>
+						</volist>
+					</select>
+				</li>
+				<li>				
+					<select onchange="btn1();" name="stars">
+						<option value="0" <eq name="star" value="0"> selected="selected" </eq>>全部</option>
+						<option value="1" <eq name="star" value="1"> selected="selected" </eq>>一星级</option>
+						<option value="2" <eq name="star" value="2"> selected="selected" </eq>>二星级</option>
+						<option value="3" <eq name="star" value="3"> selected="selected" </eq>>三星级</option>
+						<option value="4" <eq name="star" value="4"> selected="selected" </eq>>四星级</option>
+						<option value="5" <eq name="star" value="5"> selected="selected" </eq> >五星级</option>
+					</select>
+				</li>				
+			</ul>
+		</header>
+	</form>
+		<div id="com_content">
+		<volist name="info" id="vo">
+			<div class="comlist">
+				<div class="top">
+					<span><img src="__STATIC__/img/tx1.png"/></span>
+					<div class="center">
+						<h3>{$vo.name}</h3>
+						<i>所在门店：{$vo.store_name}</i>
+					</div>
+					<ul>
+						{$vo.stars}
+					</ul>
+				</div>
+				<div class="bottom">
+					<a href="__APP__/Home/User/complaint/admin_id/{$vo.admin_id}"><dl>
+						<dt><img src="__STATIC__/img/ts.png"/></dt>
+						<dd>投诉</dd>
+					</dl>
+					</a>
+					<dl>
+						<dt><img src="__STATIC__/img/ds.png"/></dt>
+						<dd>打赏</dd>
+					</dl>
+					<dl class="active_Dl">
+						<dt>
+							<img src="__STATIC__/img/bs.png" onclick="btn_a({$vo.admin_id},{$vo.caia});"/>
+							<img src="__STATIC__/img/bs1.png" class="inactive" onclick="btn_a({$vo.admin_id},{$vo.cai});"/>
+						</dt>
+						<dd>
+							踩
+						</dd>
+					</dl>
+					<dl class="zan">
+						<dt>
+							<img src="__STATIC__/img/dz.png" onclick="btn({$vo.admin_id},{$vo.zana});"/>
+							<img src="__STATIC__/img/dz1.png" class="inactive" onclick="btn({$vo.admin_id},{$vo.zana});"/>
+						</dt>
+						<dd class="">{$vo.zan}</dd>
+						<dd class="click">{$vo.zana}</dd>
+
+						</dt>
+					</dl>
+				</div>
+
+			</div>
+		</volist>
+
+		</div>
+		<script type="text/javascript" src="__STATIC__/js/jquery-1.11.1.min.js">
+		</script>
+		<script>
+			function btn1(){
+				$('#form1').submit();
+			}
+			$('#ser').blur(function(){
+				$('#form1').submit();
+			});
+			function btn(id,zan){
+				$.ajax({
+                type:'GET',
+                url:"/index.php?m=Home&c=User&a=do_b&id="+id+"&zan="+zan,
+                success:function(){
+                      console.log();		 
+                	}
+				});		
+			}
+			function btn_a(id,cai){
+			$.ajax({
+            type:'GET',
+            url:"/index.php?m=Home&c=User&a=do_c&id="+id+"&cai="+cai,
+            success:function(){
+                  console.log();		 
+            		}
+				});		
+			}
+		</script>
+		<script type="text/javascript">
+			$(function() {
+				//输入框背景切换
+				$('#cgg_com header p.search input').on('input propertychange', function() {
+					var val = $(this).val();
+					if(val.length > 0) {
+						$(this).css('background', 'none');
+					} else {
+						$(this).css('background', 'url(img/sear.png) no-repeat center #FFF')
+					}
+				});
+				//点击切换图标		
+				$("#com_content .comlist .bottom dl.zan").click(function() {
+					$(this).find('img').toggle();
+					$(this).find('dd').toggle();
+				});
+			$("#com_content .comlist .bottom dl.active_Dl").click(function() {
+					$(this).find("img").toggle();
+					$(this).find("dd").toggleClass("font_col");
+				});
+		});
+</script>
+	</body>
+
+</html>

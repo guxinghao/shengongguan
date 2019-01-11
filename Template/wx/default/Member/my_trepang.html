@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#ededed">
+<head>
+	<meta charset="UTF-8">
+	<!-- 同比缩放标签 ,最大缩放比,最小缩放比,禁止用户缩放-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>我的海参</title>
+	<link rel="stylesheet" href="__STATIC__/css/reset.css">
+	<link rel="stylesheet" href="__STATIC__/css/public.css">
+	<script src="__STATIC__/js/rem.js"></script>
+</head>
+<body>
+	<ul class="my_nav ovw">
+		<li class="replace">
+			<span style="">代发</span>
+			<i></i>
+			<div >
+				<img src="__STATIC__/images/icon.png" alt="">
+			</div>
+		</li>
+		<li class="consign">
+			<span class="font_col">寄存</span>
+			<div>
+				<img src="__STATIC__/images/icon.png" alt="">
+			</div>
+		</li>
+	</ul>
+
+	<!-- 代发 -->
+<div class="my_box mar_top">
+	<div id= 'ajax_return'>
+	<volist name='info' id='vo'>
+		<dl class="so_info mar_b my_info ovw">
+	
+			<dd class="pad mar_t">
+				<span>订单编号 : </span>
+				<i>{$vo.sn}</i>
+				<i class="finish">已完成</i>
+			</dd>
+			<dd class="pad">
+				<span>品名 : </span>
+				<i>{$vo.product_name}</i>
+			</dd>
+			<dd class="pad">
+				<span>根数 : </span>
+				<i>{$vo.count}根</i>
+			</dd>
+			<dd class="pad">
+				<span>发制日期 : </span>
+				<i>{$vo.send_time}</i>
+			</dd>
+			<dd class="pad">
+				<span>领取日期 : </span>
+				<i>{$vo.receive_time}</i>
+			</dd>
+			<dd class="pad">
+				<span>发制要求 : </span>
+				<i>{$vo.requirement}</i>
+			</dd>
+			<dt class="schedule ovw">
+				<a class="tre_soak" href="__APP__/Home/Member/soak_schedule/id/{$vo.id}">查看泡发进度</a>
+			</dt>
+		</dl>
+	</volist>
+	</div>
+	</div>
+	
+	<!-- 寄存 -->
+	<div class="my_box my_box1 mar_top">
+	<div id= 'ajax_return1'>
+	<volist name='r' id='vo'>
+		<dl class="so_info mar_b my_info ovw">
+	
+			<dd class="pad mar_t">
+				<span>寄存编号 : </span>
+				<i>{$vo.sn}</i>
+			</dd>
+			<dd class="pad">
+				<span>品名 : </span>
+				<i>{$vo.product_name}</i>
+			</dd>
+			<dd class="pad">
+				<span>根数 : </span>
+				<i>{$vo.count}根</i>
+			</dd>
+			<dd class="pad">
+				<span>寄存日期 : </span>
+				<i>{$vo.receive_time}</i>
+			</dd>
+			
+			<dt class="schedule ovw">
+				<a class="tre_soak" href="__APP__/Home/Index/soak">我要泡发</a>
+				<a class="tre_delivery" href="__APP__/Home/Member/deliver_goods/id/{$vo.id}">不泡发直接送货</a>
+			</dt>
+		</dl>
+	</volist>
+	</div>
+	</div>
+		<input type="hidden" id = "page" value = '1'>	
+		<input type="hidden" id = "page1" value = '1'>
+
+	<script src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+	<script>
+	$(function(){
+		$('.my_nav>li').each(function(index){
+			$(this).click(function(){
+				$(".my_nav li").find("div").hide();
+				$(".my_nav li").find("span").addClass("font_col");
+				$(this).find("div").show();
+				$(this).find("span").removeClass("font_col");
+				$('.my_box').eq(index).show().siblings(".my_box").hide();
+			})
+		})
+
+     $(window).scroll(function () {
+      	var a = $(window).height()+$(window).scrollTop();
+      	var b = $(document).height();
+      	if(a==b){
+      		var page = $('#page').val();
+      		var page = $('#page1').val();      		
+      		 $.ajax({
+                type : "POST",
+                url:"/index.php?m=Home&c=Member&a=ajax_send&p="+page,
+                success: function(data){               	
+                    if(data==''){
+						$('#load').css('display','none');
+						$('.finish').css('display','block');
+								}else{
+									 		page =Number(page)+1;
+											$('#page').val(page);					
+                    						$("#ajax_return").append(data);
+										}
+                }
+            });
+            $.ajax({
+                type : "POST",
+                url:"/index.php?m=Home&c=Member&a=ajax_deposit&p="+page1,
+                success: function(data1){               	
+                    if(data1==''){
+						$('#load').css('display','none');
+						$('.finish').css('display','block');
+								}else{
+									 		page =Number(page1)+1;
+											$('#page').val(page1);					
+                    						$("#ajax_return1").append(data1);
+										}
+                }
+            });
+        }
+        })
+ 	}); 
+     
+	</script>
+</body>
+</html>

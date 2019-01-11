@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#ededed">
+<head>
+	<meta charset="UTF-8">
+	<!-- 同比缩放标签 ,最大缩放比,最小缩放比,禁止用户缩放-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>积分兑换-新增</title>
+	<link rel="stylesheet" href="__STATIC__/css/reset.css">
+	<link rel="stylesheet" href="__STATIC__/css/new_integral.css">
+	<script src="__STATIC__/js/rem.js"></script>
+</head>
+<body>
+	<div style="width: 100%;height: auto;">
+		<div class="new_integral pad">
+			<p style="width: 100%;height: 2rem;"><a href="{:U('Cart/new_history')}"><span style="color:#fff;display: inline-block;float: right;font-size: 0.7rem;margin-right: 0.8rem; margin-top: 0.5rem">我的兑换</span></a></p>
+			<div class="fl integral_num">
+				<i class="fr line"></i>
+				<p style="font-size: 1rem">{$user.pay_points}</p>
+				<span>当前积分</span>
+			</div>
+			<div class="fl integral_num">
+				<p style="font-size: 1rem">{$points}</p>
+				<span>可用积分</span>
+			</div>
+		</div>
+		
+		<!-- 商品兑换列表 -->
+		<dl class="commodity_list ovw">
+			<dt class="title">
+				<div class="fl lf">
+					<img src="__STATIC__/images/line.png" alt="">
+					<span>商品列表</span>
+				</div>
+				<div class="fr rt">
+					<input class="cb" type="checkbox" >
+					<span>仅显示可兑换</span>
+				</div>
+			</dt>
+		<div id="ajax_return">
+		<volist name="info" id="vo">
+		 <if condition="$vo.goods_points lt $points">  	<dd class="commodity ovw " ><else/><dd class="commodity ovw a" ></if> 
+				<div class="fl commodity_img">
+					<img src="{$vo.original_img}" alt="">
+				</div>
+				<div class="fl commodity_info">
+					<p class="name">{$vo.goods_name}</p>
+					<p class="describe"> {$vo.goods_remark}</p>
+					<div class="exchange" style="min-height:1.5rem; ">
+						<span>{$vo.goods_points} 积分 <i style="text-decoration: 
+						line-through;font-size: 0.5rem">({$vo.app_points})</i></span>
+						<if condition="$vo.goods_points lt $points">   <a href="__APP__/Home/Cart/new_integral_conversion/goods_id/{$vo.goods_id}">兑换</a><else/><a class="bg_col">兑换</a></if>
+					</div>
+				</div>
+			</dd>
+		</volist>
+		</div>
+		</dl>
+	</div>
+	<script src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+	<script>
+	$(function(){
+				var i=1;
+		$(".rt").click(function(){
+
+			if(i==1){
+				$(this).find(".cb").prop("checked",true);
+				i=2;
+				$('.a').css("display","none");
+			}else{
+				$(this).find(".cb").prop("checked",false);
+				i=1;
+				$('.a').css("display","block");
+			}			
+		})
+	})
+
+		
+		
+	</script>
+</body>
+</html>

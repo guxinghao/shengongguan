@@ -1,0 +1,32 @@
+
+	<volist name = 'info' id = 'vo'>
+	<div class="activity_content ovw mar_b">
+		<div class="pic">
+			<img src="__STATIC__/images/pic_5.png" alt="">
+			<a href="__APP__/Home/User/activity/id/{$vo.activity_id}" class="pic_a">马上预约</a>
+			<a class="bg_col pic_b" href="{:U('User/apply')}">预约已满</a>
+			
+
+		</div>
+		<dl>
+			<dt>{$vo.content}</dt>
+			<dd class="times">
+				<span class="time">活动时间 :</span>
+				<span>{$vo.start_day|date='Y-m-d',###}</span>
+			</dd>
+			<dd class="times">
+				<span class="time">活动门店 :</span>
+				<span>{$vo.store_name}</span>
+			</dd>
+			<dd class="times">
+				<span class="time">预约人数 :</span>
+				<span class="line ovw rel">
+					<span class="num"></span>
+				</span>
+					<span class="nums">
+						<span id="num_a">20</span>/<span id="num_b">30</span>
+					</span>
+			</dd>
+		</dl>
+	</div>
+	</volist>

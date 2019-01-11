@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#ededed">
+<head>
+	<meta charset="UTF-8">
+	<!-- 同比缩放标签 ,最大缩放比,最小缩放比,禁止用户缩放-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>我的优惠券</title>
+	<link rel="stylesheet" href="__STATIC__/css/reset.css">
+	<link rel="stylesheet" href="__STATIC__/css/public.css">
+	<script src="__STATIC__/js/rem.js"></script>
+</head>
+<body>
+<div id="ajax_return">
+	<volist name='info' id='vo'>
+	<div class="dis_coupon dis_bg">
+		<span class="dis_sum" style="font-size: 0.5rem;" >¥<i style="font-size: 1.5rem;" >{$vo.money}</i></span>
+		<div class="dis_explain">
+			<p>{$vo.name}</p>
+			<span>{$vo.use_start_time|date='Y.m.d',###}-{$vo.use_end_time|date='Y.m.d',###}</span>
+		</div>
+		<a href="{:U('Cart/vip_index')}" class="fr dis_use">立即使用</a>
+	</div>
+	</volist>
+</div>
+		<input type="hidden" id = "page" value = '1'>
+</html>
+<script>
+	                    					
+	$(window).scroll(function () {
+      	var a = $(window).height()+$(window).scrollTop();
+      	var b = $(document).height();
+      	if(a==b){
+      		
+      		var page = $('#page').val();     		
+      		 $.ajax({
+                type : "POST",
+                url:"/index.php?m=Home&c=Member&a=ajax_coupon&p="+page,
+                success: function(data){               	
+                    if(data==''){
+						$('.a').css('display','none');
+						$('.b').css('display','inline-block');
+						console.log('1');
+
+								}else{
+									 		page =Number(page)+1;
+											$('#page').val(page);					
+                    						$("#ajax_return").append(data);
+										}
+                }
+            });
+        }
+ 	}); 
+</script>

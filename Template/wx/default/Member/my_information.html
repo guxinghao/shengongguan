@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#ededed">
+<head>
+	<meta charset="UTF-8">
+	<!-- 同比缩放标签 ,最大缩放比,最小缩放比,禁止用户缩放-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>个人资料</title>
+	<link rel="stylesheet" href="__STATIC__/css/reset.css">
+	<link rel="stylesheet" href="__STATIC__/css/public.css">
+		<script src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+	<script src="__STATIC__/js/rem.js"></script>
+</head>
+<body>
+<form action="do_information" method="post" id="form1">
+	<ul class="apply ovw soak soak_1 info">
+		<li class="pad pad_a ovw">
+			<span>头像</span>
+			<div class="fr">
+				<span class="font_c">
+					<img src="{$head_pic}" alt="">
+				</span>
+				<img src="__STATIC__/images/rt.png" alt="">
+			</div>
+		</li>
+		
+		
+		<li class="pad">
+			<span>昵称</span>
+			<div class="fr">
+				<input class="font_c ipt" type="text" value="{$info.nickname}" name="name">
+				<img src="__STATIC__/images/rt.png" alt="">
+			</div>
+		</li>
+
+		<li class="pad">
+			<span>姓名</span>
+			<div class="fr">
+				<input class="font_c ipt" type="text" value="{$info.nickname}" name="xingming">
+				<img src="__STATIC__/images/rt.png" alt="">
+			</div>
+		</li>
+		<li class="pad">
+			<span>生日</span>
+			<div class="fr">
+				<input class="font_c ipt" type="text" value="{$info.birthdays}" name="birthday">
+				<img src="__STATIC__/images/rt.png" alt="">
+			</div>
+		</li>
+		<li class="pad">
+			<span>性别</span>
+			<div class="fr">
+			  
+			<eq name="info.sex" value="2"><input class="font_c ipt"  name="sex" type="text"value="女" ></eq>
+			<eq name="info.sex" value="1"><input class="font_c ipt"  name="sex" type="text"value="男" ></eq>
+			<eq name="info.sex" value="0"><input class="font_c ipt"  name="sex" type="text"value="保密"></eq>
+				<img src="__STATIC__/images/rt.png" alt="">
+			</div>
+		</li>
+		<li class="pad site_info">
+			<span>常用地址</span>
+			<div class="fr ">
+				<textarea class="font_c site" name="address" id="" cols="30" rows="4" >{$address.address}</textarea>
+				<img class="rt_img" src="__STATIC__/images/rt.png" alt="">
+			</div>
+			
+		</li>
+	</ul>
+	<a class="apply_sub" >确认</a>
+	</form>
+
+</body>
+</html>
+<script>
+	$('.apply_sub').click(function(){
+		$('#form1').submit();
+	});
+</script>

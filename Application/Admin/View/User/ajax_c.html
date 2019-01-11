@@ -1,0 +1,25 @@
+	     <table class="table table-bordered table-hover">
+                                <thead>   
+	  		<h5 class="h5 h5_a">积分增减记录 &nbsp;&nbsp;&nbsp;积分余额：{$user.pay_points}分<span><a href="{:U('Admin/user/detail',array('id'=>$maps['user_id']))}">返回&gt;</a></span></h5>                         
+			<tr>
+			        <td>编号</td>
+			        <td>积分描述</td>
+			        <td>增减积分</td>
+			        <td>操作时间</td>
+			</tr>
+            </thead>
+                        
+            <tbody>
+
+			<volist name="infos" id="vos">
+			<tr>
+			        <td>{$vos.log_id}</td>
+			        <td>{$vos.desc}</td>
+			        <td><eq name="vos.type" value="3">-<else/>+</eq>{$vos.pay_points}</td>
+			        <td>{$vos.change_time|date='Y-m-d H:i',###}</td>
+			</tr>
+			</volist>
+          
+            </tbody>
+
+	</table>

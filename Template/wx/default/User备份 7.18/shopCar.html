@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>购物车</title>
+		<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>
+		<meta content="telephone=no,email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/footer.css" />
+	</head>
+
+	<body id="shopCar">
+		<ul class="total">
+			<li>
+				<input type="checkbox" name="list" id="" value="" />
+				<aside class="top">
+					<dl>
+						<dt><img src="__STATIC__/img/tu2.png"></dt>
+						<dd class="title">大连晓芹淡干海参38-48头300g 装超高性...</dd>
+						<dd class="money">
+							<span class="jg">¥ <b  class="price">888.00</b></span>
+							<div>
+								<span class="quantity-increase" class="btn">–</span>
+								<input type="text" name="" class="num" value="2">
+								<span class="quantity-decrease" class="btn">+</span>
+
+							</div>
+						</dd>
+					</dl>
+				</aside>
+
+			</li>
+			<li>
+				<input type="checkbox" name="list" id="" value="" />
+				<aside class="top">
+					<dl>
+						<dt><img src="__STATIC__/img/tu2.png"></dt>
+						<dd class="title">大连晓芹淡干海参38-48头300g 装超高性...</dd>
+						<dd class="money">
+							<span class="jg">¥ <b  class="price">888.00</b></span>
+							<div>
+								<span class="quantity-increase" class="btn">–</span>
+								<input type="text" name="" class="num" value="1">
+								<span class="quantity-decrease" class="btn">+</span>
+
+							</div>
+						</dd>
+					</dl>
+				</aside>
+
+			</li>
+			<li>
+				<input type="checkbox" name="list" id="" value="" />
+				<aside class="top">
+					<dl>
+						<dt><img src="__STATIC__/img/tu2.png"></dt>
+						<dd class="title">大连晓芹淡干海参38-48头300g 装超高性...</dd>
+						<dd class="money">
+							<span class="jg">¥ <b  class="price">888.00</b></span>
+							<div>
+								<span class="quantity-increase" class="btn">–</span>
+								<input type="text" name="" class="num" value="2">
+								<span class="quantity-decrease" class="btn">+</span>
+
+							</div>
+						</dd>
+					</dl>
+				</aside>
+
+			</li>
+
+		</ul>
+		<div class="fixedB">
+			<div><input type="checkbox" id="chk_all">全选</div>
+			<p>合计：<span id="AllTotal">¥ 0.00</span></p>
+			<a href="{:U('User/confirmation')}">去结算(2)</a>
+		</div>
+		<footer>
+
+			<dl>
+				<a href="{:U('User/vip_index')}">
+					<dt><img src="__STATIC__/img/sy1.png"></dt>
+					<dd>首页</dd>
+				</a>
+			</dl>
+			<dl>
+				<a href="{:U('Index/classify')}">
+					<dt><img src="__STATIC__/img/fl1.png"></dt>
+					<dd>分类</dd>
+				</a>
+			</dl>
+			<dl>
+				<a href="{:U('User/shopCar')}">
+				<dt><img src="__STATIC__/img/car2.png"></dt>
+				<dd  class="addCol">购物车</dd>
+				</a>
+			</dl>
+			<dl>
+				<a href="{:U('Member/index')}">
+					<dt><img src="__STATIC__/img/per1.png"></dt>
+					<dd>个人</dd>
+				</a>
+			</dl>
+		</footer>
+		<script type="text/javascript" src="__STATIC__/js/jquery-1.11.1.min.js">
+		</script>
+		<script type="text/javascript" src="__STATIC__/js/fastclick.js">
+		</script>
+		<script type="text/javascript">
+			$(function() {
+
+				$('.quantity-increase').click(function() {
+					var oSub = $(this).next().val();
+					if(oSub == 1) {
+						$(this).addClass('disable');
+
+						return;
+
+					} else {
+						oSub--;
+						$(this).next().val(oSub);
+
+					}
+					TotalPrice();
+				});
+
+				$('.quantity-decrease').click(function() {
+					$(this).prev().prev().removeClass('disable');
+					var oSub = $(this).prev().val();
+					oSub++;
+					$(this).prev().val(oSub);
+					TotalPrice();
+
+				});
+
+				$("input[name='list']").addClass('GoodsCheck');
+				//				点击单选
+				$(".GoodsCheck").click(function() {
+					var goods = $(".GoodsCheck"); //获取所有复选框
+					var goodsC = $(".GoodsCheck:checked"); //获取所有被选中的复选框
+					var Shops = $('#chk_all') //获取全选按钮 
+					if(goods.length == goodsC.length) { //如果选中的复选框等于所有复选框 
+						Shops.prop('checked', true); //全选按钮被选中 
+						TotalPrice();
+					} else { //如果选中的复选框不等于所有复选框
+						Shops.prop('checked', false); //全选按钮不被选中 
+						TotalPrice();
+					}
+				});
+				// 点击全选按钮 
+				$("#chk_all").click(function() {
+
+					if($(this).prop("checked") == true) { //如果全选按钮被选中 
+						$("input[name='list']").prop('checked', true); //所有按钮都被选中 
+						TotalPrice();
+
+					} else {
+						$("input[name='list']").prop('checked', false); //else所有按钮不全选 
+						TotalPrice();
+					}
+				});
+
+				function TotalPrice() {
+
+					var allprice = 0; //总价
+					$(".GoodsCheck").each(function() {
+						var oprice = 0; //店铺总价
+						if($(this).is(":checked")) { //如果该商品被选中
+							var num = parseInt($(this).parents("li").find(".num").val()); //得到商品的数量
+
+							var price = parseFloat($(this).parents("li").find(".price").text()); //得到商品的单价
+
+							var total = price * num; //计算单个商品的总价
+							oprice += total;
+						}
+						allprice += oprice;
+						$("#AllTotal").text('¥ '+allprice.toFixed(2));
+					})
+
+				}
+
+			})
+		</script>
+	</body>
+
+</html>

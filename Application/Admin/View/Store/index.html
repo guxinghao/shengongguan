@@ -1,0 +1,168 @@
+<include file="Public/min-header"/>
+<div class="wrapper">
+    <include file="Public/breadcrumb"/>
+    <section class="content">
+        <div class="row">
+        	<div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i> 门店列表</h3>
+                </div>
+                <div class="panel-body">
+	                <div class="navbar navbar-default">
+	                	<form class="navbar-form form-inline" action="" method="post">
+                        <!--
+				            <div class="form-group">
+				              	<input type="text" class="form-control" placeholder="搜索">
+				            </div>
+				            <button type="submit" class="btn btn-default">提交</button>
+                         -->   
+				            <div class="form-group pull-right">
+					            <a href="{:U('Admin/Store/store_info')}" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>添加门店</a>
+				            </div>		          
+			          </form>
+	                </div>
+                    <div id="ajax_return">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></td>
+                                     <td class="text-center">门店编号</td>
+                                    <td class="text-center">门店名称</td>
+                                    <td class="text-center">所属店长</td>
+                                    <td class="text-center">门店地址</td>
+                          			 <td class="text-center">门店电话</td>
+                                    <!--<td class="text-center">添加日期</td>-->
+                                    <td class="text-center">操作</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <volist name="lists" id="list">
+                                    <tr>
+                                        <td class="text-center">
+                                            <input type="checkbox" name="selected[]" value="6">
+                                        </td>
+                                       		 <td class="text-center">{$list.shop_no}</td>
+                                            <td class="text-center">{$list.store_name}</td>
+                                              <td class="text-center">{$list.shopkeeper}</td>
+                                            <td class="text-center">{$list.store_address}</td>
+                                            <td class="text-center">{$list.store_tel}</td>
+                                            <!--<td class="text-center">{$list.create_time|date='Y-m-d',###}</td>-->
+                                            <td class="text-center">
+                                          
+                                            <a href="{:U('Admin/Store/store_info',array('id'=>$list['store_id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="编辑"><i class="fa fa-pencil"></i></a>
+                                            <a data-url="{:U('Admin/Store/del_store',array('id'=>$list['store_id']))}" onclick="delfun(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"><i class="fa fa-trash-o"></i></a>
+                                            <if condition="$list.is_forbid eq 0 ">
+                                                <a title="禁用" data-url="{:U('Admin/Store/forbid_store',array('id'=>$list['store_id']))}" onclick="forbid_store(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-warning" data-original-title="禁用"><i class="fa fa-minus-square"></i></a>
+                                                <a style="display:none" title="启用" data-url="{:U('Admin/Store/start_store',array('id'=>$list['store_id']))}" onclick="start_store(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="启用"><i class="fa fa-check-circle"></i></a>
+                                            <else />
+                                                <a style="display:none" data-url="{:U('Admin/Store/forbid_store',array('id'=>$list['store_id']))}" onclick="forbid_store(this)" href="javascript:;" title="禁用" data-toggle="tooltip" title="" class="btn btn-warning" data-original-title="禁用"><i class="fa fa-minus-square"></i></a>
+                                                <a data-url="{:U('Admin/Store/start_store',array('id'=>$list['store_id']))}" title="启用" onclick="start_store(this)" href="javascript:;" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="启用"><i class="fa fa-check-circle"></i></a>
+                                            </if>
+                                            </td>
+                                            
+                                    </tr>
+                                </volist>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+				 <div class="row">
+                    <div class="col-sm-12 text-center">{$page}</div>		
+	              </div>                    
+				  </div>
+                </div>
+            </div>
+        </div>        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<script>
+$('.send_user').click(function(){
+    var url = $(this).attr('data-url');
+    layer.open({
+        type: 2,
+        title: '发放优惠券',
+        shadeClose: true,
+        shade: 0.5,
+        area: ['70%', '85%'],
+        content: url, 
+    });
+});
+
+function delfun(obj){
+	if(confirm('确认删除')){		
+		$.ajax({
+			type : 'post',
+			url : $(obj).attr('data-url'),
+			dataType : 'json',
+			success : function(data){
+				if(data.status==1){
+					$(obj).parent().parent().remove();
+				}else{
+					layer.alert(data.info, {icon: 2});  //alert('删除失败');
+				}
+			}
+		})
+	}
+	return false;
+}
+// 禁用门店
+function forbid_store(obj){
+    if(confirm('确认禁用')){        
+        $.ajax({
+            type : 'post',
+            url : $(obj).attr('data-url'),
+            dataType : 'json',
+            success : function(data){
+                if(data.success==1){
+                    $(obj).css('display', 'none');
+                    $(obj).next().css('display', 'inline-block');
+                }else{
+                    layer.alert(data.info, {icon: 2});  //alert('删除失败');
+                }
+            }
+        })
+    }
+    return false;
+}
+// 启用门店
+function start_store(obj){
+    if(confirm('确认启用')){        
+        $.ajax({
+            type : 'post',
+            url : $(obj).attr('data-url'),
+            dataType : 'json',
+            success : function(data){
+                if(data.success==1){
+                    $(obj).css('display', 'none');
+                    $(obj).prev().css('display', 'inline-block');
+                }else{
+                    layer.alert(data.info, {icon: 2});  //alert('删除失败');
+                }
+            }
+        })
+    }
+    return false;
+}
+
+//选择展示条数时触发
+$("#selectPage").change(function(){
+    var pageCount = $('#selectPage').val();
+    $('.pagination  a').each(function(index, el) {
+        var result = getStrParam('pageCount',$(this).attr('href'));
+        // 如果已经拼接 则替换
+        if (result) {
+            var _href = reStrParam($(this).attr('href'),pageCount);
+        }else{
+            var _href = $(this).attr('href')+'/pageCount/'+pageCount;
+        }
+        $(this).attr('href',_href);
+        
+    });
+    window.location.href="{:U('Store/index')}/p/1/pageCount/"+pageCount;
+});
+</script>
+</body>
+</html>

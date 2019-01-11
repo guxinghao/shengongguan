@@ -1,0 +1,150 @@
+<include file="Public/min-header" />
+<style type="text/css">
+	.changeColor{
+		height:30px;
+		width: 130px;
+		border-radius: 3px;
+		border: 1px solid #ccc;
+		padding-left: 5px;
+	}
+	.form-group input{
+		height:30px;
+		width: 130px;
+		border-radius: 3px;
+		border: 1px solid #ccc;
+		padding-left: 5px;
+	}
+</style>
+<div class="wrapper">
+    <include file="Public/breadcrumb"/>
+	<section class="content">
+       <div class="row">
+       		<div class="col-xs-12">
+	       		<div class="box">
+	             <div class="box-header">
+	               	<nav class="navbar navbar-default">	     
+				        <div class="collapse navbar-collapse">
+				          <form class="navbar-form form-inline" action="{:U('Admin/supplier')}" method="post">
+				          	<div class="form-group">
+                                <label class="control-label" for="input-order-id">姓名</label>
+                                <div class="input-group">
+                                    <input type="text" name="user_name" value="{$user_name}" placeholder="姓名" id="input-member-id">
+                                    <!--<span class="input-group-addon" id="basic-addon2"><i class="fa fa-search"></i></span>-->
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="input-order-id">门店名称</label>
+                                    <select style="height:30px;" name="store_id" class="changeColor">
+                                    	<option value="0">选择门店</option>
+                               			<volist name="store" id="item">
+                         					<option <if condition="$item[store_id] eq $store_id"> selected="selected"</if> value="{$item.store_id}">
+                         						{$item.store_name}
+                         						</option>
+                         				</volist>                  
+                     				</select>
+                                </div>
+                            <input type="hidden" name="pageCount" id="pageCount" value="{$pageCount}">
+                            <button type="submit"  id="button-filter search-order" class="btn btn-primary "><i class="fa fa-search"></i> 筛选</button>
+				            <div class="form-group pull-right">
+					            <a href="{:U('Admin/supplier_info')}" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>添加服务顾问</a>
+				            </div>		          
+				          </form>		
+				      	</div>
+	    			</nav>  
+	             </div>	             
+	             <div class="box-body">	               
+	           		<div class="row">
+	            	<div class="col-sm-12">
+		              <table id="list-table" class="table table-bordered table-striped dataTable">
+		                 <thead>
+		                   <tr role="row">
+			                   <th>ID</th>
+			                   <th>姓名</th>
+			                   <th>用户名</th>
+                               <th>本年度销售目标</th>
+			                   <th>门店</th>
+			                   <th>顾问星级 <span id="startdesc" <eq name="starsort" value="desc">style="display:none"</eq>><a href="javascript:void(0);" onclick="sorts('desc');">倒序</a></span>
+                               				<span id="startasc" <eq name="starsort" value="">style="display:none"<else/><eq name="starsort" value="asc">style="display:none"</eq></eq>><a href="javascript:void(0);" onclick="sorts('asc');">顺序</a></span>
+                               </th>
+							   <th>被赞次数  <span id="startdesc" <eq name="zansort" value="desc">style="display:none"</eq>><a href="javascript:void(0);" onclick="sortss('desc');">倒序</a></span>
+                               				<span id="startasc" <eq name="zansort" value="">style="display:none"<else/><eq name="zansort" value="asc">style="display:none"</eq></eq>><a href="javascript:void(0);" onclick="sortss('asc');">顺序</a></span></th>
+						
+			                   <th>操作</th>
+		                   </tr>
+		                 </thead>
+						<tbody>
+						  <foreach name="list" item="vo" key="k" >
+						  	<tr role="row">
+		                     	<td>{$vo.admin_id}</td>
+		                     	<td>{$vo.name}</td>
+		                     	<td>{$vo.user_name}</td>
+                                <td>{$vo.sale_count}</td>
+		                     	<td>{$vo.store_name}</td>
+							 	<td><eq name="vo.star" value="">0<else/>{$vo.star}</eq></td>
+								<td><eq name="vo.zan" value="">0<else/>{$vo.zan}</eq></td>
+								
+		                     <td>
+		                      <a class="btn btn-primary" href="{:U('Admin/supplier_info',array('admin_id'=>$vo['admin_id']))}"><i class="fa fa-pencil"></i></a>
+		                      <a class="btn btn-danger" href="javascript:void(0)" data-url="{:U('Admin/supplierHandle')}" data-id="{$vo.admin_id}" onclick="delfun(this)"><i class="fa fa-trash-o"></i></a>
+							</td>
+		                   </tr>
+		                  </foreach>
+		                   </tbody>
+		                 <tfoot>		                 
+		                 </tfoot>
+		               </table>	 
+	               </div>
+	          </div>
+              <div class="row">
+              	   
+                    <div class="col-sm-12 text-center">{$page}</div>		
+              </div>
+	         </div>
+	        </div>
+       	</div>
+       </div>
+   </section>
+</div>
+<script>
+function sorts(asc){
+	var  url="__APP__/Admin/Admin/supplier/orderby/star/sort/"+asc+"/p/{$p}";
+	window.location.href=url;
+}
+
+function sortss(asc){
+	var  url="__APP__/Admin/Admin/supplier/orderby/zan/sort/"+asc+"/p/{$p}";
+	window.location.href=url;
+}
+
+function delfun(obj){
+	if(confirm('确认删除')){		
+		$.ajax({
+			type : 'post',
+			url : $(obj).attr('data-url'),
+			data : {act:'del',suppliers_id:$(obj).attr('data-id')},
+			dataType : 'json',
+			success : function(data){
+				console.log(data);
+				if(data.status==1){
+					$(obj).parent().parent().remove();
+				}else{
+					layer.alert(data.info, {icon: 2});   //alert('用户名或密码不能为空');// alert(data);
+					layer.closeAll();
+				}
+			}
+		})
+	}
+	return false;
+}
+$('.changeColor').on('change',function () {
+    $(this).css('color','red').find("option").css('color','red');
+    $(this).find("option:not(:selected)").css('color','#999');
+    return false;
+});
+if ('{$store_id}') {
+  $('.changeColor').css('color','red').find("option").css('color','red');
+  $('.changeColor').find("option:not(:selected)").css('color','#999');
+}
+</script> 
+</body>
+</html>

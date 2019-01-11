@@ -1,0 +1,327 @@
+<style type="text/css">
+    #selectBox{
+        padding:0px 30px 20px 0px;
+        width: 100%;
+        height: 30px;
+    }
+    .showlist{
+        display: inline-block;
+        width: 90px;
+        height: 30px;
+        border:1px solid #eee;
+        float: right;
+        text-align: center;
+        line-height: 30px;
+        background-color: #68b828;
+        color: #fff;
+        cursor: pointer;
+    }
+    .listTitle{
+        width:180px;
+        height: 360px;
+        border:1px solid #ccc;
+        background-color: #fff;
+        padding-left:20px; 
+        position: absolute;
+        right: 30px;
+        top: 38px;
+        z-index: 99;
+        display: none;
+    }
+    .listTitle li{
+        list-style-type:none;
+
+    }
+    label{
+        font-weight: normal;
+        cursor: pointer;
+    }
+    .listTitle:before, .listTitle:after{
+      display:table;
+      content:'';
+    }
+    .listTitle:after{
+      clear:both;
+    }
+    .btn{
+      font-size: 12px;
+    }
+</style>
+<style type="text/css">
+    .floatDiv{
+        background-color:#ccc;position: fixed;top: 0px;left: 46px;height: 35px;display: none;overflow:hidden;
+    }
+    #list-table1 th {
+        font-size: 12px;
+    }
+</style>
+<form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
+<div class="table-responsive">
+    <div style="width: 100%;overflow-x: auto;" class="data_header">
+    <div style="width: 1783px;" class="list-table">
+    <table class="table table-bordered table-hover" id="list-table" style="font-size:12px;width: 1783px;">
+        <thead>
+        <tr>
+            <td style="width: 143px;" class="text-center">
+                <a href="javascript:sort('tp_order.order_sn');">编号</a>
+            </td>
+            <td style="width: 100px;" class="f3 text-center">
+                <a href="javascript:sort('tp_order.consignee');">收货人</a>
+            </td>
+            <td style="width: 100px;" class="f4 text-center">
+                <a href="javascript:sort('tp_order.goods_price');">总金额</a>
+            </td>      
+            <td style="width: 100px;" class="f5 text-center">
+               <a href="javascript:sort('tp_order.order_amount');">应付金额</a>
+            </td>
+            <td style="width: 100px;" class="f12 text-center">使用积分</td>
+            <td style="width: 100px;" class="f12 text-center">使用优惠券</td>
+            <td style="width: 150px;" class="text-center">产品名称</td>
+            <td style="width: 100px;" class="text-center">单价</td>
+            <td style="width: 100px;" class="text-center">数量</td>
+            <td style="width: 100px;" class="f9 text-center">支付方式</td>
+            <td style="width: 100px;" class="f11 text-center">门店</td>
+            <td style="width: 100px;" class="f13 text-center">操作人</td>
+            <td style="width: 150px;" class="f14 text-center">
+                <a href="javascript:sort('add_time');">下单时间</a>
+            </td>
+            <td style="width: 130px;" class="f15 text-center">备注</td>
+            <td style="width: 130px;" class="f15 text-center">删除理由</td>
+            <td class="text-center" style="width: 80px;">操作</td>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="orderList" id="list">
+            <tr>
+                <td title="{$list.order_sn}" class="text-center">{$list.order_sn}</td>
+                <td class="f3 text-center"><a href="{:U('Admin/user/detail',array('id'=>$list['user_id']))}">{$list.mobile}</a></td>
+                <td class="f4 text-center">{$list.goods_price}</td>
+                <td class="f5 text-center">{$list.order_amount}</td>
+                <td class="f12 text-center">{$list.integral}</td>
+                <td class="f12 text-center">{$list.coupon_price}</td>
+                <td class="text-center">{$list.goods_name}</td>
+                <td class="text-center">{$list.every_price}</td>
+                <td class="text-center">{$list.goods_num}</td>
+                <td class="f9 text-center">{$list.pay_name}</td>
+                <td class="f11 text-center">{$list.store_name}</td>
+                <td class="f13 text-center">{$list.name}</td>
+                <td class="f14 text-center"">{$list.add_time|date='y-m-d H:i',###}</td>
+                <td class="f15 text-center" style="width: 130px">{$list.order_note}</td>
+                <td class="f15 text-center">{$list.del_reason}</td>
+                <td class="text-center">
+                   <if condition="($list['order_status'] eq 3) or ($list['order_status'] eq 5)">
+                      	<a style="height: 26px;padding: 0 0;width: 36px;line-height: 26px;" href="javascript:void(0)" onclick="alert('该订单已经删除,请不要重复删除')" data-toggle="tooltip" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i></a>
+                	<else/>
+                       <a style="height: 26px;padding: 0 0;width: 36px;line-height: 26px;" href="###" id="button-delete6" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="删除"  onclick="javascript:delorder({$list['order_id']})"><i class="fa fa-trash-o"></i></a>
+                	
+                	</if>
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+    </div>
+</div>
+</div>
+</form>
+<div class="row">
+    <div class="col-sm-12 text-center">{$page}</div>
+</div>
+<div class="floatDiv">
+    <div style="width: 1783px;" class="list-table1">
+    <table id="list-table1" class="list-table1 table table-bordered table-striped dataTable" style="width: 1783px;">
+     <thead>
+       <tr role="row">
+           <th style="width: 143px;text-align: center;" class="sorting" tabindex="0">编号</th>
+           <th style="width: 100px;text-align: center;" class="sorting" tabindex="0">收货人</th>
+           <th style="width: 100px;text-align: center;" class="sorting" tabindex="0">总金额</th>
+           <th style="width: 100px;text-align: center;" class="sorting" tabindex="0">应付金额</th>
+           <th style="width: 100px;text-align: center;" class="sorting" tabindex="0">使用积分</th>
+           <th style="width: 100px;text-align: center;" class="sorting" tabindex="0">使用优惠券</th>
+           <th style="width: 150px;text-align: center;" class="sorting" tabindex="0">产品名称</th>
+           <th style="width: 100px;text-align: center;" class="sorting" tabindex="0">单价</th>
+           <th style="width: 100px;text-align: center;" class="sorting" tabindex="0">数量</th>
+           <th style="width: 100px;text-align: center;" class="sorting" tabindex="0">支付方式</th>
+           <th style="width: 100px;text-align: center;" class="sorting" tabindex="0">门店</th>
+           <th style="width: 100px;text-align: center;" class="sorting" tabindex="0">操作人</th>
+           <th style="width: 150px;text-align: center;" class="sorting" tabindex="0">下单时间</th>
+           <th style="width: 130px;text-align: center;" class="sorting" tabindex="0">备注</th>
+           <th style="width: 130px;text-align: center;" class="sorting" tabindex="0">删除理由</th>
+           <th style="width: 80px;text-align: center;" class="sorting" tabindex="0">操作</th>
+       </tr>
+     </thead>
+    </table>
+    </div>
+    </div>
+</div>
+<!-- <script src="__PUBLIC__/plugins/jQuery/jquery-1.8.2.min.js"></script> -->
+<script>
+//获取cookie中存储的展示列表字段名称
+var _val = $.cookie('order_cookie');
+if (_val) {
+    var ss = _val.split(",");
+    for (var i = 1; i < 16; i++) {
+        var _thisclass = 'f'+i;
+        if ($.inArray(_thisclass,ss) != -1) {
+            $('.f'+i).show();
+            $('#f'+i).prop("checked","checked");//全选
+        }else{
+            $('.f'+i).hide();
+            $('#f'+i).prop("checked","");//全选
+        }
+    }
+    
+}
+
+// 分页样式
+$(".pagination li").eq(-1).find('a').css('border-top-right-radius','4px');
+$(".pagination li").eq(-1).find('a').css('border-bottom-right-radius','4px');
+$(".pagination  a").click(function(){
+    var pageCount = $('#selectPage').val();
+    var page = $(this).data('p');
+    ajax_get_table('search-form2',page,pageCount);
+});
+//选择展示条数时触发
+$("#selectPage").change(function(){
+    var pageCount = $('#selectPage').val();
+    var page = $("li.active>a").data('p');
+    ajax_get_table('search-form2',1,pageCount);
+});
+</script>
+
+<script>
+function delorder(id) { 
+var id=id;
+var msg = "您真的确定要删除吗？\n\n请确认！"; 
+    if (confirm(msg)==true){ 
+        //页面层
+        layer.open({
+        type: 1,
+        skin: 'layui-layer-rim', //加上边框
+        area: ['420px', '240px'], //宽高
+        content: '<div><p style="font-size:16px;text-align:center;font-weight:bold;margin-top:10px">请填写作废原因</p><p style="text-align:center;"><textarea style="width:366px;height:63px" class="reason_detail"></textarea></p><p style="text-align:right;padding-right:20px"><button order_id="'+id+'" id="del_reason" style="width: 60px;height: 28px;">提交</button></p></div>'
+        })
+        return true; 
+    }else{ 
+        return false; 
+    } 
+}
+
+// 点击确认按钮 添加删除原因
+//去除重复点击
+var is_click = 0;
+$(document).on('click', '#del_reason',function(event) {
+    if (!is_click) {
+        is_click = 1;
+        var message = $('.reason_detail').val();
+        var id=$(this).attr('order_id');
+        $.ajax({
+            type:'GET',
+            url:"{:U('Admin/order/order_action')}",
+            data:{order_id:id, type:"invalid" ,note:message},
+            dataType: "json",
+            success:function(data){
+                alert("操作成功！");
+                layer.closeAll('page');
+                // location.reload(); 
+                var pageCount = $('#selectPage').val();
+                var page = $("li.active>a").data('p');
+                ajax_get_table('search-form2',1,pageCount);  
+            }
+        });
+    }else{
+        return false;
+    }
+});
+
+// 全显列表函数
+function showAll() {
+    for (var i = 1; i < 16; i++) {
+        $('.f'+i+'').show();
+    }
+    $(".listTitle input:checkbox").prop("checked","checked");//全选       
+}
+//选择框出现
+function selectShow(){
+    $('.listTitle').toggle()
+}
+
+$('.listTitle li input').click(function(event) {
+    var _class = $(this).attr('id');
+    if ($(this).is(':checked')) {
+        $('.'+_class+'').show();
+    }else{
+        $('.'+_class+'').hide();
+    }
+});
+
+//点击页面之前 获取自定义展示列表的值 存入cookie
+$('.paginate_button').click(function(event) {
+    var _str = new Array();
+    $('.listTitle li input').each(function(index, el) {
+        if ($(this).is(':checked')) {
+            _str.push($(this).attr('this_name'));
+        }
+    });
+    var newStr = _str.join(",");
+    $.cookie('order_cookie', newStr);
+});
+//给统计赋值
+$('#total_amount').html('{$total_amount?$total_amount:0}元');
+$('#total_points').html('{$total_points?$total_points:0}分');
+$('#true_amount').html('{$true_amount?$true_amount:0}元');
+$('#bank_card').html('{$bank_card?$bank_card:0}元');
+$('#cash').html('{$cash?$cash:0}元');
+$('#wechat').html('{$wechat?$wechat:0}元');
+$('#zhifubao').html('{$zhifubao?$zhifubao:0}元');
+$('#okcard').html('{$okcard?$okcard:0}元');
+$('#bankchange').html('{$bankchange?$bankchange:0}元');
+$('#quan').html('{$quan?$quan:0}元');
+$('#zuhe').html('{$zuhe?$zuhe:0}元');
+$('#coupon').html('{$coupon_price?$coupon_price:0}元');
+$('#del_count_money').html('{$del_count_money?$del_count_money:0}元');
+$('#del_count').html('{$del_count?$del_count:0}笔');
+
+$(window).scroll(function(){
+    if($('#list-table') && $('#list-table').offset()){
+        var _h = $('#list-table').offset().top;
+        var _r = $(window).scrollTop();
+        if(Math.floor(parseInt(_h)) > Math.floor(parseInt(_r))){
+            $('.floatDiv').css('display','none');
+        }else{
+            $('.floatDiv').css('display','block');
+            var _width = $('.data_header').css('width');
+            $('.floatDiv').css('width',_width);
+        }
+    }
+});
+
+
+//浏览器屏幕大小改变  改变定死表头外侧DIV的宽度
+$(window).resize(function() {
+    var _width = $('.data_header').css('width');
+    $('.floatDiv').css('width',_width);
+});
+
+//滚动条发送变化 改变自定义表头滚动条位置
+$('.data_header').scroll(function(){
+    scrollHeader();
+})
+//自定义表头滚动条发送变化 改变表头滚动条位置
+$('.floatDiv').scroll(function(){
+    scrollBody();
+})
+
+//表单滚动条改变 改变自定义表头
+function scrollHeader(){
+    var headerScrollLeft=$(".data_header").scrollLeft();
+    $(".floatDiv").scrollLeft(headerScrollLeft);
+}
+//自定义滚动条改变 改变表单表头
+function scrollBody(){
+    var bodyScrollLeft=$(".floatDiv").scrollLeft();
+    $(".data_header").scrollLeft(bodyScrollLeft);
+}
+
+
+</script>

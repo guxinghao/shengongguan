@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>新增地址</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>		
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css" /> 
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+		<script src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+	</head>
+	<body id="add_new">
+	<form action="{:U('User/do_addi')}" id="form1" method="post">
+		<ul>
+			<li>
+				<span>姓名</span>
+				<input type="text" class="username" value="{$info.consignee}" name="name">
+			</li>
+			<li>
+				<span>手机号</span>
+				<p></p>
+				<input type="text" class="username" value="{$info.mobile}" name="mobile">
+			</li>
+			<li>
+				<span>地址</span>
+				<textarea class="site" id="" cols="30" rows="5" name="content">{$info.address}</textarea>
+			</li>
+		</ul>
+		<input type="hidden" value="{$info.address_id}" name="address_id">
+		<input type="hidden" value="cart2" name="source">
+		<a class="btn">确定</a>
+	</form>
+	</body>
+</html>
+<script>
+	$(".btn").click(function(){
+		$('#form1').submit();
+	})
+</script>

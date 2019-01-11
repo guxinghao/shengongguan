@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#ededed">
+<head>
+	<meta charset="UTF-8">
+	<!-- 同比缩放标签 ,最大缩放比,最小缩放比,禁止用户缩放-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>食用小贴士</title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css"/>
+	<link rel="stylesheet" href="__STATIC__/css/public.css">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+	<link rel="stylesheet" type="text/css" href="__STATIC__/css/footer.css" />
+	<link rel="stylesheet" type="text/css" href="__STATIC__/css/swiper.min.css" />
+	<script src="__STATIC__/js/rem.js"></script>
+	<script type="text/javascript" src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+	<style>
+		.content img{
+			width: 100%;
+		}
+		.content video{
+			width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<div class="soak_content ovw mar_b">
+		<h3>{$info.title}</h3>
+		<p>{$info.add_time|date='Y-m-d',###}</p>
+		<div class="pic">
+			<img src="{$info.thumb}" alt="">
+		</div>
+		<div class="content">
+			{$info.content|htmlspecialchars_decode}
+		</div>
+	</div>	
+	<!-- 泡发心得 -->
+	<dl class="soak_comm ovw taboo">
+		<dt>
+			<img src="__STATIC__/images/line.png" alt="">
+			<span>专业资讯</span>
+		</dt>
+		<div id= 'ajax_return'>
+	<volist name='r' id='vo'>
+	<a href="__APP__/Home/index/show_b/id/{$vo.article_id}">
+		<dd class="ovw bor_b taboo_cont">
+			<div class='lf'>
+				<img src="{$vo.thumb}" alt="">
+			</div>
+			<div class="rt">
+				<h3>{$vo.title}</h3>
+				<p>{$vo.content|htmlspecialchars_decode}</p>
+			</div>
+		</dd>
+		</a>
+	</volist>	
+	</div>		
+	</dl>
+	<div id="load">
+		<img src="__STATIC__/img/load.png"/>
+	</div>
+
+
+	<input type="hidden" id = "page" value = '1'>
+</body>
+</html>
+<script>
+
+     $(window).scroll(function () {
+      	var a = $(window).height()+$(window).scrollTop();
+      	var b = $(document).height();
+      	if(a==b){
+      		var page = $('#page').val();     		
+      		 $.ajax({
+                type : "POST",
+                url:"/index.php?m=Home&c=Index&a=ajax_food&p="+page,
+                success: function(data){               	
+                    if(data==''){
+						$('#load').css('display','none');
+								}else{
+									 		page =Number(page)+1;
+											$('#page').val(page);					
+                    						$("#ajax_return").append(data);
+										}
+                }
+            });
+        }
+ 	}); 
+</script>

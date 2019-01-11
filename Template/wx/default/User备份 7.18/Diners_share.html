@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<style>
+  a{
+	color: white;
+  }
+</style>
+	<head>
+		<meta charset="UTF-8">
+		<title>食客分享</title>
+		<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>
+		<meta content="telephone=no,email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+	</head>
+
+	<body id="diners_share">
+		<header>
+			<dl>
+
+				<a href="__APP__/Home/User/Diners_share/type/0" ><dd>最新</dd></a>
+				<span class="angel"><img src="__STATIC__/img/topimg2.png"/></span>
+			</dl>
+			<dl class="unclick">
+				<a href="__APP__/Home/User/Diners_share/type/1" ><dd>精华</dd></a>
+				<span class="angel"><img src="__STATIC__/img/topimg2.png"/></span>
+			</dl>
+			<dl class="unclick">
+				<a href="__APP__/Home/User/Diners_share/type/2" ><dd>我的</dd></a>
+				<span class="angel"><img src="__STATIC__/img/topimg2.png"/></span>
+			</dl>
+		</header>
+		<div id="share_con">
+			<div class="comlist">
+			<div id= 'ajax_return'>
+			<volist name='info' id= 'vo'>
+				<div class="top">
+					<span><!-- <img src="__STATIC__/img/tx1.png"/> -->
+					<img src="__STATIC__/img/tx.png"/></span>
+					<div class="center">
+						<div class="dl_top">
+							<h3>{$vo.title}</h3>
+							<dl>
+								<dt>
+									<img src="__STATIC__/img/dz.png" onclick="btn({$vo.id},{$vo.zana});"/>
+									<img src="__STATIC__/img/dz1.png" class="click" onclick="btn({$vo.id},{$vo.zan});"/>
+								</dt>
+								<dd>{$vo.zan}</dd>
+								<dd class="click">{$vo.zana}</dd>
+							</dl>
+						</div>
+						<i class="colTip blue">{$vo.t}</i>
+						<p class="font_28 col_3">{$vo.content}</p>
+						<ul>
+						<volist name='vo.data' id='vos'>
+							<li style="width: 30%"><img src="{$url}{$vos.image}" alt="" width="100%"></li>
+						</volist>
+						</ul>
+						<em class="time">{$vo.create_time|date='Y-m-d H:i:s',###}</em>
+					</div>
+				</div>
+		</volist>
+		</div>
+			</div>
+			<p class="font_24 col_6 center">您的分享，可能会帮助到很多人...</p>
+		</div>
+		<input type="hidden" id = "page" value = '1'>
+		<footer>
+			<dl>
+				<dt><img src="__STATIC__/img/heart.png"/></dt>
+				<dd><a href="{:U('User/share')}" style="color:black">我要分享</a></dd>
+			</dl>
+		</footer>
+		<script type="text/javascript" src="__STATIC__/js/jquery-1.11.1.min.js">
+		</script>
+		<script type="text/javascript">
+
+				$('#diners_share header dl').each(function() {
+					$('#diners_share header dl').click(function() {
+						$('#diners_share header dl').addClass('unclick');
+						$(this).removeClass('unclick');
+
+					})
+				});
+				$('#share_con .comlist .top .center dl').click(function() {
+
+					$(this).find('img').toggle();
+					$(this).find('dd').toggle();
+				})
+	$(window).scroll(function () {
+		var a = $(window).height()+$(window).scrollTop();
+      	var b = $(document).height();
+      	if(a==b){
+      		console.log('1');
+      		var page = $('#page').val();     		
+      		 $.ajax({
+                type : "POST",
+                url:"/index.php?m=Home&c=User&a=ajax_Diners&p="+page,
+                success: function(data){               	
+                    if(data==''){
+						$('#load').css('display','none');
+						$('.finish').css('display','block');
+								}else{
+									 		page =Number(page)+1;
+											$('#page').val(page);					
+                    						$("#ajax_return").append(data);
+										}
+                }
+            });
+        }
+		});
+	function btn(id,zan){
+		$.ajax({
+                type:'GET',
+                url:"/index.php?m=Home&c=User&a=do_a&id="+id+"&zan="+zan,
+                success:function(){
+                      console.log();		 
+                }
+		});		
+	}
+		
+ 	
+		</script>
+	</body>
+
+</html>
+

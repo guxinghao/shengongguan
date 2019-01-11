@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>会员中心</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+		<meta content="telephone=no,email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/footer.css" />
+	</head>
+	<style type="text/css">
+		.line{
+			display: inline-block;
+		    height: 0.7rem;
+		    width: 1px;
+		    background: #d9c5af;
+		}
+	</style>
+	<body id="cgg_mem">
+		<header>
+
+			<dl>
+				<dt>
+					<img style="width:2.2rem;height: 2.2rem;border-radius: 50%" src="{$head}"/>
+					<!-- <img style="width:2.2rem;height: 2.2rem;border-radius: 50%" src="__STATIC__/img/tu4.png"/> -->
+					<span class="jb"><img src="__STATIC__/img/jb.png"></span>
+				</dt>
+			
+				<dd>
+					<h3>{$r.nickname}</h3>
+					<span><!-- 卡号 62366786399992765678 --></span>
+				</dd>
+				
+				
+			</dl>
+			<ul>
+			<a href="{:U('Member/integral')}">
+				<li>
+					<h3>{$r.pay_points}</h3>
+					<span>积分余额</span>
+				</li>
+			</a>
+			<li style="width:4%;text-align: center;margin-left: 0.5rem;font-size: 0.6rem;color:#ccc"><i class="fr line"></i></li>
+			<a href="{:U('Member/integral')}">
+				<li style="float:right">
+					<!-- <h3>{$info} </h3> --><!-- 优惠劵数量 -->
+					<!-- <span>优惠劵</span> -->
+					<h3>{:getKeScore($r['user_id'])}</h3>
+					<span>可用积分</span>
+				</li>
+				</a>
+			</ul>
+			<a href="{:U('Member/tuichu')}">
+			<span class="sz"><img src="__STATIC__/img/sz.png"/></span>
+			</a>
+		</header>
+		<div id="mem_content">
+			<aside class="order">
+				<dl>
+					<dt><img src="__STATIC__/img/line3.png"></dt>
+					<dd>我的订单</dd>
+				</dl>
+				<a href="{:U('Member/my_order')}">
+				<dl>				
+					<dd>全部订单</dd>
+					<dt><img src="__STATIC__/img/rarrow.png"></dt>					
+				</dl>
+				</a>
+			</aside>
+			 <aside class="list">
+			<a href="__APP__/Home/Member/my_order/type/1">
+				<dl>				
+					<dt><img src="__STATIC__/img/fk.png"/></dt>
+					<dd>待付款</dd>					
+				</dl>
+				</a>
+				<a href="__APP__/Home/Member/my_order/type/1">
+				<dl>				
+					<dt>
+						<img src="__STATIC__/img/wl.png"/> -->
+						 <span class="stip">10</span> -->
+					 </dt>
+					<dd>待发货</dd>					
+				</dl>
+				</a>
+				<a href="__APP__/Home/Member/my_order/type/1">
+				<dl>				
+					<dt><img src="__STATIC__/img/sh.png"/></dt>
+					<dd>待收货</dd>					
+				</dl>
+				</a>
+				<a href="__APP__/Home/Member/my_order/type/4">
+				<dl>				
+					<dt><img src="__STATIC__/img/pj.png"/></dt>
+					<dd>待评价</dd>					
+				</dl>
+				</a>
+			</aside>
+			<div class="hr" style="height: 0.23rem;"></div>
+			<aside class="ullist">
+			<a href="{:U('Member/my_information')}">
+			<dl>
+			
+				<dt><img src="__STATIC__/img/bj.png"/></dt>
+				<dd>修改资料</dd>
+			</dl>
+			</a>
+			<a href="{:U('Member/qr_code')}">
+				<dl>				
+					<dt><img src="__STATIC__/img/code.png"/></dt>
+					<dd>我的二维码</dd>
+				</dl>
+			</a>
+			<a href="{:U('Member/my_trepang')}">
+				<dl>				
+					<dt><img src="__STATIC__/img/group.png"/></dt>
+					<dd>我的海参</dd>
+				</dl>
+			</a>
+				<dl>
+					<a href="{:U('Member/friend_ticket')}"><dt><img src="__STATIC__/img/hy.png"/></dt>
+					<dd>我的参友</dd></a>
+				</dl>
+				<dl>
+				<a href="{:U('Member/my_News')}">
+					<dt><img src="__STATIC__/img/info.png"/></dt>
+					<dd>我的消息</dd>
+					</a>
+				</dl>
+				<div class="hr"></div>	
+				<a href="{:U('Cart/new_integral')}">			
+				<dl>
+					<dt><img src="__STATIC__/img/qu.png"/></dt>
+					<dd>积分兑换</dd>
+				</dl>
+				</a>
+				<a href="{:U('Member/know')}">
+				<dl>				
+					<dt><img src="__STATIC__/img/lj.png"/></dt>
+					<dd>了解参公馆</dd>
+				</dl>
+				</a>
+				<a href="tel:4009928739">
+				<dl>
+					<dt><img src="__STATIC__/img/lx.png"/></dt>
+					<dd>联系我们</dd>
+				</dl>
+				</a>
+				<a href="{:U('Member/collection')}">
+				<dl>
+				
+					<dt><img src="__STATIC__/img/collect.png"/></dt>
+					<dd>我的收藏</dd>
+				</dl>
+				</a>
+				<a href="{:U('Member/feedback')}">
+				<dl>
+				
+					<dt><img src="__STATIC__/img/bj.png"/></dt>
+					<dd>意见反馈</dd>
+				</dl>
+				</a>
+				<div class="hr"></div>
+			</aside>
+		</div>
+<!-- 		<footer>
+				<dl>
+					<a href="{:U('Cart/vip_index')}"><dt><img src="__STATIC__/img/sy1.png"></dt>
+					<dd >首页</dd></a>
+				</dl>
+				<dl>
+					<a href="{:U('Index/classify')}"><dt><img src="__STATIC__/img/fl1.png"></dt>
+					<dd>分类</dd></a>
+				</dl>
+				<dl>
+					<a href="{:U('Cart/cart')}"><dt><img src="__STATIC__/img/car1.png"></dt>
+					<dd>购物车</dd></a>
+				</dl>
+				<dl>
+					<a href="{:U('Member/index')}"><dt><img src="__STATIC__/img/per2.png"></dt>
+					<dd class="addCol">个人</dd></a>
+				</dl>
+			</footer> -->
+	</body>
+
+</html>

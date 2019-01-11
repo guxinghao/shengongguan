@@ -1,0 +1,138 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
+   
+
+
+                            <div id="container">
+                                <div id="uploader">
+                                    <div class="queueList">
+                                        <div id="dndArea" class="placeholder">
+                                            <div id="filePicker"></div>
+                                            <p>或将照片拖到这里，单次最多可选300张</p>
+                                        </div>
+                                    </div>
+                                    <div class="statusBar" style="display:none;">
+                                        <div class="progress">
+                                            <span class="text">0%</span>
+                                            <span class="percentage"></span>
+                                        </div>
+                                        <div class="info"></div>
+                                        <div class="btns">
+                                            <div id="filePicker2"></div>
+                                            <div class="uploadBtn">开始上传</div>
+                                        </div>
+                                    </div>
+                                </div>
+                        
+   </div>
+   </form>
+
+
+
+
+    
+</body>
+</html>
+ -->
+ <!DOCTYPE html>
+<html lang="en" style="background:#ededed">
+<head>
+    <meta charset="UTF-8">
+    <!-- 同比缩放标签 ,最大缩放比,最小缩放比,禁止用户缩放-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>Document</title>
+    <script type="text/javascript" src="__STATIC__/js/jquery.js"></script>
+    <script type="text/javascript" src="__STATIC__/js/webuploader.js"></script>
+    <script type="text/javascript" src="__STATIC__/js/upload.js"></script>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/webuploader.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/style_upload.css" />
+    <link rel="stylesheet" href="__STATIC__/css/reset.css">
+    <link rel="stylesheet" href="__STATIC__/css/public.css">
+    <script src="__STATIC__/js/rem.js"></script>
+</head>
+<body>
+ <form action="{:U('User/share_a')}" id="uploadForm"  class="form1" method="post">
+    <ul class="share mar_b">       
+        <li class="pad bor_b">
+            <span >我的主题</span>
+            <!-- <span class="fr">青岛海参选购学习</span> -->
+            <input  class="fr sha_ipt" type="text" placeholder="请输入主题" name="title">
+        </li>
+        <li class="pad bor_b">
+            <span>分享类别</span>
+            <!-- <a class="fr" href="#">
+                选购技巧
+                <img src="images/rt.png" alt="">
+            </a> -->
+            <select name="cate_id" id="">
+                <option value="0">选购技巧</option>
+                <option value="1">泡发窍门</option>
+                <option value="2">厨艺分享</option>
+                <option value="3">食参感受</option>
+                <option value="4">其他分享</option>
+            </select>
+        </li>
+    </ul>
+    
+    <div class="share_content mar_b">
+        <span>分享文字 </span>
+        <textarea name="content" id="" cols="30" rows="6" placeholder="输入文字"></textarea>
+    </div>
+
+    <!-- <div class="add_img ovw">
+        <div class="mar_r">
+            <img src="__STATIC__/images/trepang_1.png" alt="">
+        </div>
+        <div class="mar_r">
+            <img src="__STATIC__/images/trepang_2.png" alt="">
+        </div>
+        <div class="mar_r">
+            <img src="__STATIC__/images/trepang_3.png" alt="">
+        </div>
+        <div>
+            <img src="__STATIC__/images/trepang_4.png" alt="">
+        </div>
+        <div class="mar_r">
+            <img src="__STATIC__/images/trepang_5.png" alt="">
+        </div>
+        <div class="mar_r">
+            <img src="__STATIC__/images/add.png" alt="">
+        </div>
+    </div> -->    
+           <div id="container">
+        <div id="uploader">
+            <div class="queueList">
+                <div id="dndArea" class="placeholder">
+                    <div id="filePicker"></div>
+                    <p>或将照片拖到这里，单次最多可选300张</p>
+                </div>
+            </div>
+            <div class="statusBar" style="display:none;">
+                <div class="progress">
+                    <span class="text">0%</span>
+                    <span class="percentage"></span>
+                </div>
+                <div class="info"></div>
+                <div class="btns">
+                    <div id="filePicker2"></div>
+                   <!--  <div class="uploadBtn">分享</div>
+                </div> -->
+            </div>
+        </div>
+                     <div class="share_release state-ready uploadBtn" >发布</div>   
+   </div>
+    
+    </form>
+</body>
+</html>
+<script>
+    function login(file, data){
+                $(".form1").submit();
+            }
+
+</script>

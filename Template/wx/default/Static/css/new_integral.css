@@ -1,0 +1,276 @@
+@charset "UTF-8";
+html {
+  font-size: 20;
+  background: #ededed; }
+
+* {
+  font-family: "微软雅黑"; }
+
+.ovw {
+  overflow: hidden; }
+
+.new_integral {
+  width: 100%;
+  height: 6.6rem;
+  background: url(../images/integral_bg.png) no-repeat;
+  background-size: 100% 100%; }
+  .new_integral .integral_num {
+    width: 50%;
+    text-align: center; }
+    .new_integral .integral_num .line {
+      display: inline-block;
+      height: 1.5rem;
+      width: 1px;
+      background: #d9c5af;
+      margin-top: 1.8rem; }
+    .new_integral .integral_num p {
+      font-size: 2rem;
+      color: #fff;
+      line-height: 3.25rem; }
+    .new_integral .integral_num span {
+      font-size: 0.7rem;
+      color: #fff; }
+
+/*商品兑换列表*/
+.commodity_list .title {
+  height: 2rem;
+  border-bottom: 1px solid #eeeeee;
+  padding: 0rem 0.75rem 0rem 0.75rem;
+  background: #fff; }
+  .commodity_list .title .lf {
+    line-height: 2rem; }
+    .commodity_list .title .lf img {
+      width: 0.15rem;
+      height: 0.8rem;
+      vertical-align: middle;
+      margin: 0rem 0.25rem 0.1rem 0rem; }
+    .commodity_list .title .lf span {
+      font-size: 0.8rem;
+      color: #333;
+      font-weight: bold; }
+  .commodity_list .title .rt {
+    line-height: 2rem; }
+    .commodity_list .title .rt .cb {
+      display: inline-block;
+      width: 0.75rem;
+      height: 0.75rem;
+      -webkit-appearance: none;
+      background: url(../images/radiou.png) no-repeat;
+      background-size: cover;
+      border: 0px;
+      vertical-align: middle;
+      margin: 0rem 0.15rem 0.1rem 0rem; }
+    .commodity_list .title .rt .cb[type="checkbox"]:checked {
+      background: url(../images/cb.png) no-repeat;
+      background-size: cover; }
+    .commodity_list .title .rt span {
+      font-size: 0.6rem;
+      color: #666; }
+.commodity_list .commodity {
+  padding: 0.75rem;
+  width: 17.25rem;
+  background: #fff;
+  position: relative;
+  margin-bottom: 0.25rem; }
+  .commodity_list .commodity .commodity_img {
+    width: 4.4rem;
+    height: 4.4rem;
+    border-radius: 6px; }
+    .commodity_list .commodity .commodity_img img {
+      width: 100%;
+      border-radius: 6px; }
+  .commodity_list .commodity .commodity_info {
+    position: relative;
+    margin-left: 0.75rem;
+    width: 12rem;
+    height: 4.4rem; }
+    .commodity_list .commodity .commodity_info p {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap; }
+    .commodity_list .commodity .commodity_info .name {
+      font-size: 0.8rem;
+      color: #333;
+      line-height: 0.95rem; }
+    .commodity_list .commodity .commodity_info .describe {
+      font-size: 0.8rem;
+      color: #999;
+      line-height: 0.95rem;
+      margin-top: 0.4rem; }
+    .commodity_list .commodity .commodity_info .exchange {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%; }
+      .commodity_list .commodity .commodity_info .exchange span {
+        display: inline-block;
+        font-size: 0.8rem;
+        color: #e11e00;
+        line-height: 0.85rem;
+        position: absolute;
+        left: 0;
+        bottom: 0; }
+      .commodity_list .commodity .commodity_info .exchange a {
+        display: inline-block;
+        float: right;
+        width: 2.5rem;
+        height: 1.4rem;
+        background: #aa8250;
+        font-size: 0.7rem;
+        color: #fff;
+        line-height: 1.45rem;
+        border-radius: 6px;
+        text-align: center; }
+      .commodity_list .commodity .commodity_info .exchange .bg_col {
+        background: #ccc; }
+      .commodity_list .commodity .commodity_info .exchange .font_col {
+        color: #333; }
+
+/*积分兑换页面*/
+.user_info {
+  background: #fff;
+  margin-bottom: 3.5rem; }
+  .user_info li {
+    line-height: 2.2rem;
+    background: #fff;
+    margin-left: 0.75rem;
+    border-bottom: 1px solid #dddddd; }
+    .user_info li label {
+      display: inline-block;
+      width: 4.5rem;
+      font-size: 0.75rem;
+      color: #333; }
+    .user_info li .ipt {
+      width: 11.25rem;
+      height: 1.5rem;
+      font-size: 0.75rem;
+      color: #999;
+      border: 0;
+      outline: none; }
+    .user_info li div {
+      display: inline-block;
+      width: 4.25rem; }
+      .user_info li div .check {
+        display: inline-block;
+        width: 1rem;
+        height: 1rem;
+        -webkit-appearance: none;
+        background: url(../images/radiou.png) no-repeat;
+        background-size: cover;
+        border: 0px;
+        vertical-align: middle;
+        margin: 0rem 0.3rem 0.15rem 0rem; }
+      .user_info li div .check[type="checkbox"]:checked {
+        background: url(../images/cb.png) no-repeat;
+        background-size: cover; }
+      .user_info li div span {
+        font-size: 0.75rem;
+        color: #666; }
+    .user_info li .sele {
+      -webkit-appearance: none;
+      width: 11.25rem;
+      height: 1.5rem;
+      font-size: 0.75rem;
+      color: #999;
+      border: 0;
+      outline: none;
+      background: #fff; }
+    .user_info li .site {
+      display: inline-block;
+      -webkit-appearance: none;
+      width: 12.75rem;
+      height: 4.5rem;
+      font-size: 0.75rem;
+      color: #999;
+      vertical-align: top;
+      margin-top: 0.5rem;
+      border: 0px;
+      outline: none;
+      resize: none; }
+  .user_info .user_site {
+    padding-bottom: 0.5rem;
+    border-bottom: 0px; }
+
+.con_btn {
+  /*position: fixed;*/
+  margin-top: 2.75rem;
+  left: 0;
+  width: 100%; }
+  .con_btn a {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: #FFF;
+    width: 8.25rem;
+    height: 2.25rem;
+    text-align: center;
+    line-height: 2.25rem;
+    border-radius: 6px;
+    margin-left: 0.75rem; }
+  .con_btn .cancel {
+    border: 1px solid #ab834c;
+    color: #ab834c;
+    background: #f4f4f4; }
+  .con_btn .affirm {
+    background: #ab834c; }
+
+/*兑换成功页面*/
+.success_content .success_img {
+  width: 7.775rem;
+  height: 5.9rem;
+  margin: 0 auto;
+  margin-top: 6.5rem; }
+  .success_content .success_img img {
+    width: 100%; }
+.success_content .title {
+  font-size: 0.8rem;
+  color: #333;
+  text-align: center;
+  margin-top: 1.75rem; }
+.success_content .text {
+  padding: 0rem 0.7rem 0rem 0.7rem;
+  font-size: 0.7rem;
+  color: #999;
+  line-height: 1.1rem;
+  text-align: justify;
+  margin-top: 1.25rem; }
+  .success_content .text span {
+    font-size: 0.7rem;
+    color: #ab834c; }
+.success_content .btn {
+  display: block;
+  width: 7rem;
+  height: 2rem;
+  font-size: 0.8rem;
+  color: #ab834c;
+  background: #fff;
+  border-radius: 6px;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 2.05rem;
+  margin-top: 1.75rem; }
+
+/*兑换历史*/
+.history_container li {
+  margin-left: 0.75rem;
+  padding-right: 0.75rem;
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 0.5rem; }
+  .history_container li .num {
+    font-size: 0.8rem;
+    color: #ee0000;
+    margin-top: 1rem; }
+  .history_container li .comm_name {
+    width: 14.5rem; }
+    .history_container li .comm_name .name {
+      font-size: 0.8rem;
+      color: #333;
+      margin-top: 0.5rem;
+      line-height: 0.95rem;
+      text-align: justify; }
+    .history_container li .comm_name .time {
+      font-size: 0.7rem;
+      color: #999;
+      line-height: 0.85rem;
+      margin-top: 0.25rem; }
+
+/*# sourceMappingURL=new_integral.css.map */

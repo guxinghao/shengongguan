@@ -1,0 +1,382 @@
+<style type="text/css">
+    #search-form2 .input-group .form-control{
+        width: 150px;
+        height: 33px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+    }
+    .sendlist_td td{
+        font-size: 12px;
+    }
+    #list-table th{
+        font-size: 12px;
+    }
+    .form-group{
+        margin-top:10px; 
+    }
+    .sendlist_td td .btn{
+        padding:6px 9px; 
+    }
+</style>
+<style type="text/css">
+    .count{
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+    }
+    .count .count_div .count_p{
+        float: left;
+        width: 25%;
+        text-align: left;
+        font-size: 14px;
+    }
+    .count:before, .count:after{
+      display:table;
+      content:'';
+    }
+    .count:after{
+      clear:both;
+    }
+    .count .count_div{
+        width: 100%;
+        padding: 10px;
+        padding-left: 20px;
+    }
+    .count .count_div .count_span{
+        display: inline-block;
+        width: 130px;
+        text-align: left;
+    }
+    .layui-layer{top:30% !important;}
+</style>
+<include file="Public/min-header"/>
+<link href="__PUBLIC__/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/plugins/daterangepicker/moment.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<div class="wrapper">
+  <include file="Public/breadcrumb"/>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i> 代发列表</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="count">
+                        <div class="count_div">
+                            <p class="count_p"><span class="count_span">未领取份数</span>{$nottl_count?$nottl_count:0}</p>
+                            <p class="count_p"><span class="count_span">已领取份数</span>{$tl_count?$tl_count:0}</p>
+                            <p class="count_p"><span class="count_span">本月新增代发份数</span>{$add_count?$add_count:0}</p>
+                            <p class="count_p"><span class="count_span">历史代发份数</span>{$history_count?$history_count:0}</p>
+                            <p class="count_p"><span class="count_span">泡发状态份数</span>{$paoruan_count?$paoruan_count:0}</p>
+                            <p class="count_p"><span class="count_span">剪洗状态份数</span>{$jianxi_count?$jianxi_count:0}</p>
+                            <p class="count_p"><span class="count_span">煮发状态份数</span>{$zhufa_count?$zhufa_count:0}</p>
+                            <p class="count_p"><span class="count_span">封装状态份数</span>{$fengzhuang_count?$fengzhuang_count:0}</p>
+                        </div>
+                    </div> 
+                    <div class="navbar navbar-default">
+                            <form action="{:U('Services/send_list')}" id="search-form2" class="navbar-form form-inline" method="post" >
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">订单编号</label>
+                                    <div class="input-group">
+                                        <input type="text" name="sn" value="{$sn}" placeholder="订单编号" id="" class="form-control">
+                                    </div>
+                                </div>
+                                <if condition="($role_id neq 4)">
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">选择门店</label>
+                                    <select style="height:30px;" name="store_id" class="input-sm changeColor" id="store_select">
+                                        <option value="0">选择门店</option>
+                                            <volist name="store" id="item">
+                                            <option value="{$item.store_id}" <if condition="$item[store_id] eq $store_id"> selected="selected"</if>>
+                                            {$item.store_name}
+                                            </option>
+                                        </volist> 
+                                    </select>
+                                </div>
+                                </if>
+                                
+                                <div class="form-group">
+                                    <label class="control-label" for="input-date-added">泡发区间</label>
+                                    <div class="input-group">
+                                        <input type="text" name="start_time" value="{$start_time}" placeholder="开始" class="form-control" style="width: 58px;">
+                                        <span style="display: inline-block;float: left;margin-top: 6px;">至</span>
+                                        <input type="text" name="end_time" value="{$end_time}" placeholder="结束" class="form-control" style="width: 58px;">
+                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">会员姓名</label>
+                                    <div class="input-group">
+                                        <input type="text" name="username" value="{$username}" placeholder="会员姓名" id="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">手机号</label>
+                                    <div class="input-group">
+                                        <input type="text" name="mobile" value="{$mobile}" placeholder="手机号" id="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">商品编码</label>
+                                    <div class="input-group">
+                                        <input type="text" name="sku" value="{$sku}" placeholder="商品编码" id="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">发制数量</label>
+                                    <div class="input-group">
+                                        <input type="text" name="count" value="{$count}" placeholder="发制数量" id="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">口感要求</label>
+                                    <select name="requirement" class="input-sm changeColor" id="requirement">
+                                        <option value="">请选择</option>
+                                        <option <if condition="$_requirement eq '略软'">selected</if> value="略软">略软</option>
+                                        <option <if condition="$_requirement eq '适中'">selected</if> value="适中">适中</option>
+                                        <option <if condition="$_requirement eq '略硬'">selected</if> value="略硬">略硬</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">其他备注</label>
+                                    <div class="input-group">
+                                        <input type="text" name="special" value="{$special}" placeholder="其他备注" id="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">领取区间</label>
+                                    <div class="input-group">
+                                        <div class="input-group">
+                                        <input type="text" name="tlstart_time" value="{$tlstart_time}" id="tlstart_time" placeholder="开始时间" class="form-control" style="width: 120px;">
+                                        <span style="display: inline-block;float: left;margin-top: 6px;">至</span>
+                                        <input type="text" name="tlend_time" id="tlend_time" value="{$tlend_time}" placeholder="结束时间" class="form-control" style="width: 120px;">
+                                     </div>
+                                    </div>
+                                </div>
+                        		<div class="form-group">
+                                    <label class="control-label" for="input-order-id">经手人</label>
+                                    <div class="input-group">
+                                        <input type="text" name="creator" value="{$creator}" placeholder="经手人" id="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">提领状态</label>
+                                    <select name="status" class="input-sm changeColor" id="status">
+                                        <option value="">不限</option>
+                                        <option <if condition="$status eq '未提领'">selected</if> value="未提领">未提领</option>
+                                        <option <if condition="$status eq '已提领'">selected</if> value="已提领">已提领</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">代发阶段</label>
+                                    <select name="stage" class="input-sm changeColor" id="stage">
+                                        <option value="">不限</option>
+                                        <option <if condition="$stage eq '泡软'">selected</if> value="泡软">泡软</option>
+                                        <option <if condition="$stage eq '剪洗'">selected</if> value="剪洗">剪洗</option>
+                                        <option <if condition="$stage eq '煮发'">selected</if> value="煮发">煮发</option>
+                                        <option <if condition="$stage eq '封装'">selected</if> value="封装">封装</option>
+                                    </select>
+                                </div>
+                                <input type="hidden" name="pageCount" value="{$_pageCount}">
+                                <div class="form-group">
+                                    <button type="submit"  id="button-filter search-order" class="btn btn-primary "><i class="fa fa-search"></i> 筛选</button>
+                                </div>
+                            </form>
+                    </div>
+                    <div class="box-body">	             
+	           		<div class="row">
+	            	<div class="col-sm-12">
+                    <div class="data_header" style="width: 100%;overflow-x: auto;"> 
+		              <table id="list-table" class="table table-bordered table-striped dataTable" style="width: 1500px;">
+		                 <thead>
+		                   <tr role="row">
+                               <th class="sorting" tabindex="0">编号</th>
+                               <th class="sorting" tabindex="0">门店</th>
+			                   <th class="sorting" tabindex="0">发制日期</th>
+                               <th class="sorting" tabindex="0">会员姓名</th>
+                               <th class="sorting" tabindex="0">手机号</th>
+                               <th class="sorting" tabindex="0">商品名称</th>
+                               <th class="sorting" tabindex="0">发制数量</th>
+                               <th class="sorting" tabindex="0">口感要求</th>
+                               <th class="sorting" tabindex="0">其他备注</th>
+                               <th class="sorting" tabindex="0">领取时间</th>
+                               <th class="sorting" tabindex="0">代发阶段</th>
+                               <th class="sorting" tabindex="0">领取状态</th>
+                               <th class="sorting" tabindex="0">经手人</th>
+			                   <th class="sorting" tabindex="0">删除理由</th>
+			                   <th style="width: 96px;" class="sorting" tabindex="0">操作</th>
+		                   </tr>
+		                 </thead>
+						<tbody>
+						  <foreach name="prom_list" item="vo" key="k" >
+						  	<tr role="row" class="sendlist_td">
+		                     <td title="{$vo.sn}">{$vo.sn|substr=0,5}...</td>
+		                     <td>{$vo.store_id|getStoreName}</td>
+                             <td>{$vo.send_time}</td>
+                             <td>{$vo.uid|getName_users}</td>
+                             <td>{$vo.uid|getUserMobile}</td>
+		                     <td>{$vo.product_name}</td>
+		                     <td>{$vo.count}</td>
+                             <td>{$vo.requirement}</td>
+                             <td>{$vo.special}</td>
+                             <td>{$vo.receive_time}</td>
+                             <td>{$vo.stage}</td>
+                             <td>{$vo.status}</td>
+							 <td>{$vo.cid|getUserName}</td>
+                             <td id="ff{$vo.id}">{$vo.del_reason}</td>
+                             <td>
+                               <a class="btn btn-primary" href="{:U('services/update_send_list',array('id'=>$vo['id']))}"><i class="fa fa-pencil"></i></a>
+                               <if condition="($vo['is_del'] eq 1)">
+                                    <a href="javascript:void(0)" onclick="alert('该数据已经删除,请不要重复删除')" data-toggle="tooltip" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i></a>
+                               <else/>
+                               <a class="btn btn-danger" href="javascript:void(0)" onclick="javascript:delorder({$vo['id']})" id='f{$vo.id}'><i class="fa fa-trash-o"></i></a>
+                               </if>
+                             </td>
+		                   </tr>
+		                  </foreach>
+		                   </tbody>
+		               </table>
+                   </div>
+	               </div>
+	          </div>
+              <div class="row">
+                    <div class="col-sm-12 text-center">{$page}</div>		
+              </div>
+	          </div>
+
+
+                </div>
+            </div>
+        </div>        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<script type="text/javascript">
+    //选择展示条数时触发
+    $("#selectPage").change(function(){
+        var pageCount = $('#selectPage').val();
+        $('.pagination  a').each(function(index, el) {
+            var result = getStrParam('pageCount',$(this).attr('href'));
+            // 如果已经拼接 则替换
+            if (result) {
+                var _href = reStrParam($(this).attr('href'),pageCount);
+            }else{
+                var _href = $(this).attr('href')+'/pageCount/'+pageCount;
+            }
+            $(this).attr('href',_href);
+            
+        });
+        window.location.href="{:U('services/send_list')}/p/1/pageCount/"+pageCount;
+    });
+
+$('#tlstart_time').daterangepicker({
+    format:"YYYY-MM-DD",
+    singleDatePicker: true,
+    showDropdowns: true,
+    minDate:'2016-01-01',
+    maxDate:'2030-01-01',
+    startDate:'{$tlstart_time?$tlstart_time:"2017-01-01"}',
+    locale : {
+        applyLabel : '确定',
+        cancelLabel : '取消',
+        fromLabel : '起始时间',
+        toLabel : '结束时间',
+        customRangeLabel : '自定义',
+        daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+        monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+        firstDay : 1
+    }
+});
+$('#tlend_time').daterangepicker({
+        format:"YYYY-MM-DD",
+        singleDatePicker: true,
+        showDropdowns: true,
+        minDate:'2016-01-01',
+        maxDate:'2030-01-01',
+        startDate:'{$tlend_time?$tlend_time:"2017-01-01"}',
+        locale : {
+            applyLabel : '确定',
+            cancelLabel : '取消',
+            fromLabel : '起始时间',
+            toLabel : '结束时间',
+            customRangeLabel : '自定义',
+            daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+            monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+            firstDay : 1
+        }
+    });
+$('.changeColor').on('change',function () {
+    $(this).css('color','red').find("option").css('color','red');
+    $(this).find("option:not(:selected)").css('color','#999');
+    return false;
+});
+if ('{$store_id}') {
+  $('#store_select').css('color','red').find("option").css('color','red');
+  $('#store_select').find("option:not(:selected)").css('color','#999');
+}
+if ('{$_requirement}') {
+  $('#requirement').css('color','red').find("option").css('color','red');
+  $('#requirement').find("option:not(:selected)").css('color','#999');
+}
+if ('{$stage}') {
+  $('#stage').css('color','red').find("option").css('color','red');
+  $('#stage').find("option:not(:selected)").css('color','#999');
+}
+if ('{$status}') {
+  $('#status').css('color','red').find("option").css('color','red');
+  $('#status').find("option:not(:selected)").css('color','#999');
+}
+function delorder(id) { 
+var id=id;
+var msg = "您真的确定要删除吗？\n\n请确认！"; 
+    if (confirm(msg)==true){ 
+        //页面层
+        layer.open({
+        type: 1,
+        skin: 'layui-layer-rim', //加上边框
+        area: ['420px', '240px'], //宽高
+        content: '<div><p style="font-size:16px;text-align:center;font-weight:bold;margin-top:10px">请填写作废原因</p><p style="text-align:center;"><textarea style="width:366px;height:63px" class="reason_detail"></textarea></p><p style="text-align:right;padding-right:20px"><button order_id="'+id+'" id="del_reason" style="width: 60px;height: 28px;">提交</button></p></div>'
+        })
+        return true; 
+    }else{ 
+        return false; 
+    } 
+}
+// 点击确认按钮 添加删除原因
+//去除重复点击
+var is_click = 0;
+$(document).on('click', '#del_reason',function(event) {
+    if (!is_click) {
+        is_click = 1;
+        var message = $('.reason_detail').val();
+        var id=$(this).attr('order_id');
+        $.ajax({
+            type:'GET',
+            url:"{:U('Admin/services/order_action1')}",
+            data:{id:id, note:message,table_name:'send_list'},
+            dataType: "json",
+            success:function(data){
+                if (data.status==0) {
+                    alert(data.info);
+                    // location.reload();
+                }else{
+                    if (data) {
+                        layer.closeAll('page');
+                        alert("操作成功！");
+                        $('#f'+id).removeClass('btn btn-danger').addClass('btn btn-default');
+                        $('#ff'+id).text(message);
+                        // alert("操作成功！");
+                        // location.reload();   
+                    }else{
+                        alert("操作失败！");
+                    }
+                }
+            }
+        });
+    }else{
+        return false;
+    }
+});
+</script>
+</body>
+</html>

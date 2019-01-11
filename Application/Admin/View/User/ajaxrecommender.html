@@ -1,0 +1,59 @@
+<style>
+  .table tr td a{
+    color: #000;
+  }  
+</style>
+<form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
+<div class="table-responsive">
+    <table class="table table-bordered table-hover" style="font-size:12px;">
+        <thead>
+        <tr>
+            <td class="text-center">推荐人</td>
+            <td class="f3 text-center"><a style="color:#72ACE3" href="javascript:sort('recommender.re_mobile');">推荐人手机</a></td>
+            <td class="f4 text-center">被推荐人</td>      
+            <td class="f4 text-center">被推荐人手机</td>      
+            <td class="f4 text-center">注册时间</td>      
+            <td class="f4 text-center">被推荐人累计消费</td>      
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="info" id="list">
+            <tr>
+                <td class="text-center"><a href="{:U('Admin/user/detail',array('id'=>$list['re_user_id']))}">{$list.re_nickname}</a></td>
+                <td class="f3 text-center"><a href="{:U('Admin/user/detail',array('id'=>$list['re_user_id']))}">{$list.re_mobile}</a></td>
+                <td class="f4 text-center"><a href="{:U('Admin/user/detail',array('id'=>$list['user_id']))}">{$list.nickname}</a></td>
+                <td class="f5 text-center"><a href="{:U('Admin/user/detail',array('id'=>$list['user_id']))}">{$list.mobile}</a></td>
+                <td class="f12 text-center">{$list['reg_time']?$list['reg_time']|date='y-m-d H:i',###:''}</td>
+                <td class="f12 text-center">{$list.total_amount}</td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+</div>
+</form>
+<div class="row">
+
+<div class="col-sm-12 text-center">{$page}</div>
+</div>
+
+<!-- <script src="__PUBLIC__/plugins/jQuery/jquery-1.8.2.min.js"></script> -->
+<script>
+// 分页样式
+$(".pagination li").eq(-1).find('a').css('border-top-right-radius','4px');
+$(".pagination li").eq(-1).find('a').css('border-bottom-right-radius','4px');
+$(".pagination  a").click(function(){
+    var pageCount = $('#selectPage').val();
+    var page = $(this).data('p');
+    ajax_get_table('search-form2',page,pageCount);
+});
+//选择展示条数时触发
+$("#selectPage").change(function(){
+    var pageCount = $('#selectPage').val();
+    var page = $("li.active>a").data('p');
+    ajax_get_table('search-form2',1,pageCount);
+});
+//给统计赋值
+$('#tuijian_count').html('{$tuijian_count?$tuijian_count:0}人');
+$('#beituijian_count').html('{$beituijian_count?$beituijian_count:0}人');
+$('#beituijian_sale').html('{$beituijian_sale?$beituijian_sale:0}元');
+</script>

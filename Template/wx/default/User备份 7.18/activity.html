@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#ededed">
+<head>
+	<meta charset="UTF-8">
+	<!-- 同比缩放标签 ,最大缩放比,最小缩放比,禁止用户缩放-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>马上预约</title>
+	<link rel="stylesheet" href="__STATIC__/css/reset.css">
+	<link rel="stylesheet" href="__STATIC__/css/public.css">
+	<script src="__STATIC__/js/rem.js"></script>
+</head>
+<body>
+	<div class="acti_pic">
+		<img src="{$info.img}" alt="">
+	</div>
+
+	<dl class="acti_introduce ovw mar_b">
+		<dt class="bor_b">
+			<img src="__STATIC__/images/line.png" alt="">
+			<span>活动介绍</span>
+		</dt>
+		<dd >
+			{$info.content}
+		</dd>
+	</dl>
+
+
+	<dl class="acti_introduce acti_activity ovw">
+		<dt class="bor_b">
+			<img src="__STATIC__/images/line.png" alt="">
+			<span>参与活动</span>
+		</dt>
+		<dd class="bor_b activity">
+			<span>活动门店</span>
+			<a href="#">
+				<span>{$info.store_name}</span>
+			</a>
+		</dd>
+		<dd class="bor_b activity">
+			<span>活动时间</span>
+			<a href="#">
+				<span>{$info.start_day|date='Y-m-d',###}</span>
+			</a>
+		</dd>
+		<dd class="bor_b activity">
+			<span>联系电话</span>
+			<span class="fr phone_nem">{$info.tel}</span>
+		</dd>
+		<dd class=" activity ovw">
+			<span>劲爆体验价</span>
+			<span class="fr price">
+				¥{$info.price1}<br>
+				<span >¥<del>{$info.price}</del></span>
+			</span><br>
+			
+		</dd>
+	</dl>
+	<p class="acti_route">可乘坐公交117路，地铁3号线到达</p>
+	<a class="acti_pay" href="__APP__/Home/User/pay/activity_id/{$info.activity_id}">马上支付</a>
+</body>
+</html>

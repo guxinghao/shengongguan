@@ -1,0 +1,260 @@
+<include file="Public/min-header"/>
+<link href="__PUBLIC__/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/plugins/daterangepicker/moment.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<style type="text/css">
+    .sendlist_td td{
+        font-size: 12px;
+    }
+    #list-table th{
+        font-size: 14px;
+    }
+    .form-group{
+        margin-top:10px; 
+    }
+    #search-form2 .form-group .input-group .search_input{
+        width: 150px;
+        height: 33px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+    }
+    #store_select{
+        width: 100px;
+        height: 33px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+    }
+    #guwen{
+        width: 120px;
+        height: 33px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+    }
+</style>
+<style type="text/css">
+    .count{
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+    }
+    .count .count_div .count_p{
+        float: left;
+        width: 33%;
+        text-align: center;
+        font-size: 14px;
+    }
+    .count:before, .count:after{
+      display:table;
+      content:'';
+    }
+    .count:after{
+      clear:both;
+    }
+    .count .count_div{
+        width: 100%;
+        padding: 10px;
+        padding-left: 10px;
+
+    }
+    .count .count_div .count_span{
+        display: inline-block;
+        width: 120px;
+        text-align: center;
+        padding-right: 5px;
+    }
+    #receive_time,#tl_time{
+        font-size: 12px;
+        width: 160px;
+    }
+</style>
+<div class="wrapper">
+  <include file="Public/breadcrumb"/>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i> 上门列表</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="count">
+                        <div class="count_div">
+                            <if condition="($role_id neq 4)">
+                            <p class="count_p"><span class="count_span">上门总数</span>{$total_count?$total_count:0}</p>
+                            </if>
+                            <p class="count_p"><span class="count_span">门店上门总数</span>{$store_count?$store_count:0}</p>
+                            <p class="count_p"><span class="count_span">服务顾问上门总数</span>{$guwen_count?$guwen_count:0}</p>
+                        </div>
+                    </div> 
+                    <div class="navbar navbar-default">
+                            <form action="{:U('Services/visit_list')}" id="search-form2" class="navbar-form form-inline" method="post" >
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">客户手机号</label>
+                                    <div class="input-group">
+                                        <input type="text" name="mobile" value="{$_mobile}" placeholder="客户手机号" id="input-member-id" class="form-control search_input">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">拜访时间</label>
+                                    <div class="input-group">
+                                        <input type="text" name="receive_time" value="{$_receive_time}" placeholder="拜访时间"  id="receive_time" class="form-control search_input">
+                                    </div>
+                                </div>
+                                <if condition="($role_id neq 4)">
+                                    <div class="form-group">
+                                        <label class="control-label" for="input-order-id">选择门店</label>
+                                        <select style="height:30px;" name="store_id" class="store_id changeColor" id="store_select">
+                                            <option value="0">选择门店</option>
+                                                <volist name="store" id="item">
+                                                <option <if condition="$_store_id eq $item['store_id']">selected</if> value="{$item.store_id}">
+                                                {$item.store_name}
+                                                </option>
+                                            </volist> 
+                                        </select>
+                                    </div>
+                                </if>
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">上门人员</label>
+                                    <select style="height:30px;" name="cid" class="cid changeColor" id="guwen">
+                                        <option value="0">选择上门人员</option>
+                                        <volist name="guwen" id="items">
+                                            <option <if condition="$_cid eq $items['admin_id']">selected</if> value="{$items.admin_id}">
+                                                {$items.user_name}
+                                            </option>
+                                        </volist>
+                                    </select> 
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">客户反馈</label>
+                                    <div class="input-group">
+                                        <input type="text" name="remark" placeholder="客户反馈" value="{$remark}" class="form-control search_input">
+                                    </div>
+                                </div>
+                                <input type="hidden" name="pageCount" value="{$_pageCount}">
+                                <div class="form-group">
+                                    <button type="submit"  id="button-filter search-order" class="btn btn-primary "><i class="fa fa-search"></i> 筛选</button>
+                                </div>
+                            </form>
+                    </div>
+                    <div class="box-body">	             
+	           		<div class="row">
+	            	<div class="col-sm-12">
+		              <table id="list-table" class="table table-bordered table-striped dataTable">
+		                 <thead>
+		                   <tr role="row">
+                               <th class="sorting" tabindex="0">编号</th>
+			                   <th class="sorting" tabindex="0">拜访时间</th>
+			                   <th class="sorting" tabindex="0">拜访地址</th>
+			                 
+                               <th class="sorting" tabindex="0">拜访客户</th>
+			                   <th class="sorting" tabindex="0">客户手机号</th>
+                               <th class="sorting" tabindex="0">拜访理由</th>
+                               <th class="sorting" tabindex="0">拜访内容</th>
+                               <th class="sorting" tabindex="0">客户反馈</th>
+			                   <th class="sorting" tabindex="0">上门人员</th>
+			                
+		                   </tr>
+		                 </thead>
+						<tbody>
+						  <foreach name="visit_list" item="visit_list" key="k" >
+						  	<tr role="row" >
+                                <td>{$visit_list.id}</td>
+    							<td>{$visit_list.create_time|date='Y-m-d H:i',###}</td>
+                                <td>{$visit_list['province']==$visit_list['city']?'':$visit_list['province']}{$visit_list['city']}{$visit_list['address']}</td>
+                                <td>{$visit_list.uid|getName_users}</td>
+                                <td>{$visit_list.mobile}</td>
+               
+                                <td>{$visit_list.reason}</td>
+                                <td>{$visit_list.content}</td>
+                                <td>{$visit_list.remark}</td>
+							    <td>{$visit_list.cid|getUserName}</td>
+		                   </tr>
+		                  </foreach>
+		                   </tbody>
+		               </table>
+	               </div>
+	          </div>
+              <div class="row">
+                    <div class="col-sm-12 text-center">{$page}</div>		
+              </div>
+	          </div>
+
+
+                </div>
+            </div>
+        </div>        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<script type="text/javascript">
+    //选择展示条数时触发
+    $("#selectPage").change(function(){
+        var pageCount = $('#selectPage').val();
+        $('.pagination  a').each(function(index, el) {
+            var result = getStrParam('pageCount',$(this).attr('href'));
+            // 如果已经拼接 则替换
+            if (result) {
+                var _href = reStrParam($(this).attr('href'),pageCount);
+            }else{
+                var _href = $(this).attr('href')+'/pageCount/'+pageCount;
+            }
+            $(this).attr('href',_href);
+            
+        });
+        window.location.href="{:U('services/visit_list')}/p/1/pageCount/"+pageCount;
+    });
+
+    //如果门店改变 则改变服务服务数据
+    $('#store_select').change(function(event) {
+        var store_id = $(this).val();
+        if (!store_id) {
+            store_id = 0;
+        }
+        $.ajax({
+            type:"post",
+            url:"{:U('services/getGuWen')}",
+            data:{"store_id":store_id},
+            success:function(result){
+                var jsonobj=eval('('+result+')');
+                var len = jsonobj.length;
+                var str = '<option value="">全部</option>';
+                for (var i = 0; i < len; i++) {
+                    str += "<option value='"+jsonobj[i].admin_id+"'>"+jsonobj[i].user_name+"</option>"
+                }
+                $('#guwen').html(str);
+            }
+        })
+    });
+$('#receive_time').daterangepicker({
+    format:"YYYY/MM/DD",
+    singleDatePicker: false,
+    showDropdowns: true,
+    minDate:'2016/01/01',
+    maxDate:'2030/01/01',
+    startDate:'2016/01/01',
+    locale : {
+        applyLabel : '确定',
+        cancelLabel : '取消',
+        fromLabel : '起始时间',
+        toLabel : '结束时间',
+        customRangeLabel : '自定义',
+        daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+        monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+        firstDay : 1
+    }
+});
+$('.changeColor').on('change',function () {
+    $(this).css('color','red').find("option").css('color','red');
+    $(this).find("option:not(:selected)").css('color','#999');
+    return false;
+});
+if ('{$_store_id}') {
+  $('#store_select').css('color','red').find("option").css('color','red');
+  $('#store_select').find("option:not(:selected)").css('color','#999');
+}
+if ('{$_cid}') {
+  $('#guwen').css('color','red').find("option").css('color','red');
+  $('#guwen').find("option:not(:selected)").css('color','#999');
+}
+</script>
+</body>
+</html>

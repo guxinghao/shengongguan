@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>分类</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>
+		<meta content="telephone=no,email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/swiper.min.css" />
+	</head>
+
+	<body id="classify">
+		<aside class="left">
+			<ul>
+				<li>全部分类</li>
+				<li class="addboder">积分兑换</li>
+				<!-- <li>即食海参</li>
+				<li>速发海参</li>
+				<li>海参礼品卡</li>
+				<li>优选燕窝</li>
+				<li>鲜食海产</li>
+				<li>搭配食材</li>				
+				<li>燕窝礼品卡</li> -->
+
+			</ul>
+
+		</aside>
+		<aside class="right">
+			<ul>
+			<volist name="info" id="vo">
+				<li>
+					<dl>
+						<a href="__APP__/Home/User/product_Details/id/{$vo.goods_id}"><dt><img src="{$vo.original_img}"/></dt>
+						<dd class="title">{$vo.goods_name}</dd>
+						<dd>{$vo.goods_points}</dd></a>
+					</dl>
+				</li>
+			</volist>
+			</ul>
+		</aside>
+		<footer>
+			<dl>
+					<a href="{:U('Cart/vip_index')}">
+					<dt><img src="__STATIC__/img/sy1.png"></dt>
+					<dd>首页</dd>
+					</a>
+			</dl>
+			<dl>
+				<a href="{:U('Index/classify')}">
+					<dt><img src="__STATIC__/img/fl2.png"></dt>
+					<dd class="addCol">分类</dd>
+				</a>
+			</dl>
+			<dl>
+				<a href="{:U('Cart/cart')}">
+					<dt><img src="__STATIC__/img/car1.png"></dt>
+					<dd>购物车</dd>
+				</a>
+			</dl>
+			<dl>
+				<a href="{:U('Member/index')}">
+					<dt><img src="__STATIC__/img/per1.png"></dt>
+					<dd>个人</dd>
+				</a>
+			</dl>
+		</footer>
+		<script type="text/javascript" src="__STATIC__/js/jquery-1.11.1.min.js">
+		</script>
+		<script type="text/javascript" src="__STATIC__/js/swiper.min.js">
+		</script>
+		<script type="text/javascript">
+			$(function() {
+				var leftH = $(window).height() - $('footer').height();
+				$('#classify aside.left').height(leftH);
+				$('#classify aside.right').height(leftH);
+				$('#classify aside.left ul li').each(function() {
+					$('#classify aside.left ul li').click(function() {
+						$('#classify aside.left ul li').removeClass('addboder');
+						$(this).addClass('addboder');
+					})
+				})
+
+			})
+		</script>
+	</body>
+
+</html>

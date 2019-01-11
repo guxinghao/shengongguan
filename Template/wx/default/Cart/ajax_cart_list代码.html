@@ -1,0 +1,135 @@
+<style type="text/css">
+	.page-shopping .bottom-panel{display: flex;}
+	.page-shopping .bottom-panel .info{margin-top: 4px;width: 50%;}
+	.page-shopping .bottom-panel .right{margin-top: 10px;}
+  .page-shopping .item-list .attr span{overflow: hidden;display: -webkit-box; font-weight: normal; white-space: nowrap;}
+</style>
+<ul class="total">
+ <foreach name="cartList" item="v" key="k" >
+   <li>
+				<input type="hidden" name="supplierid" id="supplierid" value="7">
+				<aside class="top">
+					<dl>
+						<dt>
+                         <div class="check-wrapper">
+              <span  class="cart-checkbox  <if condition="$v[selected] eq 1" >checked</if>">
+                 <input type="checkbox" autocomplete="off" name="cart_select[{$v.id}]" <if condition="$v[selected] eq 1" >checked="checked"</if>  style="display:none;" value="1" onclick="ajax_cart_list();">
+              </span>
+             </div>
+                        <a href="{:U('Home/User/product_Details/',array('id'=>$v[goods_id]))}"><img src="{$v.goods_id|goods_thum_images=200,200}"></a></dt>
+						<dd class="title">{$v.goods_name}</dd>
+						<dd class="money">
+							<span class="jg"><b  class="price">{$v.goods_points} 积分</b> {$v.spec_key_name}</span>
+							<div>
+								<span class="quantity-increase" onclick="switch_num(-1,{$v.id},{$v.store_count});" id="jiannum6" class="btn">–</span>
+								<input type="text"  id="goods_num[{$v.id}]" type="text" onKeyDown='if(event.keyCode == 13) event.returnValue = false' name="goods_num[{$v.id}]"  value="{$v.goods_num}" class="num"   onblur="ajax_cart_list()">
+								<span class="quantity-decrease"  onclick="switch_num(1,{$v.id},{$v.store_count});"  class="btn">+</span>
+
+							</div>
+						</dd>
+					</dl>
+				</aside>
+
+			</li>
+   
+</foreach>
+</ul>
+<if condition="empty($cartList)">         
+<div class="screen-wrap fullscreen login">
+<section id="cart-content">
+      <div class="qb_tac" style="padding:50px 0">
+        <img src="__STATIC__/images/flow/empty_cart.png" width="100" height="95">
+        <br>购物车还是空的</div>
+      <div class="qb_gap" style="width:60%; margin:0 auto;">
+        <a href="{:U('Cart/vip_index')}" class="mod_btn btn_strong">马上逛逛</a>
+      </div>
+</section>
+<div style="height:72px;"></div>
+<section class="f_mask" style="display: none;"></section>
+<section class="f_block" id="choose" style="height:0px;"></section> 
+</div>
+ <else/>
+
+
+	<div class="fixedB">
+			<div class="quanxuans">  
+	        <span class="cart-checkbox" onclick="chkAll_onclick()"></span><span class="cart-checktext">全选</span>
+	     </div>
+			<p id="cart_amount_desc"><em>总计：</em><span id="AllTotal">{$total_price.total_fee}</span></p>
+			<a  href="javascript:void();"  onclick="return selcart_submit();" >去结算</a>
+		</div>
+      
+</if> 
+<script type="text/javascript">
+$(".check-wrapper .cart-checkbox").click(function(){
+	if($(this).hasClass('checked')){
+		$(this).removeClass('checked');
+		$(this).find('input').attr('checked',false);
+	}else{
+		$(this).addClass('checked');
+		$(this).find('input').attr('checked',true);
+	}
+	ajax_cart_list();
+})
+
+var is_checked = true;
+$('.inner .cart-checkbox').each(function(){
+	  if(!$(this).hasClass('checked'))
+	  {
+	       is_checked = false;
+	       return false;
+	  }
+});
+if(is_checked){
+  	$('.quanxuans .cart-checkbox').addClass('checked'); 
+}else
+{
+  	$('.quanxuans .cart-checkbox').removeClass('checked'); 
+} 
+	
+function chkAll_onclick() 
+{
+  if($('.quanxuans .cart-checkbox').hasClass('checked')){	  
+    $('.quanxuans .cart-checkbox').removeClass('checked');
+    $('.inner .cart-checkbox').removeClass('checked');
+    $("input[name^='cart_select']").prop('checked',false);
+    is_checked = false;
+  }   
+  else{
+    $('.quanxuans .cart-checkbox').addClass('checked');
+    $('.inner .cart-checkbox').addClass('checked');
+    $("input[name^='cart_select']").prop('checked',true);
+    is_checked = true;
+  }
+  ajax_cart_list();
+}
+
+function del_cart_goods(goods_id)
+{
+    if(!confirm('确定要删除吗?'))
+        return false;
+    var chk_value = [];
+    chk_value.push(goods_id);
+    // ajax调用删除
+    if(chk_value.length > 0)
+        ajax_del_cart(chk_value.join(','));
+}
+
+
+function selcart_submit()
+{
+     var j=0;
+	 $('input[name^="cart_select"]:checked').each(function(){
+	       j++;
+	 });
+     if (j>0)
+     {
+		  window.location.href="{:U('Mobile/Cart/cart2')}"
+     }
+     else
+     {   
+	     alert('请选择要结算的商品！');
+	     return false;
+    }
+}
+</script>

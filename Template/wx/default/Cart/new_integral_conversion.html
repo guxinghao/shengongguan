@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#f4f4f4">
+<head>
+	<meta charset="UTF-8">
+	<!-- 同比缩放标签 ,最大缩放比,最小缩放比,禁止用户缩放-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>积分兑换-兑换页面</title>
+	<link rel="stylesheet" href="__STATIC__/css/reset.css">
+	<link rel="stylesheet" href="__STATIC__/css/new_integral.css">
+	<script src="__STATIC__/js/rem.js"></script>
+</head>
+<body>
+	<!-- 兑换 -->
+	<form action="{:U('Home/Cart/add')}" method="post" id="form1">
+	<dl class="commodity_list con_content ovw">
+		
+		<dd class="commodity ovw">
+			<div class="fl commodity_img">
+				<img src="{$info.original_img}" alt="">
+			</div>
+			<div class="fl commodity_info">
+				<p class="name">{$info.goods_name}</p>
+				<p class="describe">{$info.goods_remark}</p>
+				<div class="exchange" style="bottom: 0.7rem;">
+					<span class="font_col" style="color:#e11e00">积分: {$info.goods_points}</span>
+					<span style="left: 7rem;bottom: 0;"><i style="display: inline-block;float: left;">数量: </i><input every_points="{$info.goods_points}" style="width: 1.8rem;height:0.75rem;border-radius: 10%;line-height:0.75rem;font-size:12px;border:1px solid #666;float:left;margin-left: 0.2rem;" type="number" name="duhuan_num" id="duhuan_num"></span>
+					<span style="left: 0rem;bottom: -1.2rem;">总积分: <i class="add_total_point"></i></span>
+					<input type="hidden" name="final_points" class="final_points">
+				</div>
+			</div>
+		</dd>
+	</dl>
+	<input type="hidden" value="{$info.goods_id}" name="goods_id">
+		<!-- 收货信息 -->
+		<ul class="user_info">
+			<li>
+				<label for="">收货人</label>
+				<input class="ipt" type="text" placeholder="请输入收货人" value="{$infos.consignee}" name="name">
+			</li>
+			<li>
+				<label for="">手机号</label>
+				<input class="ipt" type="text" placeholder="请输入手机号" value="{$infos.mobile}" name="mobile">
+			</li>
+			<li>
+				<label for="">提货方式</label>
+				<div class="zt">
+					<input class="check" type="checkbox"  checked="checked" value="1" name="zt">
+					<span>自提</span>
+				</div>
+				<div class="zt sh">
+					<input class="check" type="checkbox" value="2" name="sh">
+					<span>送货</span>
+				</div>
+			</li>
+			<li class="show">
+				<label for="">选择门店</label>
+				<select class="sele" name="store_id" id="show_store_id" >
+					<option value="0">请选择门店</option>
+					<volist name="r" id="vo" >
+					<option value="{$vo.store_id}">{$vo.store_name}</option>
+					</volist>
+				</select>
+			</li>
+			<li class="ovw user_site show" style="display: none">
+				<p style="border-bottom: 1px solid #dddddd;">
+				<label for="">选择门店</label>
+				<select class="sele" name="new_store_id" id="show_new_store_id" >
+					<option value="0">请选择门店</option>
+					<volist name="res" id="vos" >
+					<option value="{$vos.store_id}">{$vos.store_name}</option>
+					</volist>
+				</select>
+				</p>
+				<p>
+				<label for="">收货地址</label>
+				<textarea class="site" name="content" id="" cols="30" rows="3" placeholder="请输入收货地址">{$infos.address}</textarea>
+				</p>
+			</li>
+
+		</ul>
+		
+		<div class="con_btn">
+			<a class="cancel" href="__APP__/Home/Cart/new_integral">取消</a>
+			<a class="affirm"  onclick="btn();">确认</a>
+			
+		</div>
+	</form>
+	<script src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/js/layer/layer.js"></script>
+	<script>
+
+	var value = $('.site').val();
+	if ($('.sh').find('.check').is(':checked') && value) {
+		$(".show").eq(0).hide();
+		$(".show").eq(1).show();
+		$('#show_store_id').val(0);
+	}
+	function btn(){
+		var duhuan_num = $('#duhuan_num').val();
+		if (!duhuan_num) {
+			layer.alert('请填写兑换数量!', {icon: 2});
+			return false;
+		}
+		var flag = $('input[type=checkbox]:checked').val()
+		if (flag==2) {
+			var value = $('.site').val();
+			var new_store_name = $("#show_new_store_id").find("option:selected").text();
+			var new_store_name_id = $("#show_new_store_id").val();
+
+			if (!value) {
+				layer.alert('请填写收货地址!', {icon: 2});
+				return false;
+			}
+
+			if (new_store_name_id != '0') {
+				//询问框
+				layer.confirm('您所选的送货门店为：'+new_store_name, {
+				  btn: ['确定','取消'] //按钮
+				}, function(){
+				   $('#form1').submit();
+				}, function(){
+				   return;
+				});
+			}else{
+				layer.alert('请选择门店!', {icon: 2});
+				return false;
+			}
+		}else{
+			$('#form1').submit();
+		}
+	}
+	$(function(){
+		$(".zt").click(function(){
+			$(".check").prop("checked",false);
+			$(this).find(".check").prop("checked",true);
+			if($(this).index()==1){
+				// 情况原始数值
+				$('.site').val('');
+
+				$(".show").eq(0).show().css("border","0px");
+				$(".show").eq(1).hide();
+			}else{
+				$('.site').val("{$infos.address}");
+				$(".show").eq(0).hide();
+				$(".show").eq(1).show();
+				$('#show_store_id').val(0);
+			}
+		})
+		$("#duhuan_num").keyup(function(){
+		  var count = $(this).val();
+		  var every_points = $(this).attr('every_points');
+		  var final_points = Math.round(count*every_points*100)/100;
+		  $('.final_points').val(final_points);
+		  $('.add_total_point').html(final_points);
+		});
+	})
+		
+	</script>
+</body>
+</html>

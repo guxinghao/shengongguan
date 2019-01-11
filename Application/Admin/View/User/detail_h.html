@@ -1,0 +1,103 @@
+<include file="Public/min-header"/>
+<link href="__PUBLIC__/plugins/iCheck/flat/user_icon.css" rel="stylesheet" type="text/css" /> 
+<style>
+    .h5_a{
+        margin-top: 0;
+    }
+</style>
+<div class="wrapper">
+    <!-- Content Header (Page header) -->
+   <include file="Public/breadcrumb"/>
+
+            <div class="panel panel-default">
+
+        
+    <form action="" method="post" id="detail_c">
+    <div id="ajax_return">
+	     <table class="table table-bordered table-hover">
+          <thead>   
+	  		<h5 class="h5 h5_a">代发记录<span><a href="{:U('Admin/user/detail',array('id'=>$maps['uid']))}">返回&gt;</a></span></h5>                         
+			<tr>
+    	        <td>订单编号</td>
+                <td>商品名称</td>
+                <td>代发数量</td>
+                <td>代发阶段</td>
+                <td>发制时间</td>
+                <td>领取时间</td>
+                <td>发制要求</td>
+			</tr>
+            </thead>
+                        
+            <tbody>
+
+			<volist name="info" id="send_list">
+			<tr>
+		        <td>{$send_list.sn}</td>
+                <td>{$send_list.product_name}</td>
+                <td>{$send_list.box}盒{$send_list.count}根</td>
+                <td>{$send_list.stage}</td>
+                <td>{$send_list.send_time}</td>
+                <td>{$send_list.receive_time}</td>
+                <td>{$send_list.special}</td>
+			</tr>
+			</volist>
+          
+            </tbody>
+
+	</table>
+    </div>
+    <input type="hidden" value="{$user.user_id}" name="points">
+	</form>
+	<div class="row">
+        <div class="col-sm-12 text-center">{$page}</div>		
+    </div>
+    </div>
+
+   </div>
+
+    <script>
+        $('#selectPage').css('display','none');
+    // $(".pagination  a").click(function(){
+    //     var pageCount = $('#selectPage').val();
+    //     var page = $(this).data('p');
+    //     ajax_get_table('detail_c',page,pageCount);
+    // });
+    //选择展示条数时触发
+    // $("#selectPage").change(function(){
+    //     var pageCount = $('#selectPage').val();
+    //     var page = $("li.active>a").data('p');
+    //     ajax_get_table('detail_c',1,pageCount);
+    // });
+    function ajax_get_table(tab,page,pageCount){
+        cur_page = page; //当前页面 保存为全局变量
+        $.ajax({
+            type : "POST",
+            url:"/index.php/Admin/user/ajax_c/p/"+page+"/pageCount/"+pageCount,//+tab,
+            data : $('#'+tab).serialize(),// 你的formid
+            success: function(data){
+                $("#ajax_return").html('');
+                $("#ajax_return").append(data);
+                console.log(data);
+            }
+        });
+    }
+
+//     //选择展示条数时触发
+// $("#selectPage").change(function(){
+//     var pageCount = $('#selectPage').val();
+//     $('.pagination  a').each(function(index, el) {
+//         var result = getStrParam('pageCount',$(this).attr('href'));
+//         // 如果已经拼接 则替换
+//         if (result) {
+//             var _href = reStrParam($(this).attr('href'),pageCount);
+//         }else{
+//             var _href = $(this).attr('href')+'/pageCount/'+pageCount;
+//         }
+//         $(this).attr('href',_href);
+        
+//     });
+//     window.location.href="{:U('user/detail_c')}/p/1/pageCount/"+pageCount;
+// });
+</script>
+</body>
+</html>

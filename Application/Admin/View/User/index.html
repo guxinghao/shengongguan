@@ -1,0 +1,652 @@
+<include file="Public/min-header"/>
+<link href="__PUBLIC__/plugins/iCheck/flat/user_icon.css" rel="stylesheet" type="text/css" /> 
+<link href="__PUBLIC__/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/plugins/daterangepicker/moment.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<style type="text/css">
+    .search_a select{
+        margin-bottom: 10px;
+    }
+    .more_toggle{
+        display: inline-block;
+        width: 18px;
+        height: 28px;
+        background: url(__PUBLIC__/images/seclose.png) center no-repeat;
+    }
+    .search_date {
+        float: left;
+        height: 30px;
+        line-height: 30px;
+        margin: 8px 0 8px 10px;
+    }
+    .search_date_box {
+        float: left;
+        width: 80px;
+        height: 30px;
+    }
+    .more_one {
+        float: left;
+        width: 215px;
+        height: 30px;
+        line-height: 30px;
+        margin: 8px 0 8px 10px;
+    }
+
+    .more_one_a{
+        float: left;
+        width: 178px;
+        height: 30px;
+        line-height: 30px;
+        margin: 8px 0 8px 10px;
+    }
+    .more_select_box {
+        position: absolute;
+        top: 322px;
+        left: 92px;
+        width: 950px;
+        background-color: #fff;
+        box-shadow: 0 0 5px #999;
+        font-size: 12px;
+        color: #333;
+        z-index: 10;
+    }
+    .more_one_l {
+        float: left;
+        width: 90px;
+        text-align: right;
+    }
+    .day{
+        width: 80px;
+        height: 25px;
+        border-radius: 3px;
+        border: 1px solid #ccc
+    }
+
+    .combobox{
+        padding: 0 0 0 5px;
+        margin: 0;
+        display: inline;
+        vertical-align: bottom;
+        border: 1px solid #cccccc;
+        height: 25px;
+        line-height: 30px;
+        float: left;
+        width: 80px;
+    }
+</style>
+<style type="text/css">
+    .count{
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+        margin:20px auto;
+        width:98%;
+    }
+    .count .count_div .count_p{
+        float: left;
+        width: 20%;
+        text-align: left;
+        font-size: 14px;
+    }
+    .count:before, .count:after{
+      display:table;
+      content:'';
+    }
+    .count:after{
+      clear:both;
+    }
+    .count .count_div{
+        width: 100%;
+        padding: 10px;
+    }
+    .count .count_div .count_span{
+        display: inline-block;
+        width: 90px;
+        text-align: left;
+    }
+</style>
+<div class="wrapper" style="min-height: 650px;">
+  <include file="Public/breadcrumb"/>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i> 会员列表</h3>
+                </div>
+                <div class="count">
+                    <div class="count_div">
+                        <p class="count_p"><span class="count_span">会员总数</span><span id="total_count"></span></p>
+                        <p class="count_p"><span class="count_span">新增会员</span><span id="add_count"></span></p>
+                        <p class="count_p"><span class="count_span">风格人数</span><span id="fengge_count"></span></p>
+                        <p class="count_p"><span class="count_span">门店会员</span><span id="store_count"></span></p>
+                        <p class="count_p"><span class="count_span">服务顾问会员</span><span id="guwen_count"></span></p>
+                        <p class="count_p"><span class="count_span">砖石会员</span><span id="jewel_count"></span></p>
+                        <p class="count_p"><span class="count_span">白金会员</span><span id="pt_count"></span></p>
+                        <p class="count_p"><span class="count_span">金卡会员</span><span id="gold_count"></span></p>
+                        <p class="count_p"><span class="count_span">银卡会员</span><span id="silver_count"></span></p>
+                        <p class="count_p"><span class="count_span">普通会员</span><span id="normal_count"></span></p>
+                    </div>
+                </div> 
+                <div class="search" style="margin:0 auto;width:98%;padding: 10px 0% 0px 0%;background-color: #f8f8f8;border-color: #e7e7e7;border-radius: 4px;">
+                <form action="" id="search-form2" class="navbar-form form-inline" method="post" onsubmit="return false">
+                    <div class="search_a" style="height: <if condition='($role_id eq 5)'>35px<else/>80px</if>;">
+                        <p style="float: left;height:35px">
+                        会员名称/手机号：  <input style="height: 30px;border-radius: 3px;border: 1px solid #ccc;padding-left:5px" type="text" name="mobile" value="" placeholder="手机号码" id="input-mobile" class="mb"></p>
+                        <if condition="($role_id neq 4) AND ($role_id neq 5)">
+                            <p style="float: left;height:35px">
+                            所属门店：  <select id="store_select" name="store_id" class="input-sm changeColor" style="width:110px;">
+                                            <option value="">全部</option>
+                                            <volist name="info" id="vo">
+                                                <option value="{$vo.store_id}">{$vo.store_name}</option>
+                                            </volist>
+                                        </select>
+                            </p>
+                        </if>
+                        <if condition="($role_id neq 5)">
+                            <p style="float: left;height:35px">
+                            服务顾问：  <select name="guwen_id" class="input-sm guwen changeColor" style="width:115px;">
+                                            <option value="">全部</option>
+                                            <volist name="guwen" id="voss">
+                                                <option value="{$voss.admin_id}">{$voss.user_name}</option>
+                                            </volist>
+                                        </select>
+                            </p>
+                        </if>
+                        <p style="float: left;height:35px">
+                        会员等级:   <select name="level" class="input-sm changeColor" id="input-level">
+                                        <option value="">全部</option>
+                                            <volist name="levels" id="vos">
+                                                <option value="{$vos.level_id}">{$vos.level_name}</option>
+                                            </volist>
+                                    </select></p>
+                        <p style="float: left;height:35px">
+                        风格:   <select name="fengge" class="input-sm changeColor" id="fengge">
+                                    <option value="999">全部</option>
+                                    <option value="888">初始</option>
+                                    <option value="2">潜在</option>
+                                    <option value="3">新手</option>
+                                    <option value="4">活跃</option>
+                                    <option value="5">忠诚</option>
+                                    <option value="7">游离</option>
+                                    <option value="8">沉寂</option>
+                                    <option value="10">回归</option>
+                                    <option value="11">老友</option>
+                                    <option value="12">复购</option>
+                                </select></p>
+                        <p style="float: left;height:35px">
+                        备注：  <input style="height: 30px;border-radius: 3px;border: 1px solid #ccc;padding-left:5px" type="text" name="remark" value="" placeholder="输入备注" id="input-remark" class="mb"></p>
+
+                        
+                        <input type="hidden" name="order_by" value="user_id">
+                        <input type="hidden" name="sort" value="desc">
+                           
+                        <p style="float: left;height:35px">
+                            <input style="height: 30px;width: 60px;background-color: #3c8dbc;border-color: #367fa9;color:#fff" type="submit" value="搜 索"  onclick="ajax_get_table('search-form2',1)" id="button-filter search-order" class="search_sub"></p>
+                        <p style="float: left;height:35px">
+                            <span class="more_toggle" title="更多"></div>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="more_select_box" style="display: none;">
+                  
+                        <div class="search_date">
+                            <div class="more_one_l" style="float:left">积分余额:</div>
+                            <div class="search_date_box">
+                                <input type="text" name="min_integral" class="day">
+                            </div>
+                            <div style="float:left;margin:0 3px;">至</div>
+                            <div class="search_date_box">
+                                <input type="text" name="max_integral" class="day">
+                            </div>
+                        </div>
+                        <div class="more_one_a"  style="width: 180px">
+                            <div class="more_one_l">本年购买金额:</div>
+                            <div class="search_date_box">
+                                <input type="text" class="day" value="" name="year_amount">
+                            </div>
+                        </div>
+                        
+
+                        <div class="more_one_a">
+                            <div class="more_one_l">来源途径:</div>
+                            <div class="search_date_box">
+                                <select name="source" class="day input-sm">
+                                    <option value="" >请选择</option>
+                                    <option value="朋友介绍" <eq name="user.source" value="朋友介绍">selected="selected"</eq>>朋友介绍</option>
+                                    <option value="网络搜索" <eq name="user.source" value="网络搜索">selected="selected"</eq>>网络搜索</option>
+                                    <option value="门店路过" <eq name="user.source" value="门店路过">selected="selected"</eq>>门店路过</option>
+                                    <option value="线下活动" <eq name="user.source" value="线下活动">selected="selected"</eq>>线下活动</option>
+                                     <option value="报纸广告" <eq name="user.source" value="报纸广告">selected="selected"</eq>>报纸广告</option>
+                                    <option value="其他" <eq name="user.source" value="其他">selected="selected"</eq>>其他</option>
+                                </select>
+                            </div>
+                        </div>
+                        <if condition="($role_id neq 5)">
+                        <div class="more_one_a" style="width: 245px;">
+                            <div class="more_one_l" style="width: 110px;">开发人:</div>
+                            <div class="search_date_box">
+                                <select name="add_uid" class="input-sm guwen" style="width: 80px;">
+                                    <option value="">全部</option>
+                                    <volist name="guwen" id="voss1">
+                                        <option value="{$voss1.admin_id}">{$voss1.user_name}</option>
+                                    </volist>
+                                </select>
+                            </div>
+                        </div>
+                        </if>
+                        <div class="search_date">
+                            <div class="more_one_l" style="float:left">开发时间:</div>
+                            <div class="search_date_box">
+                                <input type="text" name="start_addtime" class="day addtime">
+                            </div>
+                            <div style="float:left;margin:0 3px;">至</div>
+                            <div class="search_date_box">
+                                <input type="text" name="end_addtime" class="day addtime">
+                            </div>
+                        </div>
+
+                        <div class="more_one" style="width: 180px">
+                            <div class="more_one_l">购买用途:</div>
+                            <select name="purpose" class="day input-sm">
+                                <option value="">请选择</option>
+                                <option value="自己吃">自己吃</option>
+                                <option value="家人吃">家人吃</option>
+                                <option value="送礼">送礼</option>
+                                <option value="公司福利">公司福利</option>
+                                <option value="酒店用">酒店用</option>
+                                <option value="内购用">内购用</option>
+                            </select>
+                        </div>
+
+                        <div style="width: 180px;margin: 8px 0 8px 9px" class="more_one">
+                            <div class="more_one_l">食用人群:</div>
+                            <select name="shiyongrenqun" class="day input-sm">
+                                <option value="">请选择</option>
+                                <option value="老人">老人</option>
+                                <option value="病号">病号</option>
+                                <option value="孕妇">孕妇</option>
+                                <option value="学生">学生</option>
+                                <option value="男性">男性</option>
+                                <option value="女性">女性</option>
+                            </select>
+                        </div>
+
+                        <div style="width: 245px;" class="more_one">
+                            <div class="more_one_l" style="width: 110px;">偏好品类:</div>
+                            <select name="preferred_products" class="day input-sm">
+                                <option value="">请选择</option>
+                                <option value="淡干海参王">淡干海参王</option>
+                                <option value="淡干家庭装">淡干家庭装</option>
+                                <option value="冷冻即食">冷冻即食</option>
+                                <option value="速发海参">速发海参</option>
+                                <option value="虾仁">虾仁</option>
+                                <option value="其他">其他</option>
+                            </select>
+                        </div>
+
+                        <div class="search_date">
+                            <div class="more_one_l" style="float:left">累计购买金额:</div>
+                            <div class="search_date_box">
+                                <input type="text" name="start_point_a" class="day">
+                            </div>
+                            <div style="float:left;margin:0 3px;">至</div>
+                            <div class="search_date_box">
+                                <input type="text" name="end_point_b" class="day">
+                            </div>
+                        </div>
+                        <div class="more_one_a" style="width: 180px">
+                            <div class="more_one_l">常购产品:</div>
+                            <div class="search_date_box">
+                                <input type="text" class="day" value="" name="changgouchanpin_name">
+                            </div>
+                        </div>
+
+                        <div class="more_one" style="width: 180px;margin: 8px 0 8px 9px">
+                            <div class="more_one_l">发制方式:</div>
+                            <select name="fazhifangshi" class="day input-sm">
+                                <option value="">请选择</option>
+                                <option value="门店代发">门店代发</option>
+                                <option value="自己发制">自己发制</option>
+                            </select>
+                        </div>
+
+                        <div class="more_one" style="width: 245px;">
+                            <div class="more_one_l" style="width: 110px">习惯吃法:</div>
+                            <select name="eating_habits" class="day input-sm">
+                                <option value="">请选择</option>
+                                <option value="原味">原味</option>
+                                <option value="蘸汁">蘸汁</option>
+                                <option value="熬粥">熬粥</option>
+                                <option value="煲汤">煲汤</option>
+                                <option value="炒菜">炒菜</option>
+                                <option value="其他">其他</option>
+                                <option value="不确定">不确定</option>
+                            </select>
+                        </div>
+                        <div class="search_date">
+                            <div class="more_one_l" style="float:left">生日:</div>
+                            <div class="search_date_box">
+                                <input id="birthdaystart" type="text" name="birthdaystart" class="day birthday">
+                            </div>
+                            <div style="float:left;margin:0 3px;">至</div>
+                            <div class="search_date_box">
+                                <input id="birthdayend" type="text" name="birthdayend" class="day birthday">
+                            </div>
+                        </div>
+
+                        <div  style="width: 180px"  class="more_one">
+                            <div class="more_one_l">是否关注公众号:</div>
+                            <select name="focus_gzh" class="day input-sm">
+                                <option value="">请选择</option>
+                                <option value="1">是</option>
+                                <option value="2">否</option>
+                            </select>
+                        </div>
+
+                        <div class="more_one" style="width: 180px;">
+                            <div class="more_one_l">是否添加微信:</div>
+                            <select name="add_wechat" class="day input-sm">
+                                <option value="">请选择</option>
+                                <option value="1">是</option>
+                                <option value="2">否</option>
+                            </select>
+                        </div>
+                        <div class="more_one_a" style="width: 245px;">
+                            <div class="more_one_l" style="width: 110px;">最后一次购买时间:</div>
+                            <div class="search_date_box">
+                                <input style="padding-left:5px;width: 80px;" type="text" class="day addtime" value="" name="lastbuytime">
+                            </div>
+                        </div>
+                        
+                        <div class="search_date">
+                            <div class="more_one_l" style="float:left">单次购买金额:</div>
+                            <div class="search_date_box">
+                                <input type="text" name="start_point" class="day">
+                            </div>
+                            <div style="float:left;margin:0 3px;">至</div>
+                            <div class="search_date_box">
+                                <input type="text" name="end_point" class="day">
+                            </div>
+                        </div>
+
+                        <div class="more_one_a"   style="width: 180px">
+                            <div class="more_one_l">累计联系次数:</div>
+                            <div class="search_date_box">
+                                <input type="text" class="day" value="" name="communication">
+                            </div>
+                        </div>
+
+                        <div class="more_one_a" style="width: 180px;">
+                            <div class="more_one_l">推荐参友人数:</div>
+                            <div class="search_date_box">
+                                <input type="text" class="day" value="" name="recommend_count">
+                            </div>
+                        </div>
+
+                        <div class="more_one_a" style="width: 245px;" >
+                            <div class="more_one_l" style="width: 110px">商圈:</div>
+                            <div class="search_date_box">
+                                <select name="trading_area" class="input-sm day">
+                                    <option value="">全部</option>
+                                    <volist name="list" id="vo1">
+                                        <option value="{$vo1.id}">{$vo1.name}</option>
+                                    </volist>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="search_date">
+                            <div class="more_one_l" style="float:left">首单购买金额:</div>
+                            <div class="search_date_box">
+                                <input type="text" name="first_start_point" class="day">
+                            </div>
+                            <div style="float:left;margin:0 3px;">至</div>
+                            <div class="search_date_box">
+                                <input type="text" name="first_end_point" class="day">
+                            </div>
+                        </div>
+                        <div class="search_date">
+                            <div class="more_one_l" style="float:left">累计购买次数:</div>
+                            <div class="search_date_box">
+                                <input type="text" name="start_buy_count" class="day">
+                            </div>
+                            <div style="float:left;margin:0 3px;">至</div>
+                            <div class="search_date_box">
+                                <input type="text" name="end_buy_count" class="day">
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <div id="ajax_return">
+
+                    </div>
+                    <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">全选 <input type="submit" value="发劵" class="search_sub">
+                     <input type="submit" value="删除" class="search_sub">
+                </form>
+                </div>
+            </div>
+        </div>        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script>
+//如果门店改变 则改变服务服务数据
+$('#store_select').change(function(event) {
+    var store_id = $(this).val();
+    if (!store_id) {
+        store_id = 0;
+    }
+    $.ajax({
+        type:"post",
+        url:"{:U('user/getGuWen')}",
+        data:{"store_id":store_id},
+        success:function(result){
+            var jsonobj=eval('('+result+')');
+            var len = jsonobj.length;
+            var str = '<option value="">全部</option>';
+            for (var i = 0; i < len; i++) {
+                str += "<option value='"+jsonobj[i].admin_id+"'>"+jsonobj[i].user_name+"</option>"
+            }
+            $('.guwen').html(str);
+        }
+    })
+});
+$(document).ready(function(){
+    var page = $.cookie('page');
+    if (page) {
+        ajax_get_table('search-form2',page);
+    }else{{
+        ajax_get_table('search-form2',1);
+    }}
+    $('#search').click(function(){
+        $('.search_a').css('display','none');
+        $('.search_b').css('display','block');
+    })
+    $('#rm_search').click(function(){
+        $('.search_a').css('display','block');
+        $('.search_b').css('display','none');
+    })
+});
+
+// ajax 抓取页面
+function ajax_get_table(tab,page,pageCount){
+    var starttime = $('#birthdaystart').val();
+    var endtime = $('#birthdayend').val();
+    if (!starttime && endtime) {
+        alert('填写规范时间');
+        return;
+    }else if (starttime && !endtime) {
+        alert('填写规范时间');
+        return;
+    }
+    cur_page = page; //当前页面 保存为全局变量
+    // 重新设置cookie的page页面;
+    $.cookie('page', cur_page);
+
+    //存取显示字段
+    putCookie();
+
+    $.ajax({
+        type : "POST",
+        url:"/index.php/Admin/user/ajaxindex/p/"+page+"/pageCount/"+pageCount,//+tab,
+        data : $('#'+tab).serialize(),// 你的formid
+        success: function(data){
+            $("#ajax_return").html('');
+            $("#ajax_return").append(data);
+        }
+    });
+}
+
+// 点击排序
+function sort(field)
+{
+    $("input[name='order_by']").val(field);
+    var v = $("input[name='sort']").val() == 'desc' ? 'asc' : 'desc';
+    $("input[name='sort']").val(v);
+    ajax_get_table('search-form2',cur_page);
+}
+
+//发送站内信
+function send_message(id)
+{
+    var obj = $("input[name*='selected']");
+    var url = "{:U('Admin/User/sendMessage')}";
+    if(obj.is(":checked")){
+        var check_val = [];
+        for(var k in obj){
+            if(obj[k].checked)
+                check_val.push(obj[k].value);
+        }
+        url += "?user_id_array="+check_val;
+    }
+    layer.open({
+        type: 2,
+        title: '站内信',
+        shadeClose: true,
+        shade: 0.8,
+        area: ['580px', '480px'],
+        content: url
+    });
+}
+
+//发送邮件
+function send_mail(id)
+{
+    var obj = $("input[name*='selected']");
+    var url = "{:U('Admin/User/sendMail')}";
+    if(obj.is(":checked")){
+        var check_val = [];
+        for(var k in obj){
+            if(obj[k].checked)
+                check_val.push(obj[k].value);
+        }
+        url += "?user_id_array="+check_val;
+        layer.open({
+            type: 2,
+            title: '发送邮箱',
+            shadeClose: true,
+            shade: 0.8,
+            area: ['580px', '480px'],
+            content: url
+        });
+    }else{
+        layer.msg('请选择会员');
+    }
+
+}
+
+/**
+ * 回调函数
+ */
+function call_back(v) {
+    layer.closeAll();
+    if (v == 1) {
+        layer.msg('发送成功');
+    } else {
+        layer.msg('发送失败');
+    }
+}
+
+
+$(document).ready(function() {
+    $('.addtime').daterangepicker({
+        format:"YYYY-MM-DD",
+        singleDatePicker: true,
+        showDropdowns: true,
+        minDate:'2016-01-01',
+        maxDate:'2030-01-01',
+        startDate:'{$now_time}',
+        locale : {
+            applyLabel : '确定',
+            cancelLabel : '取消',
+            fromLabel : '起始时间',
+            toLabel : '结束时间',
+            customRangeLabel : '自定义',
+            daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+            monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+            firstDay : 1
+        }
+    });
+    
+    $('.birthday').daterangepicker({
+        format:"YYYY-MM-DD",
+        singleDatePicker: true,
+        showDropdowns: true,
+        minDate:'2016-01-01',
+        maxDate:'2030-01-01',
+        startDate:'{$now_time}',
+        locale : {
+            applyLabel : '确定',
+            cancelLabel : '取消',
+            fromLabel : '起始时间',
+            toLabel : '结束时间',
+            customRangeLabel : '自定义',
+            daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+            monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+            firstDay : 1
+        }
+    });
+
+});
+$(".more_toggle").bind("click",function(event){
+    var status = $(".more_select_box").css("display");
+    if(status == "none"){
+        $(".more_select_box").show();
+        $(this).css("background-image","url(__PUBLIC__/images/seopen.png)");
+    }else{
+        $(".more_select_box").hide();
+        $(this).css("background-image","url(__PUBLIC__/images/seclose.png)");
+    }
+    event.stopPropagation();    //  阻止事件冒泡
+});
+
+$(".search").bind("click",function(){
+    $(".more_select_box").hide();
+    $(".more_toggle").css("background-image","url(__PUBLIC__/images/seclose.png)");
+    event.stopPropagation();
+})
+$(".more_select_box").bind("click",function(e){
+    e.stopPropagation();    //  阻止事件冒泡
+})
+$('.changeColor').on('change',function () {
+    $(this).css('color','red').find("option").css('color','red');
+    $(this).find("option:not(:selected)").css('color','#999');
+    return false;
+});
+
+//存储cookie方法
+function putCookie(){
+  var _str = new Array();
+  $('.listTitle li input').each(function(index, el) {
+      if ($(this).is(':checked')) {
+          _str.push($(this).attr('name'));
+      }
+  });
+  var newStr = _str.join(",");
+  $.cookie('user_cookie', newStr);
+}
+
+</script>
+</body>
+</html>

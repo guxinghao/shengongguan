@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-sm-12">
+    <table id="list-table" class="table table-bordered table-striped dataTable">
+       <thead>
+         <tr role="row">
+           <!--   <th class="text-center"><input type="checkbox" onclick="choosebox(this)">全选</th> -->
+             <th class="text-center">编号</th>
+             <th class="text-center">商圈名称</th>
+             <th class="text-center">操作</th>
+         </tr>
+       </thead>
+      <tbody>
+        <foreach name="info" item="vo"  >
+          <tr role="row" align="center">
+         <!--   <td><input type="checkbox" name="right[]" value="{$vo.id}"></td> -->
+           <td>{$vo.id}</td>
+           <td>{$vo.name}</td>
+         <!--   <td><div style="width:500px;word-wrap:break-word;">{$vo.right}</div></td> -->
+           <td>
+           <!--  <a class="btn btn-primary" href="{:U('System/edit_right',array('id'=>$vo['id']))}"><i class="fa fa-pencil"></i></a> -->
+           <eq name="vo.status" value="1">
+            <a class="btn btn-danger" title="禁用" href="javascript:void(0)" data-url="{:U('Admin/System/shangquang',array('id'=>$vo['id']))}" onclick="delfunc(this)"><i class="fa fa-trash-o"></i></a>
+            </eq>
+            <eq name="vo.status" value="0">
+            <a class="btn btn-default" title="恢复" href="javascript:void(0)" data-url="{:U('Admin/System/del_sq',array('id'=>$vo['id']))}" onclick="store(this)"><i class="fa fa-trash-o"></i></a>
+            </eq>
+          </td>
+         </tr>
+        </foreach>
+         </tbody>
+       <tfoot>                         
+       </tfoot>
+     </table>  
+ </div>
+</div>
+<div class="row">
+  <div class="col-sm-12 text-center">{$page}</div>        
+</div>
+<script>
+$(".pagination  a").click(function(){
+    var pageCount = $('#selectPage').val();
+    var page = $(this).data('p');
+    ajax_get_table('area',page,pageCount);
+});
+//选择展示条数时触发
+$("#selectPage").change(function(){
+    var pageCount = $('#selectPage').val();
+    var page = $("li.active>a").data('p');
+    ajax_get_table('search-form2',1,pageCount);
+});
+</script>

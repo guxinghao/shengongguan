@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#ededed">
+<head>
+	<meta charset="UTF-8">
+	<!-- 同比缩放标签 ,最大缩放比,最小缩放比,禁止用户缩放-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>送至门店发泡</title>
+	<link rel="stylesheet" href="__STATIC__/css/reset.css">
+	<link rel="stylesheet" href="__STATIC__/css/public.css">
+	<script src="__STATIC__/js/rem.js"></script>
+</head>
+<body>
+<form action="{:U('Index/dosoak')}" method="post">
+	<ul class="apply ovw soak mar_b">
+		<li class="pad">
+			<span>选择门店</span>
+			<div class="fr">
+				<!-- <span class="font_c">门店一</span>
+				<img src="images/rt.png" alt=""> -->
+				<select name="store_name" id="">
+				<volist name="info" id="vo" key="k">
+					<option value="{$vo.id}">{$vo.store_name}</option>
+				</volist>	
+				</select>
+			</div>
+		</li>
+		<li class="pad">
+			<span>商品名称</span>
+			<input class="fr font_c" type="text" placeholder="请输入商品名称" name="name"></input>
+		</li>
+		<li class="pad">
+			<span>口感</span>
+			<div class="fr">
+				<select name="kougan" id="">
+					<option value="1">略硬</option>
+					<option value="2">适中</option>
+					<option value="3">略软</option>					
+				</select>
+			</div>
+		</li>
+		<li class="pad bg_col">
+			<span>数量</span>
+		</li>
+		<li class="pad so_boxes">
+			<span>盒</span>
+			<div class="fr">
+				<i class="reduce">–</i>
+				<input class="font_c soak_num soak_txt" type="text" value="1" name="box">
+				<i class="add">+</i>
+			</div>
+		</li>
+		<li class="pad so_boxes">
+			<span>根</span>
+			<div class="fr">
+				<i class="reduce">–</i>
+				<input class="font_c soak_nums soak_txt" type="text" value="1" name="geng">
+				<i class="add">+</i>
+			</div>
+		</li>
+	</ul>
+	
+	<ul class="apply ovw soak mar_b">
+		<li class="pad">
+			<span>提货方式</span>
+			<div class="fr">
+				<select name="get_goods" id="">
+					<option value="自提">自提</option>
+					<option value="送货上门">送货上门</option>
+				</select>
+			</div>
+		</li>
+		<li class="pad">
+			<span>领取时间</span>
+			<div class="fr">
+				<input class="so_time" id="" value="2017-07-02T11:00:00" type="datetime-local" placeholder="请选择日期" name="time">
+			</div>
+		</li>
+		<li class="pad require"> 
+			<span class="fl">特殊要求</span>
+			<textarea name="special" id="" cols="30" rows="5" ></textarea>
+		</li>
+	</ul>
+	<!-- <su class="soak_sub" href="#">提交</a> -->
+	<input type="submit" value="提交" class="soak_sub">
+
+</form>
+	<script src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+	<script>
+		$(function(){
+
+			$(".add").click(function(){
+				var num=parseInt($(this).prev().val());
+				num++;
+				$(this).prev().val(num)
+				console.log($(this).prev())
+				console.log(num);
+				$(this).prev().prev().css("color","#999").css("background","").css("borderColor","#e5e5e5");
+			});
+
+			$(".reduce").click(function(){
+				var num=parseInt($(this).next().val());
+				if(num==1){
+					$(this).css("color","#FFF").css("background","#ededed").css("borderColor","#ededed");
+					$(this).next().val(1);
+				}else{
+						num--;
+					$(this).next().val(num);
+				}
+			})
+
+			
+		})
+		
+
+	</script>
+</body>
+</html>

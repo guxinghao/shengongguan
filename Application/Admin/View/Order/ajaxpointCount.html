@@ -1,0 +1,64 @@
+<form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover" style="font-size:12px;">
+            <thead>
+            <tr>
+                <td class="text-center">
+                    所属门店
+                    <!-- <a href="javascript:sort('nickname');">所属门店</a> -->
+                </td>
+                <td class="text-center">
+                    兑换时间
+                    <!-- <a href="javascript:sort('consignee');">兑换时间</a> -->
+                </td>
+                <td class="text-center">
+                    商品编号
+                    <!-- <a href="javascript:sort('goods_price');">商品编号</a> -->
+                </td>
+                <td class="text-center">产品名称</td>      
+                <td class="text-center">兑换数量</td>
+                <td class="text-center">使用积分</td>
+            </tr>
+            </thead>
+            <tbody>
+            <volist name="send_points" id="vo">
+                <tr>
+                    <td class="text-center">{$vo.store_id|getStoreName}</td>
+                    <td class="text-center">{$point_time}</td>
+                    <td class="text-center">{$vo.goods_id|getSku}</td>
+                    <td class="text-center">{$vo.goods_name}</td>
+                    <td class="text-center">{$vo.total_num}</td>
+                    <td class="text-center">{$vo.total_points}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+    </div>
+</form>
+<div class="row">                        
+    <div class="col-sm-12 text-center">{$page}</div>
+</div>
+<script>
+    $(".pagination  a").click(function(){
+        var pageCount = $('#selectPage').val();
+        var page = $(this).data('p');
+        ajax_get_table('search-form2',page,pageCount);
+    });
+    //选择展示条数时触发
+    $("#selectPage").change(function(){
+        var pageCount = $('#selectPage').val();
+        $('#pageCount').val(pageCount);
+        
+        var page = $("li.active>a").data('p');
+        ajax_get_table('search-form2',page,pageCount);
+    });
+    //表头统计赋值
+    $('#search_store').html('{$thisStore}');
+    if ("{$thisCreateTime}") {
+        $('#search_time').html('{$thisCreateTime}');
+    }
+    $('#search_sku').html('{$thisSku}');
+    $('#search_goods_name').html('{$thisGoodsName}');
+    $('#search_count').html('{$total_num}');
+    $('#search_points').html('{$total_points}');
+</script>

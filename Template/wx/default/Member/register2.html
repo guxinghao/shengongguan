@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>注册密码</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>
+		<meta content="telephone=no,email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css" /> 
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+
+
+	</head>
+
+	<body id="cgg_reagin" class="comform">
+		<p><img src="__STATIC__/img/cgglogo.png" /></p>
+		<form action="{:U('Member/sign_Up')}" method="post" id="form1">
+		<input type="hidden" name="mobile" value="{$mobile}">
+			<div class="pwd cominpput">
+				<span>
+					<img src="__STATIC__/img/lock.png"/>
+				</span>
+				<input type="password" class="mima_dd" name="password" id=""  placeholder="请输入6位数密码" maxlength="6"/>
+			
+				<i class="eyes_box" data-show="1"><img src="__STATIC__/img/open.png"/></i>
+			</div>
+
+			<div class="conpwd cominpput">
+				<span>
+					<img src="__STATIC__/img/lock.png"/>
+				</span>
+				
+				<input type="password" name="password_a"  class="mima_wz" placeholder="请再输入确定密码" maxlength="6" />
+				<i class="eyes_box" data-show="2"><img src="__STATIC__/img/close.png"/></i>
+			</div>
+			<a class="btn" onClick="login();">注册</a>
+			<div id="treaty">
+				<input type="checkbox" name="password1" id="" value="" checked="checked"/>
+				<p class="font_28">我同意<span>《XXXX注册协议》</span></p>
+			</div>
+			
+			
+		</form>
+		<div id="shandow">
+				<aside>
+					<p class="xy">注册协议</p>
+					<p class="con">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget odio.
+Unnamed (Rectangle)
+					</p>
+					<p class="con">
+						Lorem ipsum dolor sit amet, consectetur
+					</p>
+					<ul>
+						<li>不同意</li>
+						<li >同意</li>
+					</ul>
+				</aside>
+			</div>
+		<script type="text/javascript" src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="__STATIC__/js/common.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				$('#shandow ul li').each(function(){
+					$('#shandow ul li').click(function(){
+						$('#shandow').css('display','none');
+					})
+				});
+				$('#treaty span').click(function(){
+					$('#shandow').css('display','block');
+				})
+			})
+			 function login(){
+			$("#form1").submit();
+			}
+
+			
+		</script>
+			
+		
+	</body>
+
+</html>

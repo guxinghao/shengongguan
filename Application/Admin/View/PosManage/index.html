@@ -1,0 +1,52 @@
+<include file="Public/min-header"/>
+<div class="wrapper">
+  <include file="Public/breadcrumb"/>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-vo"></i> pos机打印管理</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="box-body">               
+                    <div class="row">
+                    <div class="col-sm-12">
+                      <table id="vo-table" class="table table-bordered table-striped dataTable">
+                         <thead>
+                           <tr role="row">
+                               <th class="sorting" tabindex="0">编号</th>
+                               <th class="sorting" tabindex="0">使用区块</th>
+                               <th style="width: 87px;" class="sorting" tabindex="0">提示语类型</th>
+                               <th style="width: 533px;" class="sorting" tabindex="0">内容</th>
+                               <th class="sorting" tabindex="0">最近一次修改人</th>
+                               <!-- <th class="sorting" tabindex="0">最后修改时间</th> -->
+                               <th class="sorting text-center" tabindex="0">操作</th>
+                           </tr>
+                         </thead>
+                        <tbody>
+                          <foreach name="info" item="vo" key="k" >
+                            <tr role="row" >
+                             <td>{$vo.id}</td>
+                             <td>{$vo.area}</td>
+                             <td>{$vo.title}</td>
+                             <td>{$vo.content}</td>
+                             <td>{$vo.creator}</td>
+                             <!-- <td class="now_time">{$vo['update_time']?$vo.update_time|date='y-m-d H:i',###:''}</td> -->
+                             <td class="text-center col-sm-2">
+                                <a class="btn btn-primary" href="{:U('PosManage/update',array('id'=>$vo['id']))}"><i class="fa fa-pencil"></i></a>
+                            </td>
+                           </tr>
+                          </foreach>
+                           </tbody>
+                       </table>
+                   </div>
+              </div>
+              </div>
+              </div>
+            </div>
+        </div>        <!-- /.row -->
+    </section>
+</div>
+</body>
+</html>

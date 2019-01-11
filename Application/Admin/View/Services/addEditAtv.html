@@ -1,0 +1,412 @@
+<include file="Public/min-header"/>
+<link href="__PUBLIC__/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/plugins/daterangepicker/moment.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<div class="wrapper">
+    <include file="Public/breadcrumb"/>
+    <section class="content ">
+        <!-- Main content -->
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回"><i class="fa fa-reply"></i></a>
+				
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i> 添加活动</h3>
+                </div>
+                <div class="panel-body ">   
+                    <!--表单数据-->
+                    <form method="post" id="handleposition" action="{:U('Admin/Services/adAvtHandle')}">                    
+                        <!--通用信息-->
+                    <div class="tab-content col-md-10">                 	  
+                        <div class="tab-pane active" id="tab_tongyong">                           
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <td class="col-sm-2">活动标题：</td>
+                                    <td class="col-sm-8">
+                                        <input type="text" class="form-control" id="title" name="title" value="{$info.title}" >
+                                        <span id="err_attr_name" style="color:#F00; display:none;"></span>                                        
+                                    </td>
+                                </tr>           
+                                <tr>
+                                    <td>所属板块：</td>
+                                    <td>
+                                        <select name="cate_id" 　 id="cate_id" 　 class="input-sm">
+                                            <option value="0">选择板块</option>
+                                             <option value="1" <eq name="info.cate_id" value="1">selected="selected"</eq>>海参下午茶</option>
+                                              <option value="2" <eq name="info.cate_id" value="2">selected="selected"</eq>>参观海参产区</option>
+                                        </select>                                
+                                    </td>
+                                </tr> 
+                                <tr>
+                                    <td>门店名称：</td>
+                                    <td>
+                                        <input type="text" class="form-control" name="store_name" value="{$info.store_name}" >                              
+                                    </td>
+                                </tr>  
+                                <tr>
+                                    <td>展示顺序：</td>
+                                    <td>
+                                         <input type="text" class="form-control" name="sort" value="{$info.sort}" >
+                                    </td>
+                                </tr> 
+                                 <tr>
+                                    <td>上传背景图：</td>
+                                    <td>
+                      					<div class="col-sm-3">
+                      						<input type="text" class="form-control" style="width:350px;margin-left:-15px;" name="img" id="ad_code" value="{$info.img}" >
+                      					</div>
+                      					<div class="col-sm-3">
+                                        	<input type="button" class="btn btn-default" onClick="GetUploadify(1,'ad_code','ad','')"  value="上传图片"/>
+                                        </div>
+                                    </td>
+                                </tr> 
+                                <tr>
+                                    <td>活动介绍:</td>
+                                    <td>
+	                                    <textarea rows="3" cols="80" name="content">{$info.content}</textarea>
+                                        <span id="content" style="color:#F00; display:none;"></span>
+                                         
+                                    </td>                                                                       
+                                </tr>
+                                <tr>
+                                    <td>开始日期：</td>
+                                    <td>
+                                        <fieldset>
+                                        <div class="control-group">
+                                                <div class="controls">
+                                                        <div class="input-prepend input-group">
+                                                                <span class="add-on input-group-addon">
+                                                                        <i class="glyphicon glyphicon-calendar fa fa-calendar">
+                                                                        </i>
+                                                                </span>
+                                                                <input type="text" style="width: 300px" name="start_day" id="start_time" class="form-control" value='{$info.start_day|default="2017-01-01"}'>  <select class="input-sm" name="start_time">
+                                                                	<option value="">选择开始时间</option>
+                                                                    <eq name="info.start_time" value=""><else/>
+                                                                     <option value="{$info.start_time}" selected="selected">{$info.start_time}</option>
+                                                                    </eq>
+                                                                    <option value="6:00">6:00</option>
+                                                                    <option value="6:30">6:30</option>
+                                                                    <option value="7:00">7:00</option>
+                                                                    <option value="7:30">7:30</option>
+                                                                    <option value="8:00">8:00</option>
+                                                                    <option value="8:30">8:30</option>
+                                                                     <option value="9:00">9:00</option>
+                                                                    <option value="9:30">9:30</option>
+                                                                    <option value="10:00">10:00</option>
+                                                                    <option value="10:30">10:30</option>
+                                                                    <option value="11:00">11:00</option>
+                                                                    <option value="11:30">11:30</option>
+                                                                     <option value="12:00">12:00</option>
+                                                                    <option value="12:30">12:30</option>
+                                                                    <option value="13:00">13:00</option>
+                                                                    <option value="13:30">13:30</option>
+                                                                    <option value="14:00">14:00</option>
+                                                                    <option value="14:30">14:30</option>
+                                                                       <option value="15:00">15:00</option>
+                                                                    <option value="15:30">15:30</option>
+                                                                     <option value="16:00">16:00</option>
+                                                                    <option value="16:30">16:30</option>
+                                                                    <option value="17:00">17:00</option>
+                                                                    <option value="17:30">17:30</option>
+                                                                    <option value="18:00">18:00</option>
+                                                                    <option value="18:30">18:30</option>
+                                                                     <option value="19:00">19:00</option>
+                                                                    <option value="19:30">19:30</option>
+                                                                    <option value="20:00">20:00</option>
+                                                                    <option value="20:30">20:30</option>
+                                                                    <option value="21:00">21:00</option>
+                                                                    <option value="21:30">21:30</option>
+                                                                     <option value="22:00">22:00</option>
+                                                                    <option value="22:30">22:30</option>
+                                                                    <option value="23:00">23:00</option>
+                                                                    <option value="23:30">23:30</option>
+                                                                  
+                                                                    
+                                                                    
+                                                                </select>-<select class="input-sm"  name="end_time">
+                                                                <option value="">选择结束时间</option>
+                                                                <eq name="info.end_time" value=""><else/>
+                                                                     <option value="{$info.end_time}" selected="selected">{$info.end_time}</option>
+                                                                    </eq>
+                                                                 <option value="6:00">6:00</option>
+                                                                    <option value="6:30">6:30</option>
+                                                                    <option value="7:00">7:00</option>
+                                                                    <option value="7:30">7:30</option>
+                                                                    <option value="8:00">8:00</option>
+                                                                    <option value="8:30">8:30</option>
+                                                                     <option value="9:00">9:00</option>
+                                                                    <option value="9:30">9:30</option>
+                                                                    <option value="10:00">10:00</option>
+                                                                    <option value="10:30">10:30</option>
+                                                                    <option value="11:00">11:00</option>
+                                                                    <option value="11:30">11:30</option>
+                                                                     <option value="12:00">12:00</option>
+                                                                    <option value="12:30">12:30</option>
+                                                                    <option value="13:00">13:00</option>
+                                                                    <option value="13:30">13:30</option>
+                                                                    <option value="14:00">14:00</option>
+                                                                    <option value="14:30">14:30</option>
+                                                                       <option value="15:00">15:00</option>
+                                                                    <option value="15:30">15:30</option>
+                                                                     <option value="16:00">16:00</option>
+                                                                    <option value="16:30">16:30</option>
+                                                                    <option value="17:00">17:00</option>
+                                                                    <option value="17:30">17:30</option>
+                                                                    <option value="18:00">18:00</option>
+                                                                    <option value="18:30">18:30</option>
+                                                                     <option value="19:00">19:00</option>
+                                                                    <option value="19:30">19:30</option>
+                                                                    <option value="20:00">20:00</option>
+                                                                    <option value="20:30">20:30</option>
+                                                                    <option value="21:00">21:00</option>
+                                                                    <option value="21:30">21:30</option>
+                                                                     <option value="22:00">22:00</option>
+                                                                    <option value="22:30">22:30</option>
+                                                                    <option value="23:00">23:00</option>
+                                                                    <option value="23:30">23:30</option>
+                                                                </select>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        </fieldset>
+                                    </td>
+                                </tr>  
+                              
+                                
+                                 <tr>
+                                    <td>报名截止时间：</td>
+                                    <td>
+                                        <fieldset>
+                                            <div class="control-group">
+                                                    <div class="controls">
+                                                            <div class="input-prepend input-group">
+                                                                    <span class="add-on input-group-addon">
+                                                                            <i class="glyphicon glyphicon-calendar fa fa-calendar">
+                                                                            </i>
+                                                                    </span>
+                                                                    <input type="text" style="width: 300px" name="deadline" id="deadline_time" class="form-control" value='{$info.deadline|default="2017-01-15"}'>
+                                                            </div>
+                                                    </div>
+                                            </div>
+                                            </fieldset>
+                                    </td>
+                                </tr>
+                              	 <tr>
+                                    <td>报名人数限制：</td>
+                                    <td>
+                                         <input type="text" class="form-control" name="counts" value="{$info.counts}" >
+                                    </td>
+                                </tr> 
+                                 <tr>
+                                    <td>地点：</td>
+                                    <td>
+                                         <input type="text" class="form-control" 　 id="address"   name="address" value="{$info.address}" >
+                                    </td>
+                                </tr> 
+                                 <tr>
+                                    <td>集合地点：</td>
+                                    <td>
+                                         <input type="text" class="form-control" name="toaddress" value="{$info.toaddress}" >
+                                    </td>
+                                </tr> 
+                                
+                                 <tr>
+                                    <td>联系电话：</td>
+                                    <td>
+                                         <input type="text" class="form-control" name="tel" value="{$info.tel}" >
+                                    </td>
+                                </tr> 
+                                
+                                 <tr>
+                                    <td>交通方式：</td>
+                                    <td>
+                                         <input type="text" class="form-control" name="transport" value="{$info.transport}" >
+                                    </td>
+                                </tr> 
+                                  <tr>
+                                    <td>活动价格(元)：</td>
+                                    <td>
+                                        <input type="text" class="form-control" 　id="price" name="price" value="{$info.price}" >
+                                    </td>
+                                </tr> 
+                                 <tr>
+                                    <td>体验价格(元)：</td>
+                                    <td>
+                                        <input type="text" class="form-control" name="price1" value="{$info.price1}" >
+                                    </td>
+                                </tr> 
+                              
+                                                          
+                                </tbody> 
+                                <tfoot>
+                                	<tr>
+                                	<td><input type="hidden" name="act" value="{$act}">
+                                        <input type="hidden" name="activity_id" value="{$info.activity_id}">
+                                	</td>
+                                	<td class="text-right"><input class="btn btn-primary" type="button" onclick="adsubmit()" value="保存"> <input class="btn btn-primary" type="button" onclick="javascript:history.go(-1)" value="取消"></td></tr>
+                                </tfoot>                               
+                            </table>
+                        </div>                           
+                    </div>              
+			    	</form><!--表单数据-->
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+function adsubmit(){
+	var title=$("#title").val();
+	if(title==''){
+		alert("请填写活动名称！")
+		return false;
+		
+	}
+	var cate_id=$("#cate_id").val();
+	if(cate_id==''){
+		alert("请选择所属板块！")
+		return false;
+		
+	}
+	var start_time=$("#start_time").val();
+	if(start_time==''){
+		alert("请填写活动时间！")
+		return false;
+		
+	}
+	var address=$("#address").val();
+	if(address==''){
+		alert("请填写活动地址！")
+		return false;
+		
+	}
+	var price=$("#price").val();
+	if(price==''){
+		alert("请填写活动费用！")
+		return false;
+		
+	}
+	$('#handleposition').submit();
+}
+
+$(document).ready(function() {
+
+	$('#start_time').daterangepicker({
+		format:"YYYY-MM-DD",
+		singleDatePicker: true,
+		showDropdowns: true,
+		minDate:'2017-01-01',
+		maxDate:'2030-01-01',
+		startDate:'2016-01-01',
+	    locale : {
+            applyLabel : '确定',
+            cancelLabel : '取消',
+            fromLabel : '起始时间',
+            toLabel : '结束时间',
+            customRangeLabel : '自定义',
+            daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+            monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+            firstDay : 1
+        }
+	});
+	
+	$('#end_time').daterangepicker({
+		format:"YYYY-MM-DD",
+		singleDatePicker: true,
+		showDropdowns: true,
+		minDate:'2017-01-01',
+		maxDate:'2030-01-01',
+		startDate:'2016-01-01',
+		/*
+        startDate: moment().startOf('day'),
+        endDate: moment(),
+        minDate: '01/01/2014',    //最小时间
+        maxDate : moment(), //最大时间
+        dateLimit : {
+            days : 30
+        }, //起止时间的最大间隔
+        showDropdowns : true,
+        showWeekNumbers : false, //是否显示第几周
+        timePicker : true, //是否显示小时和分钟
+        timePickerIncrement : 60, //时间的增量，单位为分钟
+        timePicker12Hour : false, //是否使用12小时制来显示时间
+        ranges : {
+            '最近1小时': [moment().subtract('hours',1), moment()],
+            '今日': [moment().startOf('day'), moment()],
+            '昨日': [moment().subtract('days', 1).startOf('day'), moment().subtract('days', 1).endOf('day')],
+            '最近7日': [moment().subtract('days', 6), moment()],
+            '最近30日': [moment().subtract('days', 29), moment()]
+        },
+        opens : 'right', //日期选择框的弹出位置
+        buttonClasses : [ 'btn btn-default' ],
+        applyClass : 'btn-small btn-primary blue',
+        cancelClass : 'btn-small',
+        format : 'YYYY-MM-DD HH:mm:ss', //控件中from和to 显示的日期格式
+        separator : ' to ',
+        */
+	    locale : {
+            applyLabel : '确定',
+            cancelLabel : '取消',
+            fromLabel : '起始时间',
+            toLabel : '结束时间',
+            customRangeLabel : '自定义',
+            daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+            monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+            firstDay : 1
+        }
+	});
+	
+	$('#deadline_time').daterangepicker({
+		format:"YYYY-MM-DD",
+		singleDatePicker: true,
+		showDropdowns: true,
+		minDate:'2017-01-01',
+		maxDate:'2030-01-01',
+		startDate:'2016-01-01',
+		/*
+        startDate: moment().startOf('day'),
+        endDate: moment(),
+        minDate: '01/01/2014',    //最小时间
+        maxDate : moment(), //最大时间
+        dateLimit : {
+            days : 30
+        }, //起止时间的最大间隔
+        showDropdowns : true,
+        showWeekNumbers : false, //是否显示第几周
+        timePicker : true, //是否显示小时和分钟
+        timePickerIncrement : 60, //时间的增量，单位为分钟
+        timePicker12Hour : false, //是否使用12小时制来显示时间
+        ranges : {
+            '最近1小时': [moment().subtract('hours',1), moment()],
+            '今日': [moment().startOf('day'), moment()],
+            '昨日': [moment().subtract('days', 1).startOf('day'), moment().subtract('days', 1).endOf('day')],
+            '最近7日': [moment().subtract('days', 6), moment()],
+            '最近30日': [moment().subtract('days', 29), moment()]
+        },
+        opens : 'right', //日期选择框的弹出位置
+        buttonClasses : [ 'btn btn-default' ],
+        applyClass : 'btn-small btn-primary blue',
+        cancelClass : 'btn-small',
+        format : 'YYYY-MM-DD HH:mm:ss', //控件中from和to 显示的日期格式
+        separator : ' to ',
+        */
+	    locale : {
+            applyLabel : '确定',
+            cancelLabel : '取消',
+            fromLabel : '起始时间',
+            toLabel : '结束时间',
+            customRangeLabel : '自定义',
+            daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+            monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+            firstDay : 1
+        }
+	});
+
+});
+
+</script>
+ </body>
+ </html>

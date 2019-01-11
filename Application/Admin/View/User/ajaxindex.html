@@ -1,0 +1,507 @@
+<style type="text/css">
+    #selectBox{
+        padding:0px 31px 20px 0px;
+        width: 100%;
+        height: 30px;
+    }
+    .showlist{
+        display: inline-block;
+        width: 90px;
+        height: 30px;
+        border:1px solid #eee;
+        float: right;
+        text-align: center;
+        line-height: 30px;
+        background-color: #68b828;
+        color: #fff;
+        cursor: pointer;
+    }
+    .listTitle{
+        width:180px;
+        height: 500px;
+        border:1px solid #ccc;
+        background-color: #fff;
+        padding-left:20px; 
+        position: absolute;
+        right: 30px;
+        top: 38px;
+        z-index: 99;
+        display: none;
+    }
+    .listTitle li{
+        list-style-type:none;
+
+    }
+    label{
+        font-weight: normal;
+        cursor: pointer;
+    }
+
+    .listTitle:before, .listTitle:after{
+        display:table;
+        content:'';
+    }
+    .listTitle:after{
+        clear:both;
+    }
+
+    .table td{
+        font-size: 12px;
+    }
+    .btn{
+        font-size: 12px;
+    }
+    .wrapper {
+        overflow: visible !important;
+    }
+</style>
+<style type="text/css">
+    .floatDiv{
+        position: fixed;
+        top: 0px;
+        left: 42px;
+        height: 35px;
+        display: none;
+        overflow:hidden;
+        width: 40px;
+    }
+    #list-table1 th {
+        font-size: 12px;
+        background-color:#ccc;
+    }
+    #list-table1 th{
+        padding:6px;
+        vertical-align: middle;
+    }
+</style>
+<div style="position: relative;">
+<p id="selectBox">
+    <span onclick="selectShow();" class="showlist">显示字段 <span style="color:#fff;font-size: 10px" class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></span>
+    <span style="width:50px" class="showlist list_show_a" onclick="showAll()">全显</span>
+    <span style="width:50px;display: none;" class="showlist list_show_b" onclick="showNotAll()">不全显</span>
+</p>
+<ul class="listTitle">
+    <li style="padding-top: 5px;">
+        <input this_width="100px" checked="checked" type="checkbox" name="f3" id="f3">
+        <label for="f3">手机号</label>
+    </li>
+    <li>
+        <input this_width="80px" checked="checked" type="checkbox" name="f4" id="f4">
+        <label for="f4">年龄段</label>
+    </li>
+    <li>
+        <input this_width="60px" checked="checked" type="checkbox" name="f5" id="f5">
+        <label for="f5">性别</label>
+    </li>
+    <li>
+        <input this_width="100px" checked="checked" type="checkbox" name="f6" id="f6">
+        <label for="f6">所属门店</label>
+    </li>
+    <li>
+        <input this_width="60px" checked="checked" type="checkbox" name="f7" id="f7">
+        <label for="f7">等级</label>
+    </li>
+    <li>
+        <input this_width="60px" checked="checked" type="checkbox" name="f8" id="f8">
+        <label for="f8">风格</label>
+    </li>
+    <li>
+        <input this_width="90px" checked="checked" type="checkbox" name="f9" id="f9">
+        <label for="f9">开发人</label>
+    </li>
+    <li>
+        <input this_width="100px" checked="checked" type="checkbox" name="f10" id="f10">
+        <label for="f10">服务顾问</label>
+    </li>
+    <li>
+        <input this_width="80px" checked="checked" type="checkbox" name="f11" id="f11">
+        <label for="f11">消费金额</label>
+    </li>
+    <li>
+        <input this_width="70px" checked="checked" type="checkbox" name="f12" id="f12">
+        <label for="f12">积分</label>
+    </li>
+    <li>
+        <input this_width="110px" checked="checked" type="checkbox" name="f13" id="f13">
+        <label for="f13">注册时间</label>
+    </li>
+    <li>
+        <input this_width="150px" checked="checked" type="checkbox" name="f16" id="f16">
+        <label for="f16">常购产品</label>
+    </li>
+    <li>
+        <input this_width="100px" type="checkbox" name="f17" id="f17">
+        <label for="f17">生日</label>
+    </li>
+    <li>
+        <input this_width="90px" type="checkbox" name="f18" id="f18">
+        <label for="f18">发制方式</label>
+    </li>
+    <li>
+        <input this_width="90px" type="checkbox" name="f19" id="f19">
+        <label for="f19">购买用途</label>
+    </li>
+    <li>
+        <input this_width="100px" type="checkbox" name="f20" id="f20">
+        <label for="f20">最后联系时间</label>
+    </li>
+    <li>
+        <input this_width="180px" type="checkbox" name="f21" id="f21">
+        <label for="f21">备注</label>
+    </li>
+   <!--  <li>
+        <input checked="checked" type="checkbox" name="f14" id="f14">
+        <label for="f14">首次购买时间</label>
+    </li> -->
+    <li>
+        <input this_width="125px" type="checkbox" name="f15" id="f15">
+        <label for="f15">最后一次购买时间</label>
+    </li>
+</ul>
+</div>
+<form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
+    <div class="table-responsive">
+        <div style="width: 98%;margin: 0 auto;overflow-x: auto;" class="data_header">
+        <div style="width:1370px;" class="this_table"  id="this_table">
+        <table style="width:1370px;" class="table table-bordered table-hover this_table">
+            <thead>
+            <tr>
+                <td style="width:40px" class="text-center">
+                     <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                </td>
+                <td style="width:100px;" class="text-left">
+                    <a href="javascript:sort('user_id');">会员名称</a>
+                </td>
+                <td style="width:100px;" class="f3 text-left">
+                    <a href="javascript:void(0);">手机号</a>
+                </td>
+                <td style="width:80px;" class="f4 text-left">
+                    <a href="javascript:void(0);">年龄段</a>
+                </td>
+                <td style="width:60px;" class="f5 text-left">
+                    <a href="javascript:void(0);">性别</a>
+                </td>
+                <td style="width:100px;" class="f6 text-left">
+                    <a href="javascript:void(0);">所属门店</a>
+                </td>
+                <td style="width:60px;" class="f7 text-left">
+                    <a href="javascript:sort();">等级</a>
+                </td>     
+                <td style="width:60px;" class="f8 text-left">
+                    <a href="javascript:void(0);">风格</a>
+                </td>
+                <td style="width:90px;" class="f9 text-left">
+                    <a href="javascript:void(0);">开发人</a>
+                </td> 
+                <td style="width:100px;" class="f10 text-left">
+                    <a href="javascript:void(0);">服务顾问</a>
+                </td>  
+                <td style="width:80px;" class="f11 text-left">
+                    <a href="javascript:sort('total_amount');">消费金额</a>
+                </td>
+                <td style="width:70px;" class="f12 text-left">
+                    <a href="javascript:sort('pay_points');">积分</a>
+                </td>
+                <td style="width:110px;" class="f13 text-left">
+                    <a href="javascript:sort('reg_time');">注册时间</a>
+                </td>
+                <td style="width:150px;" class="f16 text-left">
+                    <a href="javascript:void(0);">常购产品</a>
+                </td>
+                <td style="display: none;width: 100px;" class="f17 text-left">
+                    <a href="javascript:void(0);">生日</a>
+                </td>
+                <td style="display: none;width: 90px;" class="f18 text-left">
+                    <a href="javascript:void(0);">发制方式</a>
+                </td>
+                <td style="display: none;width: 90px;" class="f19 text-left">
+                    <a href="javascript:void(0);">购买用途</a>
+                </td>
+                <td style="display: none;width: 100px;" class="f20 text-left">
+                    <a href="javascript:void(0);">最后联系时间</a>
+                </td>
+                <td style="display: none;width: 180px;" class="f21 text-left">
+                    <a href="javascript:void(0);">备注</a>
+                </td>
+                <!-- <td style="display: none;" class="f14 text-left">
+                    <a href="javascript:void(0);">首次购买时间</a>
+                </td> -->
+                <td style="display: none;width: 125px;" class="f15 text-left">
+                    <a href="javascript:void(0);">最后一次购买时间</a>
+                </td>
+                <td style="width: 170px" class="text-center col-sm-2">操作</td>
+            </tr>
+            </thead>
+            <tbody id="tbody_style">
+            <volist name="userList" id="list">
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" name="selected[]" value="{$list['user_id']}">
+                        <input type="hidden" name="shipping_code[]" value="flat.flat">
+                    </td>
+                    <td class="text-left">
+                     {$list.nickname}</td>
+                    <td class="f3 text-left">{$list.mobile}
+                    </td>
+                    <!-- 年龄段 性别 -->
+                    <td class="f4 text-left">{$list.age_group}</td>
+                    <td class="f5 text-left">
+                        <if condition="$list['sex'] eq 0">保密</if> 
+                        <if condition="$list['sex'] eq 1">男</if> 
+                        <if condition="$list['sex'] eq 2">女</if> 
+                    </td>
+
+                    <td class="f6 text-left">{$list.store_name}</td>
+                    <td class="f7 text-left">{$level[$list[level]]|utf_substr=4}</td>
+                    <td class="f8 text-left">{$list.user_id|getUserFen}</td>                                
+                    <td class="f9 text-left">{$list.kaifa}</td>
+                    <td class="f10 text-left">{$list.consultant}</td>
+                    <td class="f11 text-left">{$list.total_amount}</td>
+                    <td class="f12 text-left">{$list.pay_points}</td>
+                    <td class="f13 text-left" style="font-size: 12px;">{$list.reg_time|date='y-m-d H:i',###}</td>
+                    <td class="f16 text-left">{$list.changgouchanpin_name}</td>
+                    <!-- 首次购买时间 最后一次购买时间 -->
+                    <!-- <td style="display: none;" class="f14 text-left">
+                        <eq name="list.first_time" value="0"><else/>{$list.first_time|date='y-m-d H:i',###}</eq>
+                    </td> -->
+                    <td style="display: none;" class="f17 text-left">
+                        {$list.birthdays}
+                    </td>
+                    <td style="display: none;" class="f18 text-left">
+                        {$list.fazhifangshi}
+                    </td>
+                    <td style="display: none;" class="f19 text-left">
+                        {$list.purpose}
+                    </td>
+                    <td style="display: none;font-size: 12px;" class="f20 text-left">
+                        {$list['last_time']?($list['last_time']|date='y-m-d H:i',###):''}
+                    </td>
+                    <td style="display: none;" class="f21 text-left">
+                        {$list.remark}
+                    </td>
+                    <td style="display: none;font-size: 12px;" class="f15 text-left">
+                        <eq name="list.end_time" value="0"><else/>{$list.end_time|date='y-m-d H:i',###}</eq>
+                    </td>
+
+                    <td style="width: 150px" class="text-center col-sm-2">
+                        <a href="{:U('Admin/user/detail',array('id'=>$list['user_id']))}" data-toggle="tooltip" title="查看详情" class="btn btn-info" data-original-title="查看详情"><i class="fa fa-eye"></i></a>
+                       <!--  <a href="{:U('Admin/user/address',array('id'=>$list['user_id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="收货地址"><i class="fa fa-home"></i></a> -->
+                        <!--<a href="{:U('Admin/order/index',array('user_id'=>$list['user_id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="订单查看"><i class="fa fa-shopping-cart"></i></a>-->
+                        <a href="{:U('Admin/user/account_log',array('id'=>$list['user_id']))}" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="编辑"><i class="fa fa-pencil"></i></a>
+                        <a href="{:U('Admin/user/delete',array('id'=>$list['user_id']))}" id="button-delete6" data-toggle="tooltip" title="作废" class="btn btn-danger" data-original-title="作废"  onclick="javascript:return del()"><i class="fa fa-trash-o"></i></a>
+                    </td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+        </div>
+        </div>
+    </div>
+</form>
+<div class="row">
+    <div class="col-sm-12 text-center">{$page}</div>
+</div>
+<div class="floatDiv">
+    <div style="width: 1370px;" class="list-table1">
+    <table id="list-table1" class="table table-bordered table-striped dataTable list-table1" style="width: 1370px;">
+     <thead>
+       <tr role="row">
+            <th style="width:40px;text-align: center;">
+                <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+            </th>
+           <th style="width: 100px;" class="sorting" tabindex="0">会员名称</th>
+           <th style="width: 100px;" class="sorting f3" tabindex="0">手机号</th>
+           <th style="width: 80px;" class="sorting f4" tabindex="0">年龄段</th>
+           <th style="width: 60px;" class="sorting f5" tabindex="0">性别</th>
+           <th style="width: 100px;" class="sorting f6" tabindex="0">所属门店</th>
+           <th style="width: 60px;" class="sorting f7" tabindex="0">等级</th>
+           <th style="width: 60px;" class="sorting f8" tabindex="0">风格</th>
+           <th style="width: 90px;" class="sorting f9" tabindex="0">开发人</th>
+           <th style="width: 100px;" class="sorting f10" tabindex="0">服务顾问</th>
+           <th style="width: 80px;" class="sorting f11" tabindex="0">消费金额</th>
+           <th style="width: 70px;" class="sorting f12" tabindex="0">积分</th>
+           <th style="width: 110px;" class="sorting f13" tabindex="0">注册时间</th>
+           <th style="width: 150px;" class="sorting f16" tabindex="0">常购产品</th>
+           <th style="width: 100px;display: none;" class="sorting f17" tabindex="0">生日</th>
+           <th style="width: 90px;display: none;" class="sorting f18" tabindex="0">发制方式</th>
+           <th style="width: 90px;display: none;" class="sorting f19" tabindex="0">购买用途</th>
+
+           <th style="width: 100px;display: none;" class="sorting f20" tabindex="0">最后联系时间</th>
+           <th style="width: 180px;display: none;" class="sorting f21" tabindex="0">备注</th>
+           <th style="width: 125px;display: none;" class="sorting f15" tabindex="0">最后一次购买时间</th>
+           <th style="width: 170px;" class="sorting" tabindex="0">操作</th>
+       </tr>
+     </thead>
+    </table>
+    </div>
+    </div>
+</div>
+<script>
+    //获取cookie中存储的展示列表字段名称
+    var _val = $.cookie('user_cookie');
+    if (_val) {
+        var ss = _val.split(",");
+        var new_width = 310;
+        for (var i = 1; i < 22; i++) {
+            var _thisclass = 'f'+i;
+            if ($.inArray(_thisclass,ss) != -1) {
+                $('.f'+i).show();
+                $('#f'+i).prop("checked","checked");//选中
+                if ($('#f'+i).attr('this_width')) {
+                    new_width = new_width + parseInt($('#f'+i).attr('this_width'));
+                }
+            }else{
+                $('.f'+i).hide();
+                $('#f'+i).prop("checked","");
+            }
+        }
+       $('.this_table').css('width',new_width+'px');//给table设置新的宽度 
+       $('.list-table1').css('width',new_width+'px');//给table设置新的宽度 
+    }
+
+
+    $(".pagination li").eq(-1).find('a').css('border-top-right-radius','4px');
+    $(".pagination li").eq(-1).find('a').css('border-bottom-right-radius','4px');
+    $(".pagination  a").click(function(){
+        var pageCount = $('#selectPage').val();
+        var page = $(this).data('p');
+        $.cookie('page', page); 
+        ajax_get_table('search-form2',page,pageCount);
+    });
+    //选择展示条数时触发
+    $("#selectPage").change(function(){
+        var pageCount = $('#selectPage').val();
+        var page = $("li.active>a").data('p');
+        ajax_get_table('search-form2',1,pageCount);
+    });
+
+</script>
+
+<script>
+function del() { 
+    var msg = "您真的确定要作废吗？\n\n请确认！"; 
+    if (confirm(msg)==true){ 
+        return true; 
+    }else{ 
+        return false; 
+    } 
+}
+
+// 全显列表函数
+function showAll() {
+    for (var i = 1; i < 22; i++) {
+        $('.f'+i+'').show();
+    }
+    $(".listTitle input:checkbox").prop("checked","checked");//全选
+    $(".list_show_a").hide();
+    $(".list_show_b").show();
+    $('.this_table').css('width','2055px');//给table设置新的宽度
+    $('.list-table1').css('width','2055px');//给table设置新的宽度
+}
+
+// 不全显列表函数
+function showNotAll() {
+    //显示隐藏
+    $('.f15').hide();
+    $('.f17').hide();
+    $('.f18').hide();
+    $('.f19').hide();
+    $('.f20').hide();
+    $('.f21').hide();
+    //input 选择框改变
+    $('#f15').prop("checked","");
+    $('#f17').prop("checked","");
+    $('#f18').prop("checked","");
+    $('#f19').prop("checked","");
+    $('#f20').prop("checked","");
+    $('#f21').prop("checked","");
+    $(".list_show_a").show();
+    $(".list_show_b").hide();
+    $('.this_table').css('width','1370px');//给table设置新的宽度
+    $('.list-table1').css('width','1370px');//给table设置新的宽度
+}
+
+//选择框出现
+function selectShow(){
+    $('.listTitle').toggle();
+}
+
+$('.listTitle li input').click(function(event) {
+    var _class = $(this).attr('id');
+    var _width = $('.this_table').css('width');//table现有宽度...px
+    var _intWidth = parseInt(_width);//table现有宽度...int
+    var this_width = $(this).attr('this_width');//当前th宽度
+
+    if ($(this).is(':checked')) {
+        $('.'+_class+'').show();
+        var new_width = _intWidth+parseInt(this_width);
+    }else{
+        $('.'+_class+'').hide();
+        var new_width = _intWidth-parseInt(this_width);
+    }
+    $('.this_table').css('width',new_width+'px');//给table设置新的宽度
+    $('.list-table1').css('width',new_width+'px');//给table设置新的宽度
+});
+
+
+//点击页面之前 获取自定义展示列表的值 存入cookie
+$('.paginate_button').click(function(event) {
+    var _str = new Array();
+    $('.listTitle li input').each(function(index, el) {
+        if ($(this).is(':checked')) {
+            _str.push($(this).attr('name'));
+        }
+    });
+    var newStr = _str.join(",");
+    $.cookie('user_cookie', newStr);
+});
+//给统计赋值
+$('#total_count').html('{$total_count?$total_count:0}人');
+$('#add_count').html('{$add_count?$add_count:0}人');
+$('#fengge_count').html('{$fengge_count?$fengge_count:0}人');
+$('#store_count').html('{$store_count?$store_count:0}人');
+$('#guwen_count').html('{$guwen_count?$guwen_count:0}人');
+$('#jewel_count').html('{$jewel_count?$jewel_count:0}人');
+$('#pt_count').html('{$pt_count?$pt_count:0}人');
+$('#gold_count').html('{$gold_count?$gold_count:0}人');
+$('#silver_count').html('{$silver_count?$silver_count:0}人');
+$('#normal_count').html('{$normal_count?$normal_count:0}人');
+
+//表单滑动到指定位置  显示自定义表头
+$(window).scroll(function(){
+    if($('#this_table') && $('#this_table').offset()){
+        var _h = $('#this_table').offset().top;
+        var _r = $(window).scrollTop();
+        if(Math.floor(parseInt(_h)) > Math.floor(parseInt(_r))){
+            $('.floatDiv').css('display','none');
+        }else{
+            $('.floatDiv').css('display','block');
+            var _width = $('.data_header').css('width');
+            $('.floatDiv').css('width',_width);
+        }
+    }
+});
+
+//浏览器屏幕大小改变  改变定死表头外侧DIV的宽度
+$(window).resize(function() {
+    var _width = $('.data_header').css('width');
+    $('.floatDiv').css('width',_width);
+});
+
+//表单滚动条改变  改变自定义表头滚动条
+$('.data_header').scroll(function(){
+    scrollHeader();
+})
+$('.floatDiv').scroll(function(){
+    scrollBody();
+})
+//表单滚动条改变  改变自定义表头滚动条 方法
+function scrollHeader(){
+    var headerScrollLeft=$(".data_header").scrollLeft();
+    $(".floatDiv").scrollLeft(headerScrollLeft);
+}
+function scrollBody(){
+    var bodyScrollLeft=$(".floatDiv").scrollLeft();
+    $(".data_header").scrollLeft(bodyScrollLeft);
+}
+</script>

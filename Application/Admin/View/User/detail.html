@@ -1,0 +1,352 @@
+<include file="Public/min-header"/>
+<link href="__PUBLIC__/plugins/iCheck/flat/user_icon.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+  #table1 td{
+    width: 33.3%;
+    display: inline-block;
+  }
+  .style_message{
+    font-weight: 1000;
+  }
+</style> 
+<div class="wrapper">
+    <!-- Content Header (Page header) -->
+   <include file="Public/breadcrumb"/>
+    <section class="content">
+    <!-- Main content -->
+    <!--<div class="container-fluid">-->
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-list"></i> 会员详情</h3>
+            </div>
+            <div class="panel-body">
+                <form action="" method="post" onsubmit="return checkUserUpdate(this);">
+                    <table class="table table-bordered" id="table1">
+                    <tbody>
+                    <h4 class="h4">会员基本信息</h4>
+                    <tr>
+                        <td class="col-sm-2">姓名：<span class="style_message">{$user.nickname}</span></td>
+                        <td>会员等级：<span class="style_message">{$user.levels}</span></td>
+                        <td>风格：<span class="style_message">{$user.user_id|getUserFen}</span></td>
+                    </tr>
+                    <tr>
+                        <td>手机号：<span class="style_message">{$user.mobile}</span></td>
+                        <td>积分余额：<span class="style_message">{$user.pay_points}</span></td>
+                        <td>生日：<span class="style_message">{$user.birthdays}</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>性别： <span class="style_message"><if condition="$user['sex'] eq 0">保密</if> 
+                            <if condition="$user['sex'] eq 1">男</if> 
+                            <if condition="$user['sex'] eq 2">女</if> </span></td>
+                        <td>年龄段：<span class="style_message">{$user.age_group}</span></td>
+                        <td>开发人：<span class="style_message">{$user.kaifa}</span></td>
+                    </tr>
+                    <tr>
+                        <td>来源途径：<span class="style_message">{$user.source}</span>
+                       </td>
+                        	<td>购买用途：<span class="style_message">{$user.purpose}</span>
+                       </td>
+                        <td>开发时间：<span class="style_message"><eq name="user.reg_time" value="0"><else/>{$user.reg_time|date='Y-m-d',###}</eq></span></td>
+                    </tr>
+                      <tr>
+                        <td>发制方式：<span class="style_message">{$user.fazhifangshi}</span>
+                       </td>
+                        	<td>食用人群：<span class="style_message">{$user.shiyongrenqun} </span>
+                       </td>
+                        <td>偏好产品：<span class="style_message">{$user.changgouchanpin_name} </span></td>
+                    </tr>
+                    <tr>
+                        <td>所属系统：<span class="style_message">{$user.system}</span></td>
+                        <td>所属门店：<span class="style_message">{$user.store}</span></td>
+                        <td>服务顾问：<span class="style_message">{$user.consultant}</span></td>
+                    </tr>
+                    <!--<tr>-->
+                        <!--<td>会员等级:</td>-->
+                        <!--<td>{$user.user_rank}</td>-->
+                    <!--</tr>-->
+                   
+                     <tr>
+                        <!-- <td>发票抬头1：{$user.invoice}</td>
+                        <td>发票抬头2：{$user.invoice1}</td>
+                        <td>发票抬头3：{$user.invoice2}</td> -->
+                        <volist name="fapiao_list" id="fapiao">
+                       <if condition="$fapiao.fapiao_style eq 0">
+                        <td>
+                            <p>发票类型：<span class="style_message">个人</span></p>
+                            <p>姓名：<span class="style_message">{$fapiao.fapiao_name}</span></p>
+                        </td>
+                       <else />
+                       <td>
+                            <p>发票类型：<span class="style_message">单位</span></p>
+                            <p>发票名称：<span class="style_message">{$fapiao.fapiao_name}</span></p>
+                            <p>发票税号：<span class="style_message">{$fapiao.fapiao_shuihao}</span></p>
+                            <p>单位地址：<span class="style_message">{$fapiao.fapiao_adress}</span></p>
+                            <p>联系电话：<span class="style_message">{$fapiao.link_phone}</span></p>
+                            <p>开户行：　<span class="style_message">{$fapiao.bank_deposit}</span></p>
+                            <p>银行账户：<span class="style_message">{$fapiao.bank_num}</span></p>
+
+                        </td>
+                        </if>
+                      </volist>
+                    </tr>
+                    <tr>
+                        <td>备注：<span class="style_message">{$user.remark}</span></td>
+                        <td>个人爱好：<span class="style_message">{$user.style}</span></td>
+                    </tr>
+                    <tr>
+                        <td>首次购买时间：<span class="style_message"><eq name="user.first_time" value="0"><else/>{$user.first_time|date='Y-m-d H:i',###}</eq></span></td>
+                        <td>最后一次购买时间：<span class="style_message"><eq name="user.end_time" value="0"><else/>{$user.end_time|date='Y-m-d H:i',###}</eq></span></td>
+                    </tr>
+                        <table  class="table table-bordered">    
+                        <h4 class="h4">联系信息</h4>                        
+                            <tr>
+                                <td>地址：<span class="style_message">{$user.business district}</span></td>
+                            </tr>
+                            <tr>
+                                <td>商圈：</td>
+                            </tr>
+                            <tr>
+                                <td>座机：<span class="style_message">{$user.landline}</span></td>
+                            </tr>                                             
+                        </table>
+                        <table  class="table table-bordered">    
+                        <h4 class="h4">相关记录</h4>
+                        <h5 class="h5">购买记录</h5>                         
+                            <tr>
+                                <td>编号</td>
+                                <td>购买时间</td>
+                                <td>商品名称</td>
+                                <td>购买数量</td>
+                                <td>单价</td>
+                                <td>购买金额</td>
+                                <td>订单总金额</td>
+                            </tr>
+                        <volist name="info" id="vo">
+                           <tr>
+                                <td>{$vo.order_sn}</td>
+                                <td>{$vo.pay_time|date='Y-m-d H:i',###}</td>
+                                <td>{$vo.goods_name}</td>
+                                <td>{$vo.goods_num}</td>
+                                <td>{$vo.every_price}</td>
+                                <td>{$vo['every_price']*$vo['goods_num']}</td>
+                                <td>{$vo.order_amount}</td>
+                            </tr>
+                        </volist>
+                            <!--- <tr>
+                                    <td>2</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                            </tr>-->
+
+                        </table>
+                        <h5 class="h5"><span><a href="{:U('Admin/user/detail_a',array('jilu'=>$user['user_id']))}">更多&gt;</a></span></h5>
+                            <table  class="table table-bordered">    
+                              <h5 class="h5">会员风格转换</h5>                         
+                            <tr>
+                                <td>转换时间</td>
+                                <td>风格转换</td>
+                            </tr>
+                        <volist name="style" id="sty">
+                            <tr>
+                                <td>{$sty.create_time|date='Y-m-d H:i',###}</td>
+                                <td>{$sty.old_fengge}--{$sty.new_fengge}</td>
+                            </tr>
+                        </volist>
+                            <!---<tr>
+                                    <td>2</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                            </tr>-->
+                        </table>
+                        <h5 class="h5">  <span><a href="{:U('Admin/user/detail_b',array('style'=>$user['user_id']))}">更多&gt;</a></span></h5>
+                        <table  class="table table-bordered">    
+                              <h5 class="h5">沟通服务记录</h5>                         
+                            <tr>
+                                <td>编号</td>
+                                <td>沟通时间</td>
+                                <td>联系电话</td>
+                                <td>沟通人姓名</td>
+                                <td>接听状态</td>
+                                <td>沟通内容</td>
+                            </tr>
+                            <volist name="communication" id="communication">
+                            <tr>
+                                <td>{$communication.id}</td>
+                                <td>{$communication.ctime}</td>
+                                <td>{$communication.tel}</td>
+                                <td>{$communication.c_person}</td>
+                                <td>{$communication.status}</td>
+                                <td>{$communication.content}</td>
+                            </tr>
+                            </volist>
+                        </table>
+                         <h5 class="h5"> <span><a href="{:U('Admin/user/detail_d',array('communication'=>$user['user_id']))}">更多&gt;</a></span></h5>  
+
+                         <table  class="table table-bordered">    
+                              <h5 class="h5">积分增减记录 &nbsp;&nbsp;&nbsp;积分余额：{$user.pay_points}分</h5>                         
+                            <tr>
+                                <td>编号</td>
+                                <td>积分描述</td>
+                                <td>增减积分</td>
+                                <td>操作时间</td>
+                            </tr>
+                        <volist name="infos" id="vos">
+                           <tr>
+                                <td>{$vos.log_id}</td>
+                                <td>{$vos.desc}</td>
+
+                                <td><eq name="vos.type" value="3">-<else/>+</eq>{$vos.pay_points}</td>
+                                <td>{$vos.change_time|date='Y-m-d H:i',###}</td>
+                            </tr>
+                        </volist>
+                           <!---  <tr>
+                                    <td>2</td>
+                                    <td>购买XXX商品</td>
+                                    <td>-300</td>
+                                    <td>2017.7.8</td>
+                            </tr>-->
+                        </table>
+                         <h5 class="h5"><span><a href="{:U('Admin/user/detail_c',array('points'=>$user['user_id']))}">更多&gt;</a></span></h5> 
+                           <table  class="table table-bordered">    
+                              <h5 class="h5">参会记录</h5>                         
+                            <tr>
+                                <td>编号</td>
+                                <td>活动主题</td>
+                                <td>活动时间</td>
+                                <td>活动门店</td>
+                                <td>签到时间</td>
+                            </tr>
+                            <volist name="sign_up" id="sign_up">
+                            <tr>
+                                <td>{$sign_up.activity_id}</td>
+                                <td>{$sign_up.title}</td>
+                                <td>{$sign_up.start_day|date='Y-m-d',###} {$sign_up.start_time}~{$sign_up.end_time}</td>
+                                <td>{$sign_up.store_name}</td>
+                                <td>{$sign_up.update_time|date='Y-m-d H:i',###}</td>
+                            </tr>
+                           </volist>
+                        </table>
+                         <h5 class="h5"> <span><a href="{:U('Admin/user/detail_e',array('sign_up'=>$user['user_id']))}">更多&gt;</a></span></h5>
+
+                            <table  class="table table-bordered">    
+                              <h5 class="h5">寄存记录</h5>                         
+                            <tr>
+                                <td>寄存编号</td>
+                                <td>商品编号</td>
+                                <td>商品名称</td>
+                                <td>起始数量</td>
+                                <td>剩余数量</td>
+                                <td>寄存时间</td>
+                                <td>提领时间</td>
+                            </tr>
+                            <volist name="deposit_list" id="deposit_list">
+                            <tr>
+                                <td>{$deposit_list.sn}</td>
+                                <td>{$deposit_list.sku}</td>
+                                <td>{$deposit_list.product_name}</td>
+                                <td>{$deposit_list.box}盒{$deposit_list.count}根</td>
+                                <td>{$deposit_list.over_box}盒{$deposit_list.over_count}根</td>
+                                <td>{$deposit_list.receive_time}</td>
+                                <td>{$deposit_list.tl_time}</td>
+                            </tr>
+                            </volist>
+                        </table>
+                         <h5 class="h5"> <span><a href="{:U('Admin/user/detail_g',array('deposit_list'=>$user['user_id']))}">更多&gt;</a></span></h5> 
+
+                         <table  class="table table-bordered">    
+                              <h5 class="h5">代发记录</h5>                         
+                            <tr>
+                                <td>订单编号</td>
+                                <td>商品名称</td>
+                                <td>代发数量</td>
+                                <td>代发阶段</td>
+                                <td>发制时间</td>
+                                <td>领取时间</td>
+                                <td>发制要求</td>
+                            </tr>
+                            <volist name="send_list" id="send_list">
+                            <tr>
+                                <td>{$send_list.sn}</td>
+                                <td>{$send_list.product_name}</td>
+                                <td>{$send_list.box}盒{$send_list.count}根</td>
+                                <td>{$send_list.stage}</td>
+                                <td>{$send_list.send_time}</td>
+                                <td>{$send_list.receive_time}</td>
+                                <td>{$send_list.special}</td>
+                            </tr>
+                            </volist>
+                        </table>
+                         <h5 class="h5"> <span><a href="{:U('Admin/user/detail_h',array('send_list'=>$user['user_id']))}">更多&gt;</a></span></h5> 
+
+                         <table  class="table table-bordered">    
+                              <h5 class="h5">上门服务记录</h5>                         
+                            <tr>
+                                <td>编号</td>
+                                <td>上门时间</td>
+                                <td>拜访人</td>
+                                <td>拜访地址</td>
+                                <td>拜访理由</td>
+                                <td>拜访内容</td>
+                                <td>客户反馈</td>
+                            </tr>
+                            <volist name="visit_list" id="visit_list">
+                            <tr>
+                                <td>{$visit_list.id}</td>
+                                <td>{$visit_list.ctime}</td>
+                                <td>{$visit_list.cid|getUserName}</td>
+                                <td>{$visit_list['province']==$visit_list['city']?'':$visit_list['province']}{$visit_list['city']}{$visit_list['address']}</td>
+                                <td>{$visit_list.reason}</td>
+                                <td>{$visit_list.content}</td>
+                                <td>{$visit_list.remark}</td>
+                            </tr>
+                            </volist>
+                        </table>
+                         <h5 class="h5"> <span><a href="{:U('Admin/user/detail_f',array('visit_list'=>$user['user_id']))}">更多&gt;</a></span></h5>             
+                    </tr>             
+                    </tbody>
+                </table>
+                </form>
+
+            </div>
+        </div>
+ 	  </div> 
+    </div>    <!-- /.content -->
+   </section>
+</div>
+<script>
+    function checkUserUpdate(){
+        var email = $('input[name="email"]').val();
+        var mobile = $('input[name="mobile"]').val();
+        var password = $('input[name="password"]').val();
+        var password2 = $('input[name="password2"]').val();
+
+        var error ='';
+        if(password != password2){
+            error += "两次密码不一样\n";
+        }
+
+        if(!checkEmail(email)){
+            error += "邮箱地址有误\n";
+        }
+        if(!checkMobile(mobile)){
+            error += "手机号码填写有误\n";
+        }
+        if(error){
+            layer.alert(error, {icon: 2});  //alert(error);
+            return false;
+        }
+        return true;
+
+    }
+</script>
+
+</body>
+</html>

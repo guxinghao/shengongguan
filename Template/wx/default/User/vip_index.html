@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>vip会员商城</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<script src="__STATIC__/js/flexible.js"></script>
+		<meta content="telephone=no,email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/swiper.min.css" />
+
+	</head>
+
+	<body id="cgg_index">
+		<header>
+			<!--轮播-->
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide"><img src="__STATIC__/img/c_lb1.png" /></div>
+					<div class="swiper-slide"><img src="__STATIC__/img/c_lb1.png" /></div>
+					<div class="swiper-slide"><img src="__STATIC__/img/c_lb1.png" /></div>
+
+				</div>
+				<div class="swiper-pagination"></div>
+			</div>
+		</header>
+		<div id="i_content">
+			<aside class="classify">
+				<dl>
+					<dt><img src="__STATIC__/img/ztzb.png"/></dt>
+					<dd>家庭滋补</dd>
+				</dl>
+				<dl>
+					<dt><img src="__STATIC__/img/qy.png"/></dt>
+					<dd>亲友送礼</dd>
+				</dl>
+				<dl>
+					<dt><img src="__STATIC__/img/fl.png"/></dt>
+					<dd>员工福利</dd>
+				</dl>
+				<dl>
+					<dt><img src="__STATIC__/img/gb.png"/></dt>
+					<dd>贵宾专享</dd>
+				</dl>
+				<dl>
+					<dt><img src="__STATIC__/img/yf.png"/></dt>
+					<dd>孕妇专区</dd>
+				</dl>
+			</aside>
+			<p class="tj"><img src="__STATIC__/img/tj.png" /></p>
+			<aside class="tj_content">
+				<ul>
+			<div id= 'ajax_return'>
+				<volist name='info' id='vo'>
+				<a href="__APP__/Home/User/product_Details/id/{$vo.goods_id}">
+					<li>
+						<div class="top">
+							<img src="{$vo.original_img}" />
+							<span class="shopcar"><img src="__STATIC__/img/shopcar.png"></span>
+						</div>
+
+						<div class="text">
+							<h3>{$vo.goods_name}</h3>
+							<p class="intro">{$vo.goods_content|htmlspecialchars_decode}</p>
+							<p class="price">积分：{$vo.goods_points}</p>
+						</div>
+
+					</li>
+				</a>
+					</volist>
+				</div>
+				</ul>
+			</aside>
+			<!--加载中-->
+			<div class="load">
+				<img src="__STATIC__/img/load.png"/>
+			</div>
+			<input type="hidden" id = "page" value = '1'>
+			<footer>
+
+				<a href="{:U('User/vip_index')}"><dl>				
+					<dt><img src="__STATIC__/img/sy2.png"></dt>
+					<dd class="addCol">首页</dd>				
+				</dl></a>	
+				<a href="{:U('Index/classify')}"><dl>
+					<dt><img src="__STATIC__/img/fl1.png"></dt>
+					<dd>分类</dd>
+				</dl></a>
+				<a href="{:U('Cart/cart')}"><dl>
+					<dt><img src="__STATIC__/img/car1.png"></dt>
+					<dd>购物车</dd>
+				</dl></a>
+				<a href="{:U('Member/index')}"><dl>
+					<dt><img src="__STATIC__/img/per1.png"></dt>
+					<dd>个人</dd>
+				</dl></a>
+			</footer>
+		</div>
+		<script type="text/javascript" src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="__STATIC__/js/swiper.min.js"></script>
+		<script type="text/javascript">
+	$(function() {
+		var mySwiper = new Swiper('.swiper-container', {
+			autoplay: 1000, //可选选项，自动滑动
+			pagination: '.swiper-pagination',
+			loop: 'true',
+		});
+		$(window).scroll(function () {
+      	var a = $(window).height()+$(window).scrollTop();
+      	var b = $(document).height();
+      	if(a==b){
+      		  var page = $('#page').val();   		
+      		 $.ajax({
+                type : "POST",
+                url:"/index.php?m=Home&c=User&a=ajax_vip&p="+page,
+                success: function(data){   
+                       	
+                    if(data==''){
+						$('.load').css('display','none');
+						}else{
+							page =Number(page)+1;
+							$('#page').val(page);					
+                    		$("#ajax_return").append(data);   
+						}					
+                }
+            });
+        }
+ 	}); 
+			})
+		</script>
+
+	</body>
+
+</html>

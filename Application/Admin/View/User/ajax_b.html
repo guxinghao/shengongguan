@@ -1,0 +1,17 @@
+<table class="table table-bordered table-hover">
+        <thead>   
+          <h5 class="h5 h5_a">会员风格转换<span><a href="{:U('Admin/user/detail',array('id'=>$mapss['uid']))}">返回&gt;</a></span></h5>                         
+          <tr>                      
+              <td>转换时间</td>
+              <td>风格转换</td>
+          </tr>
+        </thead>
+        <tbody>
+            <volist name="style" id="sty">
+              <tr>
+                  <td>{$sty.create_time|date='Y-m-d H:i',###}</td>
+                  <td>{$sty.old_fengge}--{$sty.new_fengge}</td>                      
+              </tr>
+            </volist>
+        </tbody>
+        </table>	   

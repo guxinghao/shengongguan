@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>会员登录</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>
+		<meta content="telephone=no,email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/popup.css" />
+		<style type="text/css">
+			*:not(input,textarea) {
+			    -webkit-touch-callout: none;
+			    -webkit-user-select: none;
+			}
+		</style>
+	</head>
+	<body id="cgg_reg" class="comform">
+	<form action="{:U('Member/login1')}" method="post" id="form1">
+		<p><img src="__STATIC__/img/cgglogo.png" /></p>
+		
+			<div class="pwd cominpput">
+				<span>
+					<img src="__STATIC__/img/loph.png"/>
+				</span>
+				<input type="text" name="mobile" id="mobile" value="" placeholder="请输入手机号" />
+
+			</div>
+
+			<div class="conpwd cominpput">
+				<span>
+					<img src="__STATIC__/img/ys.png"/>
+				</span>
+				<input type="text" name="rand" id="" value="" placeholder="请输入验证码" maxlength="6" class="wid_50"/>
+			 	<input class="code " name='b' value="获取验证码" onfocus="b.blur()" onclick="time(this);sendMessage();">
+				
+				<p class="line"></p>
+			</div>
+			<a class="btn" onClick="reset_Pwd()">绑定微信</a>
+			<p class="font_28 last">请在60秒内完成验证，超时请点击重新发送</p>
+<!-- 			<ul class="forget">
+				<li><a href="{:U('Member/register')}"><img src="__STATIC__/img/loright.png">现在注册</a></li>
+			</ul> -->
+		</form>
+		<script type="text/javascript" src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="__STATIC__/js/common.js">
+			
+		</script>
+        <script>
+        function reset_Pwd(){
+			$("#form1").submit();
+			}
+        function sendMessage() {	
+			var mobile=$("#mobile").val();
+			if(mobile==''){				
+				alert("请输入手机号码！");
+				return;				
+			}  
+			var getcodeurl="{:u('member/getCode')}";						
+			$.post(getcodeurl, {mobile:mobile}, function(res){			
+			if(res==1){
+				alert('发送成功');
+			}else if(res==3){
+				alert("验证码一天最多发5次!");
+			}else{
+				alert("发送失败！");
+			}
+     });
+}
+			
+
+        </script>
+
+	</body>
+
+</html>

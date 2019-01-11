@@ -1,0 +1,103 @@
+<include file="Public/min-header"/>
+<link href="__PUBLIC__/plugins/iCheck/flat/user_icon.css" rel="stylesheet" type="text/css" /> 
+<style>
+    .h5_a{
+        margin-top: 0;
+    }
+</style>
+<div class="wrapper">
+    <!-- Content Header (Page header) -->
+   <include file="Public/breadcrumb"/>
+
+            <div class="panel panel-default">
+
+        
+    <form action="" method="post" id="detail_c">
+    <div id="ajax_return">
+	     <table class="table table-bordered table-hover">
+          <thead>   
+	  		<h5 class="h5 h5_a">上门服务记录<span><a href="{:U('Admin/user/detail',array('id'=>$maps['uid']))}">返回&gt;</a></span></h5>                         
+			<tr>
+    	        <td>编号</td>
+                <td>上门时间</td>
+                <td>拜访人</td>
+                <td>拜访地址</td>
+                <td>拜访理由</td>
+                <td>拜访内容</td>
+                <td>客户反馈</td>
+			</tr>
+            </thead>
+                        
+            <tbody>
+
+			<volist name="info" id="visit_list">
+			<tr>
+		        <td>{$visit_list.id}</td>
+                <td>{$visit_list.ctime}</td>
+                <td>{$visit_list.cid|getUserName}</td>
+                <td>{$visit_list['province']==$visit_list['city']?'':$visit_list['province']}{$visit_list['city']}{$visit_list['address']}</td>
+                <td>{$visit_list.reason}</td>
+                <td>{$visit_list.content}</td>
+                <td>{$visit_list.remark}</td>
+			</tr>
+			</volist>
+          
+            </tbody>
+
+	</table>
+    </div>
+    <input type="hidden" value="{$user.user_id}" name="points">
+	</form>
+	<div class="row">
+        <div class="col-sm-12 text-center">{$page}</div>		
+    </div>
+    </div>
+
+   </div>
+
+    <script>
+        $('#selectPage').css('display','none');
+    // $(".pagination  a").click(function(){
+    //     var pageCount = $('#selectPage').val();
+    //     var page = $(this).data('p');
+    //     ajax_get_table('detail_c',page,pageCount);
+    // });
+    //选择展示条数时触发
+    // $("#selectPage").change(function(){
+    //     var pageCount = $('#selectPage').val();
+    //     var page = $("li.active>a").data('p');
+    //     ajax_get_table('detail_c',1,pageCount);
+    // });
+    function ajax_get_table(tab,page,pageCount){
+        cur_page = page; //当前页面 保存为全局变量
+        $.ajax({
+            type : "POST",
+            url:"/index.php/Admin/user/ajax_c/p/"+page+"/pageCount/"+pageCount,//+tab,
+            data : $('#'+tab).serialize(),// 你的formid
+            success: function(data){
+                $("#ajax_return").html('');
+                $("#ajax_return").append(data);
+                console.log(data);
+            }
+        });
+    }
+
+//     //选择展示条数时触发
+// $("#selectPage").change(function(){
+//     var pageCount = $('#selectPage').val();
+//     $('.pagination  a').each(function(index, el) {
+//         var result = getStrParam('pageCount',$(this).attr('href'));
+//         // 如果已经拼接 则替换
+//         if (result) {
+//             var _href = reStrParam($(this).attr('href'),pageCount);
+//         }else{
+//             var _href = $(this).attr('href')+'/pageCount/'+pageCount;
+//         }
+//         $(this).attr('href',_href);
+        
+//     });
+//     window.location.href="{:U('user/detail_c')}/p/1/pageCount/"+pageCount;
+// });
+</script>
+</body>
+</html>

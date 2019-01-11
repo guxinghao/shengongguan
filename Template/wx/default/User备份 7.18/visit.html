@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>参观集锦</title>
+		<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>
+		<meta content="telephone=no,email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+	</head>
+
+	<body id="cgg_visit">
+		<header>
+			<dl class="unclick">
+				<dt class="uced"><img src="__STATIC__/img/hd.png"/></dt>
+				<dt class="clickd"><img src="__STATIC__/img/hd2.png"/></dt>
+				<dd>最新活动</dd>
+				<span class="angel"><img src="__STATIC__/img/topimg.png"/></span>
+			</dl>
+			<dl>
+				<dt class="clickd"><img src="__STATIC__/img/tk.png"/></dt>
+				<dt class="uced"><img src="__STATIC__/img/tk2.png"/></dt>
+				<dd>参观集锦</dd>
+				<span class="angel"><img src="__STATIC__/img/topimg.png"/></span>
+			</dl>
+		</header>
+		<div id="vis_content">
+			<!--最新活动-->
+			<div class="vislist addopen">
+		<volist name='info' id='vo'>
+						<div class="activity_content ovw mar_b">
+					<div class="pic">
+						<img src="{$vo.img}" alt="">
+						<a href="__APP__/Home/User/order/activity_id/{$vo.activity_id}">马上预约</a>
+					</div>
+					<dl>
+						<dd class="times">
+							<span class="time">活动时间 :</span>
+							<span>{$vo.start_day|date='Y-m-d',###} {$vo.start_time} ~ {$vo.start_day|date='Y-m-d',###} {$vo.end_time}</span>
+						</dd>
+						<dd class="times">
+							<span class="time">报名截止 :</span>
+							<span>{$vo.deadline|date='Y-m-d H:i:s',###}</span>
+						</dd>
+						<dd class="times">
+							<span class="time">参观目的地 :</span>
+							<span>{$vo.store_name}</span>
+						</dd>
+						<dd class="times">
+							<span class="time">预约人数 :</span>
+							<span class="line ovw">
+					<span class="num"></span>
+							</span>
+							<span class="nums">03/30</span>
+						</dd>
+					</dl>
+				</div>
+		</volist>
+				<a href="{:U('User/apply')}" class="activity_entrance">没能参观？来报名！下次优参观
+					<img src="__STATIC__/images/entrance.png" alt="">
+				</a>
+			</div>
+			<!--参观集锦-->
+			<div class="vislist ">
+				<aside class="order">
+					<dl>
+						<dt><img src="__STATIC__/img/zb.png"></dt>
+						<dd>参公馆直播</dd>
+					</dl>
+					<dl>
+						<dd>更多</dd>
+						<dt><img src="__STATIC__/img/rarrow.png"></dt>
+					</dl>
+				</aside>
+				<aside class="v_list">
+					<dl>
+						<dt>
+							<video class="myVideo"  poster="__STATIC__/img/video1.png">
+								<source src="http://domhttp.kksmg.com/2017/05/09/h264_450k_mp4_a32def31c8fd51e212638d08a82258cb_ncm.mp4" type="video/mp4"></source>
+							</video>
+						</dt>
+						<dd class="first">青岛选海参系列 </dd>
+						<!--<dd class="last">季姐带你吃遍青岛优质海参</dd>-->
+					</dl>
+					<dl>
+						<dt>
+							<video class="myVideo"  poster="__STATIC__/img/video2.png">
+								<source src="http://domhttp.kksmg.com/2017/05/09/h264_450k_mp4_a32def31c8fd51e212638d08a82258cb_ncm.mp4" type="video/mp4"></source>
+							</video>
+						</dt>
+						<dd class="first">青岛选海参系列 </dd>
+						<!--<dd class="last">季姐带你吃遍青岛优质海参</dd>-->
+					</dl>
+				</aside>
+				<aside class="order">
+					<dl>
+						<dt><img src="__STATIC__/img/cb.png"></dt>
+						<dd>重播</dd>
+					</dl>
+					<dl>
+						<dd>更多</dd>
+						<dt><img src="__STATIC__/img/rarrow.png"></dt>
+					</dl>
+				</aside>
+				<aside class="bef_list">
+					<dl>
+						<dt>
+							<video class="myVideo"  poster="__STATIC__/img/be1.png">
+								<source src="http://domhttp.kksmg.com/2017/05/09/h264_450k_mp4_a32def31c8fd51e212638d08a82258cb_ncm.mp4" type="video/mp4"></source>
+							</video>
+						</dt>
+						<dd>节日海参礼品多种多样 该如何选择?</dd>
+					</dl>
+					<dl>
+						<dt>
+							<video class="myVideo"  poster="__STATIC__/img/be2.png">
+								<source src="http://domhttp.kksmg.com/2017/05/09/h264_450k_mp4_a32def31c8fd51e212638d08a82258cb_ncm.mp4" type="video/mp4"></source>
+							</video>
+						</dt>
+						<dd>节日海参礼品多种多样</dd>
+					</dl>
+					<dl>
+						<dt>
+							<video class="myVideo"  poster="__STATIC__/img/be3.png">
+								<source src="http://domhttp.kksmg.com/2017/05/09/h264_450k_mp4_a32def31c8fd51e212638d08a82258cb_ncm.mp4" type="video/mp4"></source>
+							</video>
+						</dt>
+						<dd>节日海参礼品多种多样 该如何选择?</dd>
+					</dl>
+					<dl>
+						<dt>
+							<video class="myVideo"  poster="__STATIC__/img/be4.png">
+								<source src="http://domhttp.kksmg.com/2017/05/09/h264_450k_mp4_a32def31c8fd51e212638d08a82258cb_ncm.mp4" type="video/mp4"></source>
+							</video>
+						</dt>
+						<dd>节日海参礼品多种多样</dd>
+					</dl>
+				</aside>
+
+			</div>
+		</div>
+		<script type="text/javascript" src="__STATIC__/js/jquery-1.11.1.min.js">
+		</script>
+		<script type="text/javascript">
+			$(function() {
+				var dlw = $('#vis_content .vislist aside.v_list dl').eq(0).width();
+
+				var vih = dlw / 1.73;
+				$('#vis_content .vislist aside.v_list dl video').width(dlw);
+				$('#vis_content .vislist aside.v_list dl video').height(vih);
+
+				var dlW = $('#vis_content .vislist aside.bef_list dl').eq(0).width();
+
+				var viH = dlW / 1.54;
+				$('#vis_content .vislist aside.bef_list dl video').width(dlW);
+				$('#vis_content .vislist aside.bef_list dl video').height(viH);
+
+				$('#cgg_visit header dl').each(function() {
+					// $('#cgg_visit header dl').click(function() {
+					// 	$('#cgg_visit header dl').addClass('unclick');
+					// 	$(this).removeClass('unclick');
+					// 	var index = $(this).index();
+					// 	$('#vis_content .vislist').removeClass('addopen');
+					// 	$('#vis_content .vislist').eq(index).addClass('addopen');
+					// })
+				});
+
+			})
+		</script>
+	</body>
+
+</html>

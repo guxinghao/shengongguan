@@ -1,0 +1,16 @@
+要求PHP5.4以上
+
+1.把根目录tpshop.sql 倒入数据库
+2./Application/Common/Conf  
+db.php 修改数据库名和密码
+数据库修改
+
+ALTER TABLE `tp_store` ADD `shopkeeper` VARCHAR( 20 ) NOT NULL AFTER `status` ;
+ALTER TABLE `tp_admin` CHANGE `star` `star` DECIMAL( 10, 1 ) NOT NULL COMMENT '星级';
+ALTER TABLE `tp_admin` CHANGE `zan` `zan` INT(10) NOT NULL COMMENT '点赞数';
+ALTER TABLE `tp_admin` ADD `complaint` INT( 10 ) NOT NULL AFTER `zan` ;
+
+ALTER TABLE `tp_order` ADD `send_goods_uid` INT(10) NOT NULL AFTER `address`;
+
+ALTER TABLE `tp_order` ADD `type` TINYINT(1) NOT NULL COMMENT '0为app，1为微信' AFTER `shipping_code`;
+

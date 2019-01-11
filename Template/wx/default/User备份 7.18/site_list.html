@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#ededed">
+<head>
+	<meta charset="UTF-8">
+	<!-- 同比缩放标签 ,最大缩放比,最小缩放比,禁止用户缩放-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>地址列表</title>
+	<link rel="stylesheet" href="__STATIC__/css/reset.css">
+	<link rel="stylesheet" href="__STATIC__/css/public.css">
+	<script src="__STATIC__/js/rem.js"></script>
+</head>
+<body>
+	<div class="mar_b1">
+		<ul class="site_list mar_b">
+			<li>
+				<h3>
+					微尘 18874047156
+				</h3>
+				<p>上海市普陀区三全路2099弄 万达广场2楼203号</p>
+			</li>
+			<li>
+				
+				<div class="site_compile">编辑</div>
+				<div class="site_del">删除</div>
+			</li>
+		</ul>
+		
+		<ul class="site_list mar_b">
+			<li>
+				<h3 >
+					微尘 18874047156
+				</h3>
+				<p>上海市普陀区三全路2099弄 万达广场2楼203号</p>
+			</li>
+			<li>
+				
+				<div class="site_compile">编辑</div>
+				<div class="site_del">删除</div>
+			</li>
+		</ul>
+
+		<ul class="site_list mar_b">
+			<li>
+				<h3>
+					微尘 18874047156
+				</h3>
+				<p>上海市普陀区三全路2099弄 万达广场2楼203号</p>
+			</li>
+			<li>
+				
+				<div class="site_compile">编辑</div>
+				<div class="site_del">删除</div>
+			</li>
+		</ul>
+	</div>
+	
+
+	<a class="apply_sub" href="{:U('User/new_addi')}">新增地址</a>
+
+	<script src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+	<script>
+		$(function(){
+			$(".site_del").click(function(){
+				$(this).parent().parent().remove();
+			})
+		})
+		
+	</script>
+</body>
+</html>

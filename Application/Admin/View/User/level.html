@@ -1,0 +1,100 @@
+<include file="Public/min-header" />
+<div class="wrapper">
+  <include file="Public/breadcrumb"/>
+    <section class="content ">
+        <!-- Main content -->
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回"><i class="fa fa-reply"></i></a>
+                <a href="javascript:;" class="btn btn-default" data-url="###/Doc/Index/article/id/1005/developer/user.html" onclick="get_help(this)"><i class="fa fa-question-circle"></i> 帮助</a>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i> 会员等级管理</h3>
+                </div>
+                <div class="panel-body ">   
+                    <!--表单数据-->
+                    <form method="post" id="handleposition" action="{:U('Admin/User/levelHandle')}">                    
+                        <!--通用信息-->
+                    <div class="tab-content col-md-10">                 	  
+                        <div class="tab-pane active" id="tab_tongyong">                           
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <td class="col-sm-2">等级名称：</td>
+                                    <td class="col-sm-4">
+                                        <input type="text" class="form-control" name="level_name" value="{$info.level_name}" >
+                                        <span id="err_attr_name" style="color:#F00; display:none;"></span>                                        
+                                    </td>
+                                    <td class="col-sm-4">不超过十个字
+                                    </td>
+                                </tr>  
+                                <tr>
+                                    <td>所需累计金额：</td>
+                                    <td >
+                         				<input type="text" class="form-control" name="amount" value="{$info.amount}">
+                                    </td>
+                                    <td class="col-sm-4"></td>
+                                </tr>
+                                 <tr>
+                                    <td>首单所需金额：</td>
+                                    <td >
+                         				<input type="text" class="form-control" name="famount" value="{$info.famount}">
+                                    </td>
+                                    <td class="col-sm-4"></td>
+                                </tr>
+                                <tr>
+                                    <td>享受折扣：</td>
+                                    <td>
+                               			<input type="text" class="form-control" name="discount" value="{$info.discount}">     
+                                    </td>
+                                    <td class="col-sm-4">折(0-10折)，10折为不享受折扣</td>
+                                </tr>  
+                                <tr>
+                                    <td>获取积分比例：</td>
+                                    <td>
+                             			<input  name="ps" value="{$info.ps}" class="form-control" >
+                                    </td>
+                                    <td class="col-sm-4">（10%则为每消费满100元，则获得10个积分）</td>
+                                </tr>      
+                                
+                                <tr>
+                                    <td>会员等级图标：</td>
+                                    <td>
+                             			<div class="col-sm-3">
+                      						<input type="text" class="form-control" style="width:350px;margin-left:-15px;" name="vlogo" id="vlogo" value="{$info.vlogo}" >
+                      						
+                                        </div>
+                      					<div class="col-sm-3">
+                                        	<input type="button" class="btn btn-default"
+                                                   onClick="GetUploadify(1,'vlogo','vlogo','')"  value="上传图片"/>
+                                        </div>
+                                        
+                                    </td>
+                                    <td class="col-sm-4"><eq name="info.vlogo" value="" ><else/><img src="{$info.vlogo}" /></eq></td>
+                                </tr>                              
+                                </tbody> 
+                                <tfoot>
+                                	<tr>
+                                	<td><input type="hidden" name="act" value="{$act}">
+                                		<input type="hidden" name="level_id" value="{$info.level_id}">
+                                	</td>
+                                	<td class="col-sm-4"></td>
+                                	<td class="text-right"><input class="btn btn-primary" type="buuton" onclick="adsubmit()" value="保存"></td></tr>
+                                </tfoot>                               
+                                </table>
+                        </div>                           
+                    </div>              
+			    	</form><!--表单数据-->
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+function adsubmit(){
+	$('#handleposition').submit();
+}
+</script>
+</body>
+</html>

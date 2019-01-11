@@ -1,0 +1,324 @@
+<include file="Public/min-header"/>
+<link href="__PUBLIC__/plugins/iCheck/flat/user_icon.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/plugins/daterangepicker/moment.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script> 
+<style type="text/css">
+  #table1 td{
+    width: 33.3%;
+    display: inline-block;
+  }
+</style>
+<div class="wrapper">
+    <!-- Content Header (Page header) -->
+   <include file="Public/breadcrumb"/>
+    <section class="content">
+    <!-- Main content -->
+    <!--<div class="container-fluid">-->
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-list"></i> 会员详情</h3>
+            </div>
+            <div class="panel-body">
+                <form action="" method="post" onsubmit="return checkUserUpdate(this);">
+                    <table class="table table-bordered" id="table1">
+                    <tbody>
+                    
+                     <h4 class="h4">会员基本信息</h4>
+                    <tr>
+                      <if condition="$role_id eq 1">
+                        <td class="col-sm-2">姓名：<input type="text" value="{$user.nickname}" name="nickname"/></td>
+                      <else />
+                        <td class="col-sm-2">姓名：{$user.nickname}</td>
+                      </if>
+                        <td>会员等级：
+                        <select name="levels">
+                          <volist name="info" id="vo">
+                            <option value="{$vo.level_id}" <eq name='vo.level_name' value="$user.levels"> selected = "selected"</eq>>{$vo.level_name}</option>
+                          </volist>
+                        </select>
+                        </td>
+                        <if condition="$role_id eq 1">
+                        <td>风格：
+                          <select style="width: 80px;" name="fengge_id">
+                            <option value="1" <lt name="user['fengge_id']" value="2"> selected = "selected"</lt>>初始</option>
+                            <option value="2" <eq name="user['fengge_id']" value="2"> selected = "selected"</eq>>潜在</option>
+                            <option value="3" <eq name="user['fengge_id']" value="3"> selected = "selected"</eq>>新手</option>
+                            <option value="4" <eq name="user['fengge_id']" value="4"> selected = "selected"</eq>>活跃</option>
+                            <option value="5" <eq name="user['fengge_id']" value="5"> selected = "selected"</eq>>忠诚</option>
+                            <option value="7" <eq name="user['fengge_id']" value="7"> selected = "selected"</eq>>游离</option>
+                            <option value="8" <eq name="user['fengge_id']" value="8"> selected = "selected"</eq>>沉寂</option>
+                            <option value="10" <eq name="user['fengge_id']" value="10"> selected = "selected"</eq>>回归</option>
+                            <option value="11" <eq name="user['fengge_id']" value="11"> selected = "selected"</eq>>老友</option>
+                            <option value="12" <eq name="user['fengge_id']" value="12"> selected = "selected"</eq>>复购</option>
+                          </select>
+                        </td>
+                        <else />
+                        <td>风格：{$user.user_id|getUserFen}</td>
+                        </if>
+                    </tr>
+                    <tr>
+                        <if condition="$role_id eq 1">
+                        <td>手机号：<input type="text" value="{$user.mobile}" name="mobile"/></td>
+                        <else />
+                        <td>手机号：{$user.mobile}</td>
+                        </if>
+                        <td>积分余额：<input type="text" value="{$user.pay_points}" name="pay_points"/></td>
+                        <if condition="$role_id eq 1">
+                        <td>生日：<input class="birthdays" type="text" value="{$user.birthdays}" name="birthdays"/></td>
+                        <else />
+                        <td>生日：{$user.birthdays}</td>
+                        </if>
+                    </tr>
+
+                    <tr>
+                      <if condition="$role_id eq 1">
+                        <td>性别： 
+                        <select name="sex">
+                            <option value="0" <eq name="user['sex']" value="0"> selected = "selected"</eq>>保密</option>
+                            <option value="1" <eq name="user['sex']" value="1"> selected = "selected"</eq>>男</option>
+                            <option value="2" <eq name="user['sex']" value="2"> selected = "selected"</eq>>女</option>
+                        </select>
+                        </td>
+                        <else />
+                        <td>性别： <if condition="$user['sex'] eq 0">保密</if> 
+                            <if condition="$user['sex'] eq 1">男</if> 
+                            <if condition="$user['sex'] eq 2">女</if> 
+                        </td>
+                        </if>
+                        <if condition="$role_id eq 1">
+                        <td>年龄段：
+                          <select name="age_group">
+                                <option value="" <eq name="user.age_group" value="">selected="selected"</eq>>未知</option>
+                                <option value="0-10" <eq name="user.age_group" value="0-10">selected="selected"</eq>>0-10</option>
+                                <option value="11-20" <eq name="user.age_group" value="11-20">selected="selected"</eq>>11-20</option>
+                                <option value="21-30" <eq name="user.age_group" value="21-30">selected="selected"</eq>>21-30</option>
+                                <option value="31-40" <eq name="user.age_group" value="31-40">selected="selected"</eq>>31-40</option>
+                                <option value="41-50" <eq name="user.age_group" value="41-50">selected="selected"</eq>>41-50</option>
+                                <option value="51-60" <eq name="user.age_group" value="51-60">selected="selected"</eq>>51-60</option>
+                                <option value="61-70" <eq name="user.age_group" value="61-70">selected="selected"</eq>>61-70</option>
+                                <option value="71-80" <eq name="user.age_group" value="71-80">selected="selected"</eq>>71-80</option>
+                                <option value="81-90" <eq name="user.age_group" value="81-90">selected="selected"</eq>>81-90</option>
+                                <option value="91-100" <eq name="user.age_group" value="91-100">selected="selected"</eq>>91-100</option>
+                                
+                          </select>
+                        </td>
+                        <else />
+                        <td>年龄段：{$user.age_group}</td>
+                        </if>
+                        <if condition="$role_id eq 1">
+                        <td>开发人：
+                          <select name="add_uid">
+                            <option value="0">请选择开发人</option>
+                            <volist name="guwenList" id="vo">
+                              <option value="{$vo.admin_id}" <eq name='vo.name' value="$user.kaifa"> selected = "selected"</eq>>{$vo.name}</option>
+                            </volist>
+                          </select>
+                        </td>
+                        <else />
+                        <td>开发人：{$user.kaifa}</td>
+                        </if>
+                    </tr>
+                    <tr>
+                        <td>来源途径：
+                          <select name="source">
+                      				<option value="" >请选择</option>
+                      				<option value="朋友介绍" <eq name="user.source" value="朋友介绍">selected="selected"</eq>>朋友介绍</option>
+                              <option value="网络搜索" <eq name="user.source" value="网络搜索">selected="selected"</eq>>网络搜索</option>
+                              <option value="门店路过" <eq name="user.source" value="门店路过">selected="selected"</eq>>门店路过</option>
+                              <option value="线下活动" <eq name="user.source" value="线下活动">selected="selected"</eq>>线下活动</option>
+                               <option value="报纸广告" <eq name="user.source" value="报纸广告">selected="selected"</eq>>报纸广告</option>
+                              <option value="其他" <eq name="user.source" value="其他">selected="selected"</eq>>其他</option>
+                          </select>
+                       </td>
+                        	<td>购买用途：
+                            <input type="checkbox" name="purpose[]" value="自己吃" <eq name="user.purpose|checkValue='自己吃'" value="1"> checked="checked" </eq> />自己吃
+                            <input type="checkbox" name="purpose[]" value="家人吃" <eq name="user.purpose|checkValue='家人吃'" value="1"> checked="checked" </eq> />家人吃
+                            <input type="checkbox" name="purpose[]" value="送礼" <eq name="user.purpose|checkValue='送礼'" value="1"> checked="checked" </eq> />送礼
+                            <input type="checkbox" name="purpose[]" value="公司福利" <eq name="user.purpose|checkValue='公司福利'" value="1"> checked="checked" </eq> />公司福利
+                            <input type="checkbox" name="purpose[]" value="酒店用" <eq name="user.purpose|checkValue='酒店用'" value="1"> checked="checked" </eq> />酒店用
+                            <input type="checkbox" name="purpose[]" value="内购用" <eq name="user.purpose|checkValue='内购用'" value="1"> checked="checked" </eq> />内购用
+                       </td>
+                        <td>开发时间：<eq name="user.reg_time" value="0"><else/>{$user.reg_time|date='Y-m-d',###}</eq></td>
+                    </tr>
+                      <tr>
+                        <td>发制方式：
+                          <select name="fazhifangshi">
+                      				<option value="" >请选择</option>
+                      				<option value="门店代发" <eq name="user.fazhifangshi" value="门店代发">selected="selected"</eq>>门店代发</option>
+                              <option value="自己发制" <eq name="user.fazhifangshi" value="自己发制">selected="selected"</eq>>自己发制</option>
+                          </select>
+                       </td>
+                        	<td>食用人群： 
+                            <input type="checkbox" name="shiyongrenqun[]" value="老人" <eq name="user.shiyongrenqun|checkValue='老人'" value="1"> checked="checked" </eq> />老人
+                            <input type="checkbox" name="shiyongrenqun[]" value="病号" <eq name="user.shiyongrenqun|checkValue='病号'" value="1"> checked="checked" </eq> />病号
+                            <input type="checkbox" name="shiyongrenqun[]" value="孕妇" <eq name="user.shiyongrenqun|checkValue='孕妇'" value="1"> checked="checked" </eq> />孕妇
+                            <input type="checkbox" name="shiyongrenqun[]" value="学生" <eq name="user.shiyongrenqun|checkValue='学生'" value="1"> checked="checked" </eq> />学生
+                            <input type="checkbox" name="shiyongrenqun[]" value="男性" <eq name="user.shiyongrenqun|checkValue='男性'" value="1"> checked="checked" </eq> />男性
+                            <input type="checkbox" name="shiyongrenqun[]" value="女性"  <eq name="user.shiyongrenqun|checkValue='女性'" value="1"> checked="checked" </eq> />女性
+                       </td>
+                        <td>偏好产品： 
+                          <input type="checkbox" name="preferred_products[]" value="淡干海参王" <eq name="user.preferred_products|checkValue='淡干海参王'" value="1"> checked="checked" </eq>  />淡干海参王
+                          <input type="checkbox" name="preferred_products[]" value="淡干家庭装" <eq name="user.preferred_products|checkValue='淡干家庭装'" value="1"> checked="checked" </eq>  />淡干家庭装
+                          <input type="checkbox" name="preferred_products[]" value="冷冻即食" <eq name="user.preferred_products|checkValue='冷冻即食'" value="1"> checked="checked" </eq>  />冷冻即食
+                          <input type="checkbox" name="preferred_products[]" value="速发海参" <eq name="user.preferred_products|checkValue='速发海参'" value="1"> checked="checked" </eq>  />速发海参
+                          <input type="checkbox" name="preferred_products[]" value="虾仁" <eq name="user.preferred_products|checkValue='虾仁'" value="1"> checked="checked" </eq>  />虾仁
+                          <input type="checkbox" name="preferred_products[]" value="其他" <eq name="user.preferred_products|checkValue='其他'" value="1"> checked="checked" </eq>  />其他</td>
+                    </tr>
+                    <tr>
+                        <td>所属系统：{$user.system}</td>
+                        <td>所属门店：
+                          <select name="changeStore">
+                            <option value="0">请选择门店</option>
+                            <volist name="storeList" id="vol">
+                              <option value="{$vol.store_id}" <eq name='vol.store_name' value="$user.store"> selected = "selected"</eq>>{$vol.store_name}</option>
+                            </volist>
+                          </select></td>
+                        <td>服务顾问：
+                          <select name="fuwu_guwen">
+                            <option value="0">请选择服务顾问</option>
+                            <volist name="guwenList" id="vo">
+                              <option value="{$vo.admin_id}" <eq name='vo.name' value="$user.consultant"> selected = "selected"</eq>>{$vo.name}</option>
+                            </volist>
+                          </select></td>
+                    </tr>
+                     <tr>
+                      <volist name="fapiao_list" id="fapiao">
+                       <if condition="$fapiao.fapiao_style eq 0">
+                        <td>
+                            <p>发票类型：个人</p>
+                            <p>姓名：<input type="text" value="{$fapiao.fapiao_name}" name="fp[fapiao_name][{$fapiao.fapiao_id}]" /></p>
+                            <input type="hidden" name="fp[id][]" value="{$fapiao.fapiao_id}">
+                        </td>
+                       <else />
+                       <td>
+                            <p>发票类型：单位</p>
+                            <p>发票名称：<input type="text" value="{$fapiao.fapiao_name}" name="fp[fapiao_name][{$fapiao.fapiao_id}]" /></p>
+                            <p>发票税号：<input type="text" value="{$fapiao.fapiao_shuihao}" name="fp[fapiao_shuihao][{$fapiao.fapiao_id}]" /></p>
+                            <p>单位地址：<input type="text" value="{$fapiao.fapiao_adress}" name="fp[fapiao_adress][{$fapiao.fapiao_id}]" /></p>
+                            <p>联系电话：<input type="text" value="{$fapiao.link_phone}" name="fp[link_phone][{$fapiao.fapiao_id}]" /></p>
+                            <p>开户行：　<input type="text" value="{$fapiao.bank_deposit}" name="fp[bank_deposit][{$fapiao.fapiao_id}]" /></p>
+                            <p>银行账户：<input type="text" value="{$fapiao.bank_num}" name="fp[bank_num][{$fapiao.fapiao_id}]" /></p>
+                            <input type="hidden" name="fp[id][]" value="{$fapiao.fapiao_id}">
+
+                        </td>
+                        </if>
+                      </volist>
+                    </tr>
+                    <tr>
+                        <if condition="$role_id eq 1">
+                        <td>消费金额：<input type="text" value="{$user.total_amount}" name="total_amount"/></td>
+                        <else />
+                        <td>消费金额：{$user.total_amount}</td>
+                        </if>
+                        <td>备注：<input type="text" value="{$user.remark}" name="remark" size="40" /></td>
+                        <td>个人爱好：<input type="text" value="{$user.style}" name="style" size="40" /></td>
+                    </tr>
+                    <tr>
+                        <td>首次购买时间：<eq name="user.first_time" value="0"><else/>{$user.first_time|date='Y-m-d H:i',###}</eq></td>
+                        <if condition="($role_id eq 1) OR ($role_id eq 4)">
+                          <td>推荐人手机号：<input type="text" value="{$user.referrals_phone}" name="referrals_phone" size="20" /></td>
+                        <else />
+                          <td>推荐人手机号：{$user.referrals_phone}</td>
+                        </if>
+                        <td>最后一次购买时间：<eq name="user.end_time" value="0"><else/>{$user.end_time|date='Y-m-d H:i',###}</eq></td>
+                    </tr>
+                    <tr>
+                        <td>习惯吃法：
+                          <input type="checkbox" name="xiguanchifa[]" value="原味" <eq name="user.eating_habits|checkValue='原味'" value="1"> checked="checked" </eq> />原味
+                          <input type="checkbox" name="xiguanchifa[]" value="蘸汁" <eq name="user.eating_habits|checkValue='蘸汁'" value="1"> checked="checked" </eq> />蘸汁
+                          <input type="checkbox" name="xiguanchifa[]" value="熬粥" <eq name="user.eating_habits|checkValue='熬粥'" value="1"> checked="checked" </eq> />熬粥
+                          <input type="checkbox" name="xiguanchifa[]" value="煲汤" <eq name="user.eating_habits|checkValue='煲汤'" value="1"> checked="checked" </eq> />煲汤
+                          <input type="checkbox" name="xiguanchifa[]" value="炒菜" <eq name="user.eating_habits|checkValue='炒菜'" value="1"> checked="checked" </eq> />炒菜
+                          <input type="checkbox" name="xiguanchifa[]" value="其他"  <eq name="user.eating_habits|checkValue='其他'" value="1"> checked="checked" </eq> />其他
+                          <input type="checkbox" name="xiguanchifa[]" value="不确定"  <eq name="user.eating_habits|checkValue='不确定'" value="1"> checked="checked" </eq> />不确定
+                        </td>
+                        <td>常购产品：{$changgouchanpin_name}</td>
+                        <td>食用人数：
+                          <select name="shiyongrenshu">
+                              <option value="" >请选择</option>
+                              <option value="1人" <eq name="user.shiyongrenshu" value="1人">selected="selected"</eq>>1人</option>
+                              <option value="2人" <eq name="user.shiyongrenshu" value="2人">selected="selected"</eq>>2人</option>
+                              <option value="3人" <eq name="user.shiyongrenshu" value="3人">selected="selected"</eq>>3人</option>
+                              <option value="3人以上" <eq name="user.shiyongrenshu" value="3人以上">selected="selected"</eq>>3人以上</option>
+                              <option value="不确定" <eq name="user.shiyongrenshu" value="不确定">selected="selected"</eq>>不确定</option>
+                          </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>食用量：
+                          <select name="shiyongliang">
+                              <option value="" >请选择</option>
+                              <option value="每天一根" <eq name="user.shiyongliang" value="每天一根">selected="selected"</eq>>每天一根</option>
+                              <option value="每天半根" <eq name="user.shiyongliang" value="每天半根">selected="selected"</eq>>每天半根</option>
+                              <option value="每周一根" <eq name="user.shiyongliang" value="每周一根">selected="selected"</eq>>每周一根</option>
+                              <option value="不确定" <eq name="user.shiyongliang" value="不确定">selected="selected"</eq>>不确定</option>
+                          </select>
+                        </td>
+                        <td>滋补习惯：
+                          <select name="tonic_behavior">
+                              <option value="" >请选择</option>
+                              <option value="常年吃" <eq name="user.tonic_behavior" value="常年吃">selected="selected"</eq>>常年吃</option>
+                              <option value="热天不吃" <eq name="user.tonic_behavior" value="热天不吃">selected="selected"</eq>>热天不吃</option>
+                              <option value="仅冬天吃" <eq name="user.tonic_behavior" value="仅冬天吃">selected="selected"</eq>>仅冬天吃</option>
+                              <option value="想起来就吃" <eq name="user.tonic_behavior" value="想起来就吃">selected="selected"</eq>>想起来就吃</option>
+                              <option value="不确定" <eq name="user.tonic_behavior" value="不确定">selected="selected"</eq>>不确定</option>
+                          </select>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div>  
+                  <button type="submit" class="btn btn-info">
+                    <i class="ace-icon fa fa-check bigger-110"></i> 保存
+                  </button>
+                  <a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default pull-right" data-original-title="返回"><i class="fa fa-reply"></i></a></div>
+                </form>
+
+            </div>
+        </div>
+      </div> 
+    </div>    <!-- /.content -->
+   </section>
+</div>
+<script>
+    function checkUserUpdate(){
+        var email = $('input[name="email"]').val();
+        var mobile = $('input[name="mobile"]').val();
+        var password = $('input[name="password"]').val();
+        var password2 = $('input[name="password2"]').val();
+
+        var error ='';
+       
+        return true;
+
+    }
+</script>
+<script>
+$(document).ready(function() {
+
+  $('.birthdays').daterangepicker({
+    format:"YYYY-MM-DD",
+    singleDatePicker: true,
+    showDropdowns: true,
+    minDate:'2016-01-01',
+    maxDate:'2030-01-01',
+    startDate:'2016-01-01',
+      locale : {
+            applyLabel : '确定',
+            cancelLabel : '取消',
+            fromLabel : '起始时间',
+            toLabel : '结束时间',
+            customRangeLabel : '自定义',
+            daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+            monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+            firstDay : 1
+        }
+  });
+});
+
+</script>
+</body>
+</html>

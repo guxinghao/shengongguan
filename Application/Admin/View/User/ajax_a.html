@@ -1,0 +1,24 @@
+ <table class="table table-bordered table-hover">
+                                <thead>   
+        
+            <h5 class="h5 h5_a"> 购买记录<span><a href="{:U('Admin/user/detail',array('id'=>$maps['user_id']))}">返回&gt;</a></span></h5>                         
+                <tr>
+                        <td>编号</td>
+                        <td>购买时间</td>
+                        <td>商品名称</td>
+                        <td>购买数量</td>
+                        <td>购买金额</td>
+                </tr>
+            </thead>
+            <tbody>
+            <volist name="info" id="vo">
+               <tr>
+                        <td>{$vo.order_id}</td>
+                        <td>{$vo.pay_time|date='Y-m-d H:i',###}</td>
+                        <td>{$vo.goods_name}</td>
+                        <td>{$vo.goods_num}</td>
+                        <td>{$vo.total_amount}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>

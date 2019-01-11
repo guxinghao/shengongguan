@@ -1,0 +1,125 @@
+function getAllMenu(){  
+
+
+去掉
+
+	//'weixin' => array('name' => '微信管理', 'icon'=>'fa-weixin', 'sub_menu' => array(
+			//		array('name' => '公众号管理', 'act'=>'index', 'control'=>'Wechat'),
+			//		array('name' => '微信菜单管理', 'act'=>'menu', 'control'=>'Wechat'),
+					array('name' => '文本回复', 'act'=>'text', 'control'=>'Wechat'),
+					array('name' => '图文回复', 'act'=>'img', 'control'=>'Wechat'),
+					array('name' => '组合回复', 'act'=>'nes', 'control'=>'Wechat'),
+					array('name' => '消息推送', 'act'=>'news', 'control'=>'Wechat'),
+			)),
+
+
+			'tools' => array('name' => '插件工具', 'icon'=>'fa-plug', 'sub_menu' => array(
+					array('name' => '插件列表', 'act'=>'index', 'control'=>'Plugin'),
+					array('name' => '数据备份', 'act'=>'index', 'control'=>'Tools'),
+					array('name' => '数据还原', 'act'=>'restore', 'control'=>'Tools'),
+			)),
+
+
+CREATE TABLE `tp_returns` (
+  `order_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '订单id',
+  `order_sn` varchar(20) NOT NULL DEFAULT '' COMMENT '订单编号',
+  `cid` int(10) NOT NULL COMMENT '服务顾问的UID',
+  `order_status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '订单状态',
+  `shipping_status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '发货状态',
+  `pay_status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '支付状态',
+  `consignee` varchar(60) NOT NULL DEFAULT '' COMMENT '收货人',
+  `mobile` varchar(60) NOT NULL DEFAULT '' COMMENT '手机',
+  `email` varchar(60) NOT NULL DEFAULT '' COMMENT '邮件',
+  `pay_code` varchar(32) NOT NULL DEFAULT '' COMMENT '支付code',
+  `pay_name` varchar(120) NOT NULL DEFAULT '' COMMENT '支付方式名称',
+  `return_type` varchar(100) NOT NULL COMMENT '返货类型',
+  `shipping_uid` int(10) NOT NULL COMMENT '发货人uid',
+  `goods_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '商品总价',
+  `shipping_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '邮费',
+  `user_money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '使用余额',
+  `coupon_price` decimal(10,2) DEFAULT '0.00' COMMENT '优惠券抵扣',
+  `integral` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '使用积分',
+  `integral_money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '使用积分抵多少钱',
+  `order_amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '应付款金额',
+  `total_amount` decimal(10,2) DEFAULT '0.00' COMMENT '订单总价',
+  `add_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '下单时间',
+  `shipping_time` int(11) DEFAULT '0' COMMENT '最后新退货时间',
+  `confirm_time` int(10) DEFAULT '0' COMMENT '收货确认时间',
+  `pay_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '支付时间',
+  `user_note` varchar(255) NOT NULL DEFAULT '' COMMENT '用户备注',
+  `admin_note` varchar(255) DEFAULT '' COMMENT '管理员备注',
+  `store_id` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`order_id`),
+  UNIQUE KEY `order_sn` (`order_sn`),
+  KEY `order_status` (`order_status`),
+  KEY `shipping_status` (`shipping_status`),
+  KEY `pay_status` (`pay_status`),
+  KEY `pay_id` (`pay_code`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+
+
+CREATE TABLE `tp_returns_goods` (
+  `rec_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '表id自增',
+  `order_id` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '订单id',
+  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '商品id',
+  `goods_name` varchar(120) NOT NULL DEFAULT '' COMMENT '视频名称',
+  `goods_sn` varchar(60) NOT NULL DEFAULT '' COMMENT '商品货号',
+  `goods_num` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT '购买数量',
+  `market_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '总价格',
+  `goods_price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '本店价',
+  `cost_price` decimal(10,2) DEFAULT '0.00' COMMENT '商品成本价',
+  `member_goods_price` decimal(10,2) DEFAULT '0.00' COMMENT '会员折扣价',
+  `give_integral` mediumint(8) DEFAULT '0' COMMENT '购买商品赠送积分',
+  `spec_key` varchar(128) NOT NULL DEFAULT '' COMMENT '商品规格key',
+  `spec_key_name` varchar(128) NOT NULL DEFAULT '' COMMENT '规格对应的中文名字',
+  `bar_code` varchar(64) NOT NULL DEFAULT '' COMMENT '条码',
+  `is_comment` tinyint(1) DEFAULT '0' COMMENT '是否评价',
+  `prom_type` tinyint(1) DEFAULT '0' COMMENT '0 普通订单,1 限时抢购, 2 团购 , 3 促销优惠',
+  `prom_id` int(11) DEFAULT '0' COMMENT '活动id',
+  `is_send` tinyint(1) DEFAULT '0' COMMENT '0未发货，1已发货，2已换货，3已退货',
+  `delivery_id` int(11) DEFAULT '0' COMMENT '发货单ID',
+  `sku` varchar(128) DEFAULT '' COMMENT 'sku',
+  PRIMARY KEY (`rec_id`),
+  KEY `order_id` (`order_id`),
+  KEY `goods_id` (`goods_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+ALTER TABLE `tp_admin` ADD `nickname` VARCHAR( 100 ) NOT NULL COMMENT '花名' AFTER `user_name` ;
+
+ALTER TABLE `tp_admin` ADD `sign_name` VARCHAR( 255 ) NOT NULL COMMENT '签名' AFTER `nickname` ;
+
+ALTER TABLE `tp_admin` ADD `img` VARCHAR( 200 ) NOT NULL AFTER `sign_name` ;
+
+
+ALTER TABLE `tp_admin` ADD `sale_count` INT(10) NOT NULL COMMENT '销售目标' AFTER `todolist`;
+
+ALTER TABLE `tp_store` ADD `shopkeeper` VARCHAR( 20 ) NOT NULL AFTER `status` ;
+ALTER TABLE `tp_admin` CHANGE `star` `star` DECIMAL( 10, 1 ) NOT NULL COMMENT '星级';
+ALTER TABLE `tp_admin` CHANGE `zan` `zan` INT(10) NOT NULL COMMENT '点赞数';
+ALTER TABLE `tp_admin` ADD `complaint` INT( 10 ) NOT NULL AFTER `zan` ;
+
+ALTER TABLE `tp_order` ADD `send_goods_uid` INT(10) NOT NULL AFTER `address`;
+
+ALTER TABLE `tp_order` ADD `type` TINYINT(1) NOT NULL COMMENT '0为app，1为微信' AFTER `shipping_code`;
+
+
+CREATE TABLE `tp_appaly` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `sn` varchar(30) NOT NULL,
+  `uid` int(10) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `activity_id` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `create_time` int(10) NOT NULL,
+  `update_time` int(10) NOT NULL DEFAULT '0',
+  `name` varchar(30) NOT NULL,
+  `mobile` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+
+
+ALTER TABLE `tp_order` ADD `is_first` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `weixin` ;
+ALTER TABLE `tp_users` ADD `age_group` VARCHAR( 100 ) NULL COMMENT '年龄段' AFTER `address_id` ;
+

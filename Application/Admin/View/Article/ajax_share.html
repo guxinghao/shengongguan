@@ -1,0 +1,57 @@
+ <table id="list-table" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                         <thead>
+                           <tr role="row">
+                               <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 294px;">分享标题</th>
+                               <th class="sorting" tabindex="0" aria-controls="example1"  aria-label="Browser: activate to sort column ascending">分享类别</th>                       
+                               <th class="sorting" tabindex="0" aria-controls="example1"  aria-label="Platform(s): activate to sort column ascending">显示</th>
+                               <th class="sorting" tabindex="0" aria-controls="example1"  aria-label="Platform(s): activate to sort column ascending">精华</th>
+                               <th class="sorting" tabindex="0" aria-controls="example1"  aria-label="Engine version: activate to sort column ascending">发布时间</th>
+                               <th class="sorting" tabindex="0" aria-controls="example1"  aria-label="CSS grade: activate to sort column ascending">操作</th>
+                           </tr>
+                         </thead>
+                        <tbody >
+                                <foreach name="info" item="vo" key="k" >
+                            <tr role="row" >
+                             <td>{$vo.title|getSubstr=0,33}</td>
+                             <td> 
+                                <eq name="vo.cate_id" value="1">泡发技巧</eq>
+                                <eq name="vo.cate_id" value="2">厨艺分享</eq>
+                                <eq name="vo.cate_id" value="3">食参感受</eq>
+                                <eq name="vo.cate_id" value="4">其他分享</eq>
+                             </td>
+                             <td>
+                                 <img width="20" height="20" src="__PUBLIC__/images/<if condition='$vo[status] eq 1'>yes.png<else />cancel.png</if>" onclick="changeTableVal('Share','id','{$vo.id}','status',this)"/>                                        
+                            </td>
+                            <td>
+                                 <img width="20" height="20" src="__PUBLIC__/images/<if condition='$vo[status] eq 1'>yes.png<else />cancel.png</if>" onclick="changeTableVal('Share','id','{$vo.id}','is_top',this)"/>                                        
+                            </td>
+                             <td>{$vo.create_time|date="Y-m-d H:i:s",###}</td>
+                             <td>
+                               <a href="{:U('Admin/Article/share',array('id'=>$vo['id']))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看详情"><i class="fa fa-eye"></i></a>
+                              <a class="btn btn-danger" href="javascript:void(0)" data-url="{:U('Admin/Article/del_share')}" data-id="{$vo.id}" onclick="delfun(this)"><i class="fa fa-trash-o"></i></a>
+                            
+                            </td>
+                            </tr>
+                          </foreach>
+                         </tbody>
+                         <tfoot>
+                         
+                         </tfoot>
+                       </table>
+                        <div class="row">
+                   
+                    <div class="col-sm-12 text-center">{$page}</div>    
+              </div>
+<script>
+$(".pagination  a").click(function(){
+    var pageCount = $('#selectPage').val();
+    var page = $(this).data('p');
+    ajax_get_table('search-form3',page,pageCount);
+});
+    //选择展示条数时触发
+$("#selectPage").change(function(){
+    var pageCount = $('#selectPage').val();
+    var page = $("li.active>a").data('p');
+    ajax_get_table('search-form2',1,pageCount);
+});
+</script>

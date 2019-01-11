@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的参友</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>
+		<meta content="telephone=no,email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+
+	</head>
+
+	<body id="fri_q">
+		<header>
+			<a><img src="__STATIC__/img/btn_yq.png"></a>
+		</header>
+		<div id="fri_content">
+			<aside class="top">
+				<dl>
+					<dt>{$count}</dt>
+					<dd><img src="__STATIC__/img/cy.png" /></dd>
+				</dl>
+				<dl>
+					<dt>{$where}</dt>
+					<dd><img src="__STATIC__/img/jf.png" /></dd>
+				</dl>
+			</aside>
+			<aside class="cy_con">
+				<ul>
+				<div id="ajax_return">
+				<volist name="info" id="vo" >
+					<li>
+						<dl>
+							<dt><!-- <img src="__STATIC__/img/hy1.png"/> --></dt>
+							<dd>
+								<h3>{$vo.nickname}</h3>
+								<p><img src="{$vo.src}" />{$vo.le}</p>
+							</dd>
+						</dl>
+						<div class="right">
+							<h3>100</h3>
+							<p>MM </p>
+						</div>				
+					</li>
+				</volist>
+				</div>	
+				</ul>
+			</aside>
+		</div>
+		<div id="shandow">
+
+		</div>
+		<aside class="box">
+			<p><img src="__STATIC__/img/fx.png" /></p>
+			<ul>
+				<li>
+					<a><img src="__STATIC__/img/kk.png" /></a>
+				</li>
+				<li>
+					<a></a><img src="__STATIC__/img/kj.png" /></li>
+				<li>
+					<a></a><img src="__STATIC__/img/wx.png" /></li>
+				<li>
+					<a></a><img src="__STATIC__/img/pyq.png" /></li>
+				<li>
+					<a></a><img src="__STATIC__/img/wb.png" /></li>
+			</ul>
+		</aside>
+		<input type="hidden" id = "page" value = '1'>
+		<script type="text/javascript" src="__STATIC__/js/jquery-1.11.1.min.js">
+			
+		</script>
+		<script type="text/javascript">
+			$(function(){
+				$('#shandow').hide();
+				$('#fri_q header a').click(function(){
+					$('#shandow').css('display','block');
+					$('#fri_q aside.box').css('display','block');
+					$('#fri_q aside.box ul li').each(function(){
+						$('#fri_q aside.box ul li').click(function(){
+							$('#shandow').css('display','none');
+					$('#fri_q aside.box').css('display','none');
+						})
+					})
+				})
+			})
+	$(window).scroll(function () {
+      	var a = $(window).height()+$(window).scrollTop();
+      	var b = $(document).height();
+      	if(a==b){     		
+      		var page = $('#page').val();     		
+      		 $.ajax({
+                type : "POST",
+                url:"/index.php?m=Home&c=Member&a=ajax_ticket&p="+page,
+                success: function(data){               	
+                    if(data==''){
+						$('.a').css('display','none');
+						$('.b').css('display','inline-block');
+						console.log('1');
+
+								}else{
+									 		page =Number(page)+1;
+											$('#page').val(page);					
+                    						$("#ajax_return").append(data);
+										}
+                }
+            });
+        }
+ 	}); 
+		</script>
+	</body>
+
+</html>

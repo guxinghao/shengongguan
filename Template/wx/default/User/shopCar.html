@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>购物车</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<script type="text/javascript" src="__STATIC__/js/flexible.js"></script>
+		<meta content="telephone=no,email=no" name="format-detection">
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/footer.css" />
+	</head>
+	<body id="shopCar">
+	<form id="cart_form" name="formCart" action="{:U('Mobile/Cart/ajaxCartList')}" method="post">
+		<ul class="total">
+	<foreach name="cartList" item="v" key="k">
+			<li>
+				<input type="checkbox"  autocomplete="off" name="cart_select[{$v.id}]" <if condition="$v[selected] eq 1" >checked="checked"</if>  style="display:none;" value="1" onclick="ajax_cart_list();" />
+				<aside class="top">
+					<dl>
+						<dt><img src="{$v.goods_id|goods_thum_images=80,80}" ></dt>
+						<dd class="title">{$v[goods_name]}</dd>
+						<dd class="money">
+							<span class="jg"><b  class="price">{$v[goods_points]}</b></span>
+							<div>
+								<span class="quantity-increase" class="btn">–</span>
+								<input type="text"  class="num" id="goods_num[{$v.id}]" type="text" onKeyDown='if(event.keyCode == 13) event.returnValue = false' name="goods_num[{$v.id}]"  value="{$v.goods_num}" onblur="ajax_cart_list()">
+								<span class="quantity-decrease" class="btn">+</span>
+								
+							</div>
+						</dd>
+					</dl>
+				</aside>
+			</li>
+	</foreach>
+<!--<a href="" class="icon-minicart-del" title="删除">删除</a>  --> 
+		</ul>
+		<div class="fixedB">
+			<div><input type="checkbox" id="chk_all">全选</div>
+			<p>合计：<span id="AllTotal">{$cart_total_price[total_fee]}</span></p>
+			 <input type="button" href="javascript:void();"  onclick="return selcart_submit();" class="xm-button " value="去结算">
+		</div>
+	 </form>
+		<footer>
+
+			<dl>
+				<a href="{:U('User/vip_index')}">
+					<dt><img src="__STATIC__/img/sy1.png"></dt>
+					<dd>首页</dd>
+				</a>
+			</dl>
+			<dl>
+				<a href="{:U('Index/classify')}">
+					<dt><img src="__STATIC__/img/fl1.png"></dt>
+					<dd>分类</dd>
+				</a>
+			</dl>
+			<dl>
+				<a href="{:U('User/shopCar')}">
+				<dt><img src="__STATIC__/img/car2.png"></dt>
+				<dd  class="addCol">购物车</dd>
+				</a>
+			</dl>
+			<dl>
+				<a href="{:U('Member/index')}">
+					<dt><img src="__STATIC__/img/per1.png"></dt>
+					<dd>个人</dd>
+				</a>
+			</dl>
+		</footer>
+		<script type="text/javascript" src="__STATIC__/js/jquery-1.11.1.min.js">
+		</script>
+		<script type="text/javascript" src="__STATIC__/js/fastclick.js">
+		</script>
+		<script type="text/javascript">
+			$(function() {
+
+				$('.quantity-increase').click(function() {
+					var oSub = $(this).next().val();
+					if(oSub == 1) {
+						$(this).addClass('disable');
+
+						return;
+
+					} else {
+						oSub--;
+						$(this).next().val(oSub);
+
+					}
+					TotalPrice();
+				});
+
+				$('.quantity-decrease').click(function() {
+					$(this).prev().prev().removeClass('disable');
+					var oSub = $(this).prev().val();
+					oSub++;
+					$(this).prev().val(oSub);
+					TotalPrice();
+
+				});
+
+				$("input[name='list']").addClass('GoodsCheck');
+				//				点击单选
+				$(".GoodsCheck").click(function() {
+					var goods = $(".GoodsCheck"); //获取所有复选框
+					var goodsC = $(".GoodsCheck:checked"); //获取所有被选中的复选框
+					var Shops = $('#chk_all') //获取全选按钮 
+					if(goods.length == goodsC.length) { //如果选中的复选框等于所有复选框 
+						Shops.prop('checked', true); //全选按钮被选中 
+						TotalPrice();
+					} else { //如果选中的复选框不等于所有复选框
+						Shops.prop('checked', false); //全选按钮不被选中 
+						TotalPrice();
+					}
+				});
+				// 点击全选按钮 
+				$("#chk_all").click(function() {
+
+					if($(this).prop("checked") == true) { //如果全选按钮被选中 
+						$("input[name='list']").prop('checked', true); //所有按钮都被选中 
+						TotalPrice();
+
+					} else {
+						$("input[name='list']").prop('checked', false); //else所有按钮不全选 
+						TotalPrice();
+					}
+				});
+
+				function TotalPrice() {
+
+					var allprice = 0; //总价
+					$(".GoodsCheck").each(function() {
+						var oprice = 0; //店铺总价
+						if($(this).is(":checked")) { //如果该商品被选中
+							var num = parseInt($(this).parents("li").find(".num").val()); //得到商品的数量
+
+							var price = parseFloat($(this).parents("li").find(".price").text()); //得到商品的单价
+
+							var total = price * num; //计算单个商品的总价
+							oprice += total;
+						}
+						allprice += oprice;
+						$("#AllTotal").text('¥ '+allprice.toFixed(2));
+					})
+
+				}
+
+			})
+		</script>
+		<script type="text/javascript">
+$(".check-wrapper .cart-checkbox").click(function(){
+	if($(this).hasClass('checked')){
+		$(this).removeClass('checked');
+		$(this).find('input').attr('checked',false);
+	}else{
+		$(this).addClass('checked');
+		$(this).find('input').attr('checked',true);
+	}
+	ajax_cart_list();
+})
+
+var is_checked = true;
+$('.inner .cart-checkbox').each(function(){
+	  if(!$(this).hasClass('checked'))
+	  {
+	       is_checked = false;
+	       return false;
+	  }
+});
+if(is_checked){
+  	$('.quanxuan .cart-checkbox').addClass('checked'); 
+}else
+{
+  	$('.quanxuan .cart-checkbox').removeClass('checked'); 
+} 
+	
+function chkAll_onclick() 
+{
+  if($('.quanxuan .cart-checkbox').hasClass('checked')){	  
+    $('.quanxuan .cart-checkbox').removeClass('checked');
+    $('.inner .cart-checkbox').removeClass('checked');
+    $("input[name^='cart_select']").prop('checked',false);
+    is_checked = false;
+  }   
+  else{
+    $('.quanxuan .cart-checkbox').addClass('checked');
+    $('.inner .cart-checkbox').addClass('checked');
+    $("input[name^='cart_select']").prop('checked',true);
+    is_checked = true;
+  }
+  ajax_cart_list();
+}
+
+function del_cart_goods(goods_id)
+{
+    if(!confirm('确定要删除吗?'))
+        return false;
+    var chk_value = [];
+    chk_value.push(goods_id);
+    // ajax调用删除
+    if(chk_value.length > 0)
+        ajax_del_cart(chk_value.join(','));
+}
+
+
+function selcart_submit()
+{
+     var j=0;
+	 $('input[name^="cart_select"]:checked').each(function(){
+	       j++;
+	 });
+     if (j>0)
+     {
+		  window.location.href="{:U('Mobile/Cart/cart2')}"
+     }
+     else
+     {   
+	     alert('请选择要结算的商品！');
+	     return false;
+    }
+}
+</script>
+	</body>
+
+</html>

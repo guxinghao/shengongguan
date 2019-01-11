@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#ededed">
+<head>
+	<meta charset="UTF-8">
+	<!-- 同比缩放标签 ,最大缩放比,最小缩放比,禁止用户缩放-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>我的订单</title>
+	<link rel="stylesheet" href="__STATIC__/css/reset.css">
+	<link rel="stylesheet" href="__STATIC__/css/public.css">
+	<script src="__STATIC__/js/rem.js"></script>
+</head>
+<body>
+	<ul class="order ovw mar_b">
+		<li>
+			<a href="__APP__/Home/Member/my_order"><span <eq name="select" value="1000"> class="bor"</eq> >全部</span></a>
+			<i></i>
+		</li>
+		<li>
+			<a href="__APP__/Home/Member/my_order/type/1">
+			<span <eq name="select" value="1"> class="bor"</eq>>待付款</span>
+			</a>
+			<i></i>
+		</li>
+		<li>
+			<a href="__APP__/Home/Member/my_order/type/2">
+			<span <eq name="select" value="2"> class="bor"</eq>>待发货</span>
+			</a>
+			<i></i>
+		</li>
+		<li>
+			<a href="__APP__/Home/Member/my_order/type/3">
+			<span <eq name="select" value="3"> class="bor"</eq>>待收货</span>
+			</a>
+			<i></i>
+		</li>
+		<li>
+			<a href="__APP__/Home/Member/my_order/type/4">
+			<span <eq name="select" value="4"> class="bor" </eq>>待评论</span>
+			</a>
+		</li>
+	</ul>
+
+<!-- 待付款 -->
+	<ul class="order_content ovw ">
+	<div id= 'ajax_return'>
+	<volist name='info' id='vo'>
+		<li class="mar_b ovw">
+			<p class="order_num pad">
+				<span>订单编号：{$vo.order_sn}</span>
+				<i>{$vo.a}</i>
+			</p>
+			<volist name="vo.goods" id="vos">	
+			<div class="order_shop pad ovw">
+				
+				<div class="or_pic fl">
+					<img src="{$vos.goods_id|goods_thum_images=200,200}" alt="">
+				</div>
+			
+				<div class="or_info fr" >
+					<h3>{$vos.goods_name}</h3>
+					<p style="float: right;">{$vos.goods_price}元<br><a style="color: red">x{$vos.goods_num}</a></p>					
+				</div>
+			
+			</div>	</volist>
+			<div class="affirm ovw">
+				<a href="{$vo.c}">{$vo.b}</a>
+			</div>
+		</li>
+	</volist>
+	</div>
+	</ul>
+	<input type="hidden" id = "page" value = '1'>
+<script src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+<script>
+	$(function(){
+		$(window).scroll(function () {
+      	var a = $(window).height()+$(window).scrollTop();
+      	var b = $(document).height();
+      	if(a==b){
+      		console.log('111');
+      		var page = $('#page').val();     		
+      		 $.ajax({
+                type : "POST",
+                url:"/index.php?m=Home&c=Member&a=ajax_order&p="+page,
+                success: function(data){               	
+                    if(data==''){
+						$('#load').css('display','none');
+						$('.finish').css('display','block');
+								}else{
+									 		page =Number(page)+1;
+											$('#page').val(page);					
+                    						$("#ajax_return").append(data);
+										}
+                }
+            });
+        }
+ 	}); 
+	})
+	</script>
+</body>
+</html>

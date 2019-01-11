@@ -1,0 +1,118 @@
+<include file="Public/min-header"/>
+<div class="wrapper">
+    <include file="Public/breadcrumb"/>
+	<section class="content">
+       <div class="row">
+       		<div class="col-xs-12">
+	       		<div class="box">
+	           	<div class="box-header">
+	                <nav class="navbar navbar-default">	     
+				        <div class="collapse navbar-collapse">
+				          <form class="navbar-form form-inline" action="{:U('Admin/Article/ajax_share')}" method="post" id="search-form3">
+				           	<div class="form-group">
+				              	<select name="cate_id" class="form-control changeColor" style="width:200px;" class="cate">
+				              		<option value="">选择分享类别</option>
+				              		<option value="1">泡发技巧</option>
+				              		<option value="2">厨艺分享</option>
+				              		<option value="3">食参感受</option>
+				              		<option value="4">其他分享</option>
+				              	</select>
+				            </div>
+				             <a class="btn btn-default">提交</a>
+				  
+				          </form>		
+				      	</div>
+	    			</nav>               
+	             </div>	    
+	             <!-- /.box-header -->
+	             <div class="box-body">	             
+	           		<div class="row">
+	            	<div class="col-sm-12" id="ajax_return">
+		              
+	               </div>
+	          </div>
+            
+	          </div><!-- /.box-body -->
+	        </div><!-- /.box -->
+       	</div>
+       </div>
+   </section>
+</div>
+<script>
+    $(".pagination  a").click(function(){
+    	var pageCount = $('#selectPage').val();
+        var page = $(this).data('p');
+        ajax_get_table('search-form3',page,pageCount);
+    });
+      $(".btn-default").click(function(){
+        ajax_get_table('search-form3',1);	
+    });
+</script>
+<script>
+$(document).ready(function(){
+    ajax_get_table('search-form3',1);		
+});
+// ajax 抓取页面
+function ajax_get_table(tab,page,pageCount){
+    cur_page = page; //当前页面 保存为全局变量
+    $.ajax({
+        type : "POST",
+        url:"/index.php/Admin/Article/ajax_share/p/"+page+"/pageCount/"+pageCount,//+tab,
+        data : $('#'+tab).serialize(),// 你的formid
+        success: function(data){
+            $("#ajax_return").html('');
+            $("#ajax_return").append(data);
+        }
+    });
+}
+function delfun(obj){
+	if(confirm('确认删除')){		
+		$.ajax({
+			type : 'post',
+			url : $(obj).attr('data-url'),
+			data : {act:'del',id:$(obj).attr('data-id')},
+			dataType : 'json',
+			success : function(data){
+				alert("操作成功！");
+				location.reload();   
+			}
+		})
+	}
+	return false;
+}
+/*
+ * 清除文章静态页面缓存
+ */
+function ClearAritcleHtml(article_id)
+{
+	$.ajax({
+	    type:'GET',
+	    url:"{:U('Admin/System/ClearAritcleHtml')}",
+	    data:{article_id:article_id},
+	    dataType:'json',
+	    success:function(data){
+	            layer.alert(data.msg, {icon: 2});								 
+	    }
+	});
+}
+
+function onTop(id,cate_id){
+
+	var id = id;
+	var cate_id = cate_id;
+	$.ajax({
+		url:"/index.php?m=Admin&c=Article&a=changeTop&cate_id="+cate_id+"&id="+id,			
+		success: function(data){									
+			layer.msg('置顶成功', {icon: 1});   
+			location.reload();
+		}
+	});		
+}
+  $('.changeColor').on('change',function () {
+    $(this).css('color','red').find("option").css('color','red');
+    $(this).find("option:not(:selected)").css('color','#999');
+    return false;
+});  
+</script>
+</body>
+</html>

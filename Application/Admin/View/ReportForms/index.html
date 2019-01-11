@@ -1,0 +1,318 @@
+<include file="Public/min-header"/>
+<style type="text/css">
+  #table th{
+    width: 60px;
+    font: 12px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+  }
+
+  #page{
+    position: absolute;
+    left: 50%;
+    bottom: -40px;
+    padding-bottom: 33px;
+    margin-bottom: 20px;
+  }
+  .wrapper {
+     overflow: visible !important;
+}
+</style>
+<style type="text/css">
+    #selectBox{
+        padding:0px 31px 20px 0px;
+        width: 100%;
+        height: 30px;
+    }
+    .showlist{
+        display: inline-block;
+        width: 90px;
+        height: 30px;
+        border:1px solid #eee;
+        float: right;
+        text-align: center;
+        line-height: 30px;
+        background-color: #68b828;
+        color: #fff;
+        cursor: pointer;
+    }
+    .listTitle{
+        margin-top:10px; 
+        padding-left:15px; 
+        width:180px;
+        /*height: 800px;*/
+        border:1px solid #ccc;
+        background-color: #fff;
+        position: absolute;
+        right: 30px;
+        top: 38px;
+        z-index: 99;
+        display: none;
+    }
+    .listTitle li{
+        list-style-type:none;
+
+    }
+    label{
+        font-weight: normal;
+        cursor: pointer;
+    }
+
+    .listTitle:before, .listTitle:after{
+      display:table;
+      content:'';
+    }
+    .listTitle:after{
+      clear:both;
+    }
+
+</style>
+<div class="wrapper">
+  <include file="Public/breadcrumb"/>
+    <!-- Main content -->
+    <section>
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-vo"></i> 仓库报表</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="navbar navbar-default">
+                            <form action="{:U('reportForms/index')}" id="search-form2" class="navbar-form form-inline" method="get">
+                                <div class="form-group">
+                                    <!-- <label class="control-label" for="input-order-id">商品名称或编号</label> -->
+                                    <div class="input-group">
+                                        <input type="text" name="search" value="{$search}" placeholder="商品名称或编号" id="input-member-id" class="form-control goods_sku">
+                                        <!-- <span class="input-group-addon" id="basic-addon2"><i class="fa fa-search"></i></span> -->
+                                    </div>
+                                </div>
+                                <button type="submit"  id="search_limit" class="btn btn-primary "><i class="fa fa-search"></i> 筛选</button>
+                                <a style="margin-left: 20px;" href="{:U('reportForms/turnoverInital_cangku')}"  target="_blank" class="btn_leading btn btn-default pull-right"><i class="fa fa-file-excel-o"></i>&nbsp;导入仓库库存</a>
+                                <a style="margin-left: 20px;" href="{:U('reportForms/turnoverInital')}"  target="_blank" class="btn_leading btn btn-default pull-right"><i class="fa fa-file-excel-o"></i>&nbsp;导入门店库存</a>
+                                <a style="margin-left: 20px;" href="__PUBLIC__/muban/cangkuStock.xls" class="btn btn-default pull-right"><i class="fa fa-file-excel-o"></i>&nbsp;下载仓库模板</a>
+                                <a href="__PUBLIC__/muban/goodsStock.xls" class="btn btn-default pull-right"><i class="fa fa-file-excel-o"></i>&nbsp;下载门店模板</a>
+                            </form>
+                    </div> 
+
+                    <div style="position: relative;">
+                      <p id="selectBox">
+                          <span onclick="selectShow();" class="showlist">显示字段 <span style="color:#fff;font-size: 10px" class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></span>
+                          <span style="width:50px" class="showlist list_show_a" onclick="showAll()">全显</span>
+                          <span style="width:50px;display: none;" class="showlist list_show_b" onclick="showNotAll()">不全显</span>
+                      </p>
+                      <!-- <div class="listTitle_div"> -->
+                      <ul class="listTitle">
+                          <?php $i=$num; ?>
+                          
+                          <!-- 门店名称 -->
+                         <volist name="store_name" id="vo1" key="k">
+                            <li>
+                                <input checked="checked" name="f{$i}" type="checkbox" id="f{$i}">
+                                <label for="f{$i}">{$vo1.store_name}</label>
+                            </li>
+                          <?php $i++; ?>
+                         </volist>
+                      </ul>
+                      <!-- </div> -->
+                    </div> 
+                    <div>
+                      <table style="width:150px;float: left;table-layout: fixed;" id="table1" class="table table-bordered">
+                        <thead>
+                           <tr>
+                             <th style="font-size:12px;width: 50px; " class="sorting" tabindex="0">编号</th>
+                             <th style="font-size:12px;width: 100px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;" class="sorting good_name" tabindex="0">名称</th>
+                           </tr>
+                         </thead>
+                         <tbody>
+                            <foreach name="result" item="vo" key="k" >
+                              <tr role="row" >
+                              <for start='1' end='3' name='j'>
+                                <td style="font-size:12px;word-break: keep-all;overflow: hidden;text-overflow:ellipsis;white-space: nowrap; " <neq name='j' value='1'>title="{$vo[$keyOfArr[$j]]}" class="good_name"</neq>  >{$vo[$keyOfArr[$j]]}</td>
+                              </for>
+                             </tr>
+                            </foreach>
+                         </tbody>
+                      </table>
+                      <div id="table_div" style="overflow-x: auto;overflow-y:hidden;margin-bottom: 100px;">
+
+                          <!-- 第二个table -->
+                          <table style="width:{$this_index*60}px;float: left;table-layout: fixed;" id="table" class="table table-bordered">
+                            <thead>
+                               <tr>
+                                 <th style="font-size:12px; " class="sorting" tabindex="0">总库存</th>
+                                 <!-- 仓库名称 -->
+                                 <volist name="repertory_name" id="vo" key="k" >
+                                 <th title="{$vo.repertory_name}" style="font-size:12px; " class="sorting" tabindex="0">{$vo.repertory_name}</th>
+                                 </volist>
+                                 <th title="在途" style="font-size:12px; " class="sorting zaitu" tabindex="0">在途</th>
+
+                                 <?php $p=$num; ?>
+
+                                 <!-- 门店名称 -->
+                                 <volist name="store_name" id="vo2" key="k" >
+                                 <th title="{$vo2.store_name}" style="font-size:12px;display: none; " class="sorting f{$p}" tabindex="0">{$vo2.store_name}</th>
+                                 <?php $p++; ?>
+                                 </volist>
+                               </tr>
+                             </thead>
+                             <tbody>
+                                <?php $m=$num; ?>
+                                <foreach name="result" item="vo" key="k" >
+                                  <tr role="row" >
+                                  <for start='3' end='$this_index' name='j'>
+                                    <?php if($j > ($num-1)){ ?>
+                                    <td class="f{$j}" style="font-size:12px;display: none ">{$vo[$keyOfArr[$j]]}</td>
+                                    <?php }else{ ?>
+                                    <td class="f{$j}" style="font-size:12px; ">{$vo[$keyOfArr[$j]]}</td>
+                                    <?php } ?>
+                                  </for>
+                                 </tr>
+                                </foreach>
+                             </tbody>
+                          </table>
+                      </div>
+                    </div>  
+                    <div style="position: relative;">
+                    <div class="row" id="page">
+                          <div class="col-sm-12 text-center">{$page}</div>       
+                    </div>
+                    </div>   
+                </div>
+            </div>
+        </div>        <!-- /.row -->
+    </section>
+</div>
+<script type="text/javascript">
+//获取cookie中存储的展示列表字段名称
+var _val = $.cookie('report_cookie');
+var _width_table_div = $('#table_div').css('width');
+//根据cookie中存储的值 做展示隐藏 如果不存在  这展示默认模块
+if (_val) {
+    var ss = _val.split(",");
+    var _lenght = ss.length;
+    for (var i = {$num}; i < {$this_index}; i++) {
+        var _thisclass = 'f'+i;
+        if ($.inArray(_thisclass,ss) != -1) {
+            $('.f'+i).show();
+            $('#f'+i).prop("checked","checked");//全选
+        }else{
+            $('.f'+i).hide();
+            $('#f'+i).prop("checked","");//全选
+        }
+    }
+    var this_width = (_lenght+5)*60;
+    //判断新表宽度是否达到外层div宽度
+    if (parseInt(_width_table_div)>this_width) {
+      $('#table').css('width','100%');//给table设置新的宽度
+    }else{
+      $('#table').css('width',this_width+'px');//给table设置新的宽度
+    }
+    
+}else {
+    for (var i = {$num}; i < {$this_index}; i++) {
+        var _thisclass = 'f'+i;
+        $('.f'+i).hide();
+        $('#f'+i).prop("checked","");//全选
+    }
+    $('#table').css('width','100%');//给table设置新的宽度
+}
+
+
+$(function(){
+  var _width = $('#page').width();
+  $('#page').css("margin-left",-_width/2);
+  $('table_div').css('width',$(window).width());
+});
+//选择展示条数时触发
+$("#selectPage").change(function(){
+    var pageCount = $('#selectPage').val();
+    $('.pagination  a').each(function(index, el) {
+        var result = getStrParam('pageCount',$(this).attr('href'));
+        // 如果已经拼接 则替换
+        if (result) {
+            var _href = reStrParam($(this).attr('href'),pageCount);
+        }else{
+            var _href = $(this).attr('href')+'/pageCount/'+pageCount;
+        }
+        $(this).attr('href',_href);
+        
+    });
+    window.location.href="{:U('ReportForms/index')}/p/1/pageCount/"+pageCount;
+});
+
+// 全显列表函数
+function showAll() {
+    for (var i = {$num}; i < {$this_index}; i++) {
+        $('.f'+i+'').show();
+    }
+    $(".list_show_a").hide();
+    $(".list_show_b").show();
+    $(".listTitle input:checkbox").prop("checked","checked");//全选
+    $('#table').css('width',{$this_index}*60+'px');//给table设置新的宽度
+    $('.good_name').css('width','60px');
+}
+
+// 不全显列表函数
+function showNotAll() {
+    //显示隐藏
+    for (var i = {$num}; i < {$this_index}; i++) {
+        $('.f'+i+'').hide();
+        $('#f'+i+'').prop("checked","");
+    }
+    
+    $(".list_show_a").show();
+    $(".list_show_b").hide();
+    $('#table').css('width','100%');//给table设置新的宽度
+}
+
+
+//选择框出现
+function selectShow(){
+    $('.listTitle').toggle();
+}
+
+$('.listTitle li input').click(function(event) {
+    var _class = $(this).attr('id');
+    var _width = $('#table').css('width');//第二个table现有宽度...px
+    var _intWidth = parseInt(_width);//第二个table现有宽度...int
+    var _width_table_div = $('#table_div').css('width');//外层div宽度
+    if ($(this).is(':checked')) {
+        $('.'+_class+'').show();
+        var new_width = _intWidth+60;
+    }else{
+        $('.'+_class+'').hide();
+        var new_width = _intWidth-60;
+    }
+    // 如果现有宽度高于固定值  则将商品名称一栏宽度变小
+    if (_intWidth>parseInt(_width_table_div)) {
+      $('#table').css('width',new_width+'px');//给table设置新的宽度
+    }else{
+      $('#table').css('width','100%');//给table设置新的宽度
+    }
+});
+
+//存储cookie方法
+function putCookie(){
+  var _str = new Array();
+  $('.listTitle li input').each(function(index, el) {
+      if ($(this).is(':checked')) {
+          _str.push($(this).attr('name'));
+      }
+  });
+  var newStr = _str.join(",");
+  $.cookie('report_cookie', newStr);
+}
+//点击页面之前 获取自定义展示列表的值 存入cookie
+$('.paginate_button').click(function(event) {
+    putCookie();
+});
+
+//提交表单之前 存储cookie
+$('#search_limit').click(function(event) {
+    putCookie();
+});
+
+</script>
+</body>
+</html>

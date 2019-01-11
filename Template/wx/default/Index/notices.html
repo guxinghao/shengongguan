@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#FFF;">
+<head>
+	<meta charset="UTF-8">
+	<!-- 同比缩放标签 ,最大缩放比,最小缩放比,禁止用户缩放-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>{$app.title}</title>
+	<link rel="stylesheet" href="__STATIC__/css/reset.css">
+	<link rel="stylesheet" href="__STATIC__/css/public.css">
+	<link rel="stylesheet" href="__STATIC__/css/swiper.min.css">
+	<script src="js/rem.js"></script>
+</head>
+<body >
+	<div class="soak_content ovw pad_b">
+		<h3>{$app.title}</h3>
+		<p>{$app.add_time|date="Y-m-d H:i:s",###}</p>
+		
+	</div>
+	
+		<div style="margin:5px;">	{$app.content|htmlspecialchars_decode}</div>
+		
+	
+	
+
+	<!-- 推荐 -->
+	
+
+
+	<!-- 泡发心得 -->
+	
+
+	
+<script src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+<script src="__STATIC__/js/swiper.min.js"></script>
+<script>
+	$(function(){
+		var mySwiper = new Swiper('.swiper-container',{
+			slidesPerView : 2.7,
+			loopedSlides :1,
+			spaceBetween:15,
+		});
+	})
+</script>
+</body>
+</html>

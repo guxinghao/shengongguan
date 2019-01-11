@@ -1,0 +1,319 @@
+<style type="text/css">
+    .count{
+        border: 1px solid #ccc;
+        height: 40px;
+        line-height: 40px;
+        margin-bottom: 20px;
+    }
+    .count .count_p{
+        float: left;
+        width: 33%;
+        text-align: center;
+        font-size: 14px;
+    }
+    .count:before, .count:after{
+      display:table;
+      content:'';
+    }
+    .count:after{
+      clear:both;
+    }
+
+
+    #search-form2 .form-group{
+        margin-bottom: 10px;
+    }
+
+
+    #list-table th{
+        font-size: 15px;
+    }
+    #list-table td{
+        font-size: 13px;
+    }
+    /*搜索框样式*/
+    .input-group input{
+      height:30px;
+      width: 130px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+      padding-left: 5px;
+    }
+    .form-group input{
+      height:30px;
+      width: 130px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+      padding-left: 5px;
+    }
+    .changeColor{
+      height:30px;
+      width: 130px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+      padding-left: 10px;
+    }
+    /*.daterangepicker{
+        left: 38% !important;
+    }*/
+</style>
+
+<include file="Public/min-header"/>
+<link href="__PUBLIC__/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/plugins/daterangepicker/moment.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+
+<div class="wrapper">
+  <include file="Public/breadcrumb"/>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i> 沟通列表</h3>
+                </div>
+                <div class="panel-body">
+
+                    <div class="count"><p class="count_p">完成沟通{$today_count}次</p><p class="count_p">历史合计{$count}次</p><p class="count_p">待完成的沟通{$need_count}次</p></div> 
+                    <div class="navbar navbar-default">
+                            <form action="{:U('Services/communication_list')}" id="search-form2" class="navbar-form form-inline" method="post" >
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">会员手机号</label>
+                                    <div class="input-group">
+                                        <input type="text" name="tel" value="{$_tel}" placeholder="客户手机号" id="input-member-id">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">会员姓名</label>
+                                    <div class="input-group">
+                                        <input type="text" name="username" value="{$username}" placeholder="会员姓名">
+                                    </div>
+                                </div>
+                                <if condition="($role_id neq 4)">
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">选择门店</label>
+                                    <select style="height:30px;" name="store_id" class="store_id changeColor" id="store_select">
+                                        <option value="0">选择门店</option>
+                                            <volist name="store" id="item">
+                                            <option value="{$item.store_id}" <if condition="$item[store_id] eq $_store_id"> selected="selected"</if>>
+                                            {$item.store_name}
+                                            </option>
+                                        </volist> 
+                                    </select>
+                                </div>
+                                </if>
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">服务顾问</label>
+                                    <select style="height:30px;" name="cid" class="cid changeColor" id="guwen">
+                                        <option value="0">选择服务顾问</option>
+                                        <volist name="guwen" id="items">
+                                            <option value="{$items.admin_id}" <if condition="$items[admin_id] eq $cid"> selected="selected"</if>>
+                                                {$items.user_name}
+                                            </option>
+                                        </volist>
+                                    </select> 
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">沟通类型</label>
+                                    <select style="height:30px;" name="type" class="changeColor" id="type">
+                                        <option value="0">选择沟通类型</option>
+                                        <option value="1" <if condition="$type eq 1"> selected="selected"</if>>购买回访
+                                        </option>
+                                        <option value="2" <if condition="$type eq 2"> selected="selected"</if>>活动通知
+                                        </option>
+                                        <option value="3" <if condition="$type eq 3"> selected="selected"</if>>投诉处理
+                                        </option>
+                                        <option value="4" <if condition="$type eq 4"> selected="selected"</if>>生日祝福
+                                        </option>
+                                        <option value="5" <if condition="$type eq 5"> selected="selected"</if>>其他交流
+                                        </option>
+                                    </select> 
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">接听状态</label>
+                                    <select style="height:30px;" name="status" class="changeColor" id="status">
+                                        <option value="0">选择接听状态</option>
+                                        <option value="已接通" <if condition="$status eq '已接通'"> selected="selected"</if>>已接通
+                                        </option>
+                                        <option value="关机" <if condition="$status eq '关机'"> selected="selected"</if>>关机
+                                        </option>
+                                        <option value="停机" <if condition="$status eq '停机'"> selected="selected"</if>>停机
+                                        </option>
+                                        <option value="被挂断" <if condition="$status eq '被挂断'"> selected="selected"</if>>被挂断
+                                        </option>
+                                        <option value="再联系" <if condition="$status eq '再联系'"> selected="selected"</if>>再联系
+                                        </option>
+                                        <option value="号码有误" <if condition="$status eq '号码有误'"> selected="selected"</if>>号码有误
+                                        </option>
+                                        <option value="成交" <if condition="$status eq '成交'"> selected="selected"</if>>成交
+                                        </option>
+                                    </select> 
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">完成沟通</label>
+                                    <select style="height:30px;" name="com_status" class="changeColor" id="com_status">
+                                        <option value="0">请选择</option>
+                                        <option value="1" <if condition="$com_status eq 1"> selected="selected"</if>>是
+                                        </option>
+                                        <option value="2" <if condition="$com_status eq 2"> selected="selected"</if>>否
+                                        </option>
+                                    </select> 
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">沟通日期</label>
+                                    <input type="text" style="width: 157px;font-size: 12px;" name="start_time" id="start_time" value='{$start_time}' placeholder="开始日期" >
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="input-order-id">沟通内容</label>
+                                    <div class="input-group">
+                                        <input type="text" name="content" value="{$content}" placeholder="沟通内容">
+                                    </div>
+                                </div>
+                                <input type="hidden" name="pageCount" id="pageCount" value="{$_pageCount}">
+                                <div class="form-group">
+                                    <button type="submit"  id="button-filter search-order" class="btn btn-primary "><i class="fa fa-search"></i> 筛选</button>
+                                </div>
+                            </form>
+                    </div>
+                    <div class="box-body">
+                                 
+	           		<div class="row">
+	            	<div class="col-sm-12">
+		              <table id="list-table" class="table table-bordered table-striped dataTable">
+		                 <thead>
+		                   <tr role="row">
+                               <th class="sorting" tabindex="0">编号</th>
+                               <th class="sorting" tabindex="0">沟通时间</th>
+                               <th class="sorting" tabindex="0">所属门店</th>
+			                   <th class="sorting" tabindex="0">服务顾问</th>
+                               <th class="sorting" tabindex="0">会员姓名</th>
+                               <th class="sorting" tabindex="0">会员手机号</th>
+                               <th class="sorting" tabindex="0">沟通类型</th>
+                             
+                               <th class="sorting" tabindex="0">接听状态</th>
+                               <th style="width: 150px;" class="sorting" tabindex="0">沟通内容</th>
+                               <!-- <th class="sorting" tabindex="0">客户反馈</th> -->
+			                
+		                   </tr>
+		                 </thead>
+						<tbody>
+						  <foreach name="visit_list" item="visit_list" key="k" >
+						  	<tr role="row" >
+                                <td>{$visit_list.id}</td>
+                                <td>{$visit_list.ctime}</td>
+    							<td>{$visit_list.store_id|getStoreName}</td>
+							    <td>{$visit_list.fuid|getUserName}</td>
+                                <td>{$visit_list.uid|getName_users}</td>
+                                <td>{$visit_list.tel}</td>
+                                <td>{$visit_list.type|getCommunicationType}</td>
+                                <td>{$visit_list.status}</td>
+                                <td style="width: 150px;">{$visit_list.content}</td>
+                                <!-- <td>{$visit_list.remark}</td> -->
+		                   </tr>
+		                  </foreach>
+		                   </tbody>
+		               </table>
+	               </div>
+	          </div>
+              <div class="row">
+                    <div class="col-sm-12 text-center">{$page}</div>		
+              </div>
+	          </div>
+
+
+                </div>
+            </div>
+        </div>        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<script type="text/javascript">
+//选择展示条数时触发
+$("#selectPage").change(function(){
+    var pageCount = $('#selectPage').val();
+    $('.pagination  a').each(function(index, el) {
+        var result = getStrParam('pageCount',$(this).attr('href'));
+        // 如果已经拼接 则替换
+        if (result) {
+            var _href = reStrParam($(this).attr('href'),pageCount);
+        }else{
+            var _href = $(this).attr('href')+'/pageCount/'+pageCount;
+        }
+        $(this).attr('href',_href);
+        
+    });
+    window.location.href="{:U('services/communication_list')}/p/1/pageCount/"+pageCount;
+});
+
+//如果门店改变 则改变服务服务数据
+$('#store_select').change(function(event) {
+    var store_id = $(this).val();
+    if (!store_id) {
+        store_id = 0;
+    }
+    $.ajax({
+        type:"post",
+        url:"{:U('services/getGuWen')}",
+        data:{"store_id":store_id},
+        success:function(result){
+            var jsonobj=eval('('+result+')');
+            var len = jsonobj.length;
+            var str = '<option value="">全部</option>';
+            for (var i = 0; i < len; i++) {
+                str += "<option value='"+jsonobj[i].admin_id+"'>"+jsonobj[i].user_name+"</option>"
+            }
+            $('#guwen').html(str);
+        }
+    })
+});
+$(document).ready(function() {
+    $('#start_time').daterangepicker({
+        format:"YYYY/MM/DD",
+        singleDatePicker: false,
+        showDropdowns: true,
+        minDate:'2016/01/01',
+        maxDate:'2030/01/01',
+        startDate:'{$now}',
+        opens : 'left', //日期选择框的弹出位置
+        locale : {
+            applyLabel : '确定',
+            cancelLabel : '取消',
+            fromLabel : '起始时间',
+            toLabel : '结束时间',
+            customRangeLabel : '自定义',
+            daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+            monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月' ],
+            firstDay : 1
+        }
+    });
+});
+$('.changeColor').on('change',function () {
+    $(this).css('color','red').find("option").css('color','red');
+    $(this).find("option:not(:selected)").css('color','#999');
+    return false;
+});
+if ('{$_store_id}') {
+  $('#store_select').css('color','red').find("option").css('color','red');
+  $('#store_select').find("option:not(:selected)").css('color','#999');
+}
+if ('{$cid}') {
+  $('#guwen').css('color','red').find("option").css('color','red');
+  $('#guwen').find("option:not(:selected)").css('color','#999');
+}
+if ('{$type}') {
+  $('#type').css('color','red').find("option").css('color','red');
+  $('#type').find("option:not(:selected)").css('color','#999');
+}
+if ('{$status}') {
+  $('#status').css('color','red').find("option").css('color','red');
+  $('#status').find("option:not(:selected)").css('color','#999');
+}
+if ('{$com_status}') {
+  $('#com_status').css('color','red').find("option").css('color','red');
+  $('#com_status').find("option:not(:selected)").css('color','#999');
+}
+
+</script>
+</body>
+</html>

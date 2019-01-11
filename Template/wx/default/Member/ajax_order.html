@@ -1,0 +1,23 @@
+
+	<volist name='info' id='vo'>
+		<li class="mar_b ovw">
+			<p class="order_num pad">
+				<span>订单编号：{$vo.order_sn}</span>
+				<i>{$vo.a}</i>
+			</p>
+			<div class="order_shop pad ovw">
+				<div class="or_pic fl">
+					<img src="__STATIC__/images/pic_j.png" alt="">
+				</div>
+				<div class="or_info fr">
+					<h3>大连滋补海参100g</h3>
+					<p>￥{$vo.total_amount}</p>
+					<span>{$vo.add_time}</span>
+				</div>
+			</div>
+			<div class="affirm ovw">
+				<a href="{$vo.c}">{$vo.b}</a>
+			</div>
+		</li>
+	</volist>
+	

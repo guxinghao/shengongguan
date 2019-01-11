@@ -1,0 +1,161 @@
+<include file="Public/min-header"/>
+<style type="text/css">
+	.changeColor{
+	    height:30px;
+	    border-radius: 3px;
+	    border: 1px solid #ccc;
+	    padding-left: 5px;
+	}
+	.form-group input{
+		height:30px;
+		width: 140px;
+		border-radius: 3px;
+		border: 1px solid #ccc;
+		padding-left: 5px;
+	}
+	.this_button{
+		width: 49px;
+		height: 30px;
+		padding: 0 0;
+		line-height: 29px;
+		background-color: #3c8dbc;
+		border-color: #367fa9;
+		color: #fff;
+	}
+</style>
+<div class="wrapper">
+  <include file="Public/breadcrumb"/>
+	<section class="content">
+       <div class="row">
+       		<div class="col-xs-12">
+	       		<div class="box">
+	             <div class="box-header">
+	              	<nav class="navbar navbar-default">	     
+				        <div class="collapse navbar-collapse">
+				          <form class="navbar-form "  style="width:300px;" action="{:U('Admin/log')}" method="post">
+				            <div class="form-group">
+				              	<input type="text" name="keyword" placeholder="输入用户名">
+				            </div>
+				            <input type="hidden" name="pageCount" id="pageCount" value="{$pageCount}">
+				            <button type="submit" class="this_button btn btn-default">提交</button>
+                             </form>
+				              <form class="navbar-form "  style="width:500px;" action="{:U('Admin/dellog')}" method="post">
+				           
+				              		<select name="daytimes" class="changeColor" style="width:140px;">
+				              		<option value="1">一周之前</option>
+                                    <option value="2">一个月之前</option>
+                                    <option value="3">三个月之前</option>
+                                    <option value="4">半年之前</option>
+				              		
+				              	</select>
+				           
+				            <button style="width: 80px;margin-bottom: 4px;" type="submit" class="this_button btn btn-default">清空日志</button>
+                             </form>    
+				         		
+				      	</div>
+	    			</nav>  
+	             </div>
+	             <div class="box-body">
+	             <div class="row">
+	            	<div class="col-sm-12">
+		              <table id="list-table" class="table table-bordered table-striped dataTable">
+		                 <thead>
+		                   <tr role="row">
+			                   <th>ID</th>
+			                   <th>角色名称</th>
+			                   <th>描述</th>
+			                   <th>IP</th>
+			                   <th>操作时间</th>
+			                 <!--  <th>操作</th>-->
+		                   </tr>
+		                 </thead>
+						<tbody>
+						  <foreach name="list" item="vo" key="k" >
+							  	<tr role="row">
+				                     <td>{$vo.log_id}</td>
+				                     <td>{$vo.user_name}</td>
+				                     <td>{$vo.log_info}</td>
+				                     <th>{$vo.log_ip}</th>
+				                     <td>{$vo.log_time|date="Y-m-d H:i:s",###}</td>
+                                     <!--
+				                     <td>
+				                      	<a class="btn btn-danger" href="javascript:void(0)" data-url="{:U('Admin/logDel')}" data-id="{$vo.log_id}" onclick="delfun(this)"><i class="fa fa-trash-o"></i></a>
+									 </td>
+                                     -->
+			                    </tr>
+		                  </foreach>
+		                   </tbody>
+		                 <tfoot>
+		                 
+		                 </tfoot>
+		               </table>	 
+	               </div>
+	          </div>
+              <div class="row">
+                    <div class="col-sm-12 text-center">{$page}</div>		
+              </div>
+	          </div>
+	        </div>
+       	</div>
+       </div>
+   </section>
+</div>
+<script>
+function delfun(obj){
+	
+	
+	//询问框
+layer.confirm('确认删除？', {
+  btn: ['确定','取消'] //按钮
+}, function(){
+    // 确定
+		$.ajax({
+			type : 'post',
+			url : $(obj).attr('data-url'),
+			data : {act:'del',log_id:$(obj).attr('data-id')},
+			dataType : 'json',
+			success : function(data){
+				if(data==1){
+					$(obj).parent().parent().remove();
+				}else{
+					layer.msg(data, {icon: 2,time: 2000});   //alert(data);
+				}
+			}
+		})
+	
+ 
+	
+}, function(){
+	// 取消
+});
+	
+	
+	 
+	 
+	return false;
+}
+//选择展示条数时触发
+$("#selectPage").change(function(){
+    var pageCount = $('#selectPage').val();
+    $('#pageCount').val(pageCount);
+    $('.pagination  a').each(function(index, el) {
+        var result = getStrParam('pageCount',$(this).attr('href'));
+        // 如果已经拼接 则替换
+        if (result) {
+            var _href = reStrParam($(this).attr('href'),pageCount);
+        }else{
+            var _href = $(this).attr('href')+'/pageCount/'+pageCount;
+        }
+        $(this).attr('href',_href);
+        
+    });
+    window.location.href="{:U('admin/log')}/p/1/pageCount/"+pageCount;
+});
+$('.changeColor').on('change',function () {
+    $(this).css('color','red').find("option").css('color','red');
+    $(this).find("option:not(:selected)").css('color','#999');
+    return false;
+});
+</script>  
+</body>
+</html>
